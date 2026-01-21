@@ -631,3 +631,116 @@ details[open] .faq-summary::after{
     color: rgba(15,23,42,0.85);
   }
 }
+/* ================================
+   CINEMATIC GALLERY
+================================ */
+
+.gallery-wrapper{
+  max-width:1800px;
+  margin:0 auto;
+  position:relative;
+}
+
+.gallery-stage{
+  position:relative;
+  height:560px;
+  overflow:visible;
+}
+
+/* CARD */
+.gallery-card{
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:520px;
+  height:320px;
+  border-radius:18px;
+  overflow:hidden;
+  background:#eee;
+  box-shadow:0 24px 70px rgba(0,0,0,.25);
+  transition:transform 1.1s cubic-bezier(.22,.61,.36,1),
+             opacity 1.1s cubic-bezier(.22,.61,.36,1);
+}
+
+.gallery-card img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* POSISI */
+.gallery-center{
+  transform:translate(-50%,-50%) scale(1.25);
+  z-index:10;
+  opacity:1;
+}
+
+.gallery-left-1{
+  transform:translate(-85%,-50%) scale(.85);
+  z-index:8;
+  opacity:.9;
+}
+
+.gallery-left-2{
+  transform:translate(-120%,-50%) scale(.7);
+  z-index:6;
+  opacity:.7;
+}
+
+.gallery-right-1{
+  transform:translate(-15%,-50%) scale(.85);
+  z-index:8;
+  opacity:.9;
+}
+
+.gallery-right-2{
+  transform:translate(20%,-50%) scale(.7);
+  z-index:6;
+  opacity:.7;
+}
+
+.gallery-off{
+  opacity:0;
+  transform:translate(-50%,-50%) scale(.6);
+}
+
+/* NAV */
+.gallery-nav{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  background:rgba(0,0,0,.6);
+  color:#fff;
+  border:none;
+  cursor:pointer;
+  font-size:22px;
+  z-index:50;
+}
+
+.gallery-nav.prev{ left:20px; }
+.gallery-nav.next{ right:20px; }
+
+/* MOBILE */
+@media(max-width:768px){
+  .gallery-stage{
+    height:auto;
+    display:flex;
+    gap:16px;
+    overflow-x:auto;
+    padding:0 12px;
+    scroll-snap-type:x mandatory;
+  }
+  .gallery-card{
+    position:relative;
+    transform:none !important;
+    opacity:1 !important;
+    width:80vw;
+    height:48vw;
+    flex:0 0 auto;
+    scroll-snap-align:center;
+  }
+  .gallery-nav{ display:none; }
+}
