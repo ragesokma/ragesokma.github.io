@@ -267,7 +267,7 @@
         ›
     </button>
 </section>
-<section class="py-14 bg-white" aria-label="Dampak dalam angka">
+<section class="py-14 bg-white impact-section" aria-label="Dampak dalam angka">
   <div class="max-w-7xl mx-auto px-6">
     <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
       <div>
@@ -277,75 +277,63 @@
       <a href="transparansi.html" class="text-blue-700 font-semibold hover:underline">Lihat Transparansi →</a>
     </div>
 
-    <div class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6">
-  <!-- Card 1 -->
-  <div class="group relative overflow-hidden rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50/80 to-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-    <!-- Accent bar -->
-    <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-700 via-blue-600 to-sky-500"></div>
-    <!-- Soft glow -->
-    <div class="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-blue-600/10 blur-2xl"></div>
-
-    <div class="relative flex items-center gap-3">
-      <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-blue-200 bg-blue-600/10 backdrop-blur">
-        <!-- icon -->
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-800" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M16 11c1.66 0 3-1.57 3-3.5S17.66 4 16 4s-3 1.57-3 3.5S14.34 11 16 11ZM8 11c1.66 0 3-1.57 3-3.5S9.66 4 8 4 5 5.57 5 7.5 6.34 11 8 11Zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13Zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.95 1.97 3.45V19h6v-2.5C23 14.17 18.33 13 16 13Z"/>
-        </svg>
+    <div class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 impact-grid" data-impact-grid>
+      <!-- Cards will be hydrated from assets/data/impact.json -->
+      <div class="impact-card" data-impact-key="beneficiaries">
+        <div class="impact-accent" aria-hidden="true"></div>
+        <div class="impact-glow" aria-hidden="true"></div>
+        <div class="impact-head">
+          <div class="impact-icon" aria-hidden="true"></div>
+          <div class="impact-titlewrap">
+            <p class="impact-title">Penerima Manfaat</p>
+            <button class="impact-info" type="button" aria-label="Info" data-tooltip=""></button>
+          </div>
+        </div>
+        <p class="impact-value" data-impact-value>0<span class="impact-plus" aria-hidden="true">+</span></p>
+        <div class="impact-meta">
+          <span class="impact-period" data-impact-period>—</span>
+          <span class="impact-note" data-impact-note>Diperbarui berkala</span>
+        </div>
       </div>
 
-      <p class="text-sm font-semibold text-blue-800">Penerima Manfaat</p>
-    </div>
-
-    <p class="relative mt-3 text-5xl font-extrabold tracking-tight text-blue-900 tabular-nums">
-      120<span class="align-super text-xl font-bold text-blue-800/80">+</span>
-    </p>
-
-    <p class="relative mt-2 text-xs text-slate-600">Diperbarui berkala</p>
-  </div>
-
-  <!-- Card 2 -->
-  <div class="group relative overflow-hidden rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50/80 to-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-    <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-700 via-blue-600 to-sky-500"></div>
-    <div class="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-blue-600/10 blur-2xl"></div>
-
-    <div class="relative flex items-center gap-3">
-      <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-blue-200 bg-blue-600/10 backdrop-blur">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-800" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2Zm0 16H5V10h14v10Zm0-12H5V6h14v2Z"/>
-        </svg>
+      <div class="impact-card" data-impact-key="activities">
+        <div class="impact-accent" aria-hidden="true"></div>
+        <div class="impact-glow" aria-hidden="true"></div>
+        <div class="impact-head">
+          <div class="impact-icon" aria-hidden="true"></div>
+          <div class="impact-titlewrap">
+            <p class="impact-title">Kegiatan Sosial</p>
+            <button class="impact-info" type="button" aria-label="Info" data-tooltip=""></button>
+          </div>
+        </div>
+        <p class="impact-value" data-impact-value>0<span class="impact-plus" aria-hidden="true">+</span></p>
+        <div class="impact-meta">
+          <span class="impact-period" data-impact-period>—</span>
+          <span class="impact-note" data-impact-note>Program berjalan</span>
+        </div>
       </div>
-      <p class="text-sm font-semibold text-blue-800">Kegiatan Sosial</p>
-    </div>
 
-    <p class="relative mt-3 text-5xl font-extrabold tracking-tight text-blue-900 tabular-nums">
-      35<span class="align-super text-xl font-bold text-blue-800/80">+</span>
-    </p>
-
-    <p class="relative mt-2 text-xs text-slate-600">Program berjalan</p>
-  </div>
-
-  <!-- Card 3 -->
-  <div class="group relative overflow-hidden rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50/80 to-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-    <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-700 via-blue-600 to-sky-500"></div>
-    <div class="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-blue-600/10 blur-2xl"></div>
-
-    <div class="relative flex items-center gap-3">
-      <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-blue-200 bg-blue-600/10 backdrop-blur">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-800" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M16 11c1.66 0 3-1.57 3-3.5S17.66 4 16 4s-3 1.57-3 3.5S14.34 11 16 11ZM8 11c1.66 0 3-1.57 3-3.5S9.66 4 8 4 5 5.57 5 7.5 6.34 11 8 11Zm8 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5Z"/>
-        </svg>
+      <div class="impact-card" data-impact-key="volunteers">
+        <div class="impact-accent" aria-hidden="true"></div>
+        <div class="impact-glow" aria-hidden="true"></div>
+        <div class="impact-head">
+          <div class="impact-icon" aria-hidden="true"></div>
+          <div class="impact-titlewrap">
+            <p class="impact-title">Relawan Terlibat</p>
+            <button class="impact-info" type="button" aria-label="Info" data-tooltip=""></button>
+          </div>
+        </div>
+        <p class="impact-value" data-impact-value>0<span class="impact-plus" aria-hidden="true">+</span></p>
+        <div class="impact-meta">
+          <span class="impact-period" data-impact-period>—</span>
+          <span class="impact-note" data-impact-note>Kolaborator aktif</span>
+        </div>
       </div>
-      <p class="text-sm font-semibold text-blue-800">Relawan Terlibat</p>
     </div>
 
-    <p class="relative mt-3 text-5xl font-extrabold tracking-tight text-blue-900 tabular-nums">
-      50<span class="align-super text-xl font-bold text-blue-800/80">+</span>
+    <p class="mt-5 text-sm text-slate-600 impact-timeline" data-impact-timeline>
+      Dampak ini terus bertambah seiring berjalannya program.
     </p>
-
-    <p class="relative mt-2 text-xs text-slate-600">Kolaborator aktif</p>
-  </div>
-</div>
-
   </div>
 </section>
 
