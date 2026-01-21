@@ -240,7 +240,8 @@
   bottom:-8px;
   height:3px;
   border-radius:999px;
-  background: rgba(15,23,42,0.85);
+  /* biru khas logo */
+  background: rgba(29,78,216,0.95);
 }
 
 .section-split-cta{
@@ -250,24 +251,53 @@
   padding:0.55rem 0.85rem;
   border-radius:12px;
   background: rgba(255,255,255,0.65);
-  border: 1px solid rgba(226,232,240,0.95);
+  border: 1px solid rgba(147,197,253,0.75);
   box-shadow: 0 6px 16px rgba(0,0,0,0.06);
-  color:#475569;
+  color:#1d4ed8;
   font-weight:600;
   text-decoration:none;
   transition: transform 180ms ease, background 180ms ease;
 }
 .section-split-cta:hover,
 .section-split-cta:focus-visible{
-  background: rgba(255,255,255,0.82);
+  background: rgba(219,234,254,0.65);
   transform: translateY(-1px);
 }
 
 @media (max-width: 640px){
   .section-split-head{
-    flex-direction:column;
-    align-items:flex-start;
+    /* Mobile: keep title (left) and CTA (right) in one row */
+    flex-direction:row;
+    align-items:center;
+    justify-content:space-between;
+    padding:0.6rem 0.6rem;
   }
+
+  .section-split-title{
+    flex: 1;
+    min-width: 0;
+    padding:0.15rem 0.6rem;
+  }
+
+  .section-split-title h2{
+    font-size: 1.15rem;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .section-split-cta{
+    white-space: nowrap;
+  }
+}
+
+/* Program badge (index) */
+#programBadge{
+  max-width: 50vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 
@@ -743,4 +773,210 @@ details[open] .faq-summary::after{
     scroll-snap-align:center;
   }
   .gallery-nav{ display:none; }
+}
+
+
+
+/* =========================
+   Program Unggulan - Judul + Badge (center, satu kesatuan)
+   ========================= */
+.program-title-inline{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin:0;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  font-weight:800;
+  color:#1d4ed8; /* biru khas logo */
+  font-size:clamp(1.5rem, 3.5vw, 2.1rem);
+}
+.program-title-text{
+  line-height:1.1;
+  white-space:nowrap;
+}
+
+/* Badge: Blue glass, tajam, khas logo */
+.badge-glass-blue{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  /* lebih pendek: pas tinggi huruf */
+  padding:0.24rem 0.65rem;
+  line-height:1;
+  border-radius:6px; /* tajam (tidak terlalu bulat) */
+  /* blue glass: kuat tapi tetap tembus */
+  background:rgba(29, 78, 216, 0.78);
+  border:1px solid rgba(255,255,255,0.22);
+  box-shadow:0 10px 25px rgba(2, 6, 23, 0.18);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  color:#ffffff;
+  font-weight:800;
+  letter-spacing:0.04em;
+}
+.badge-text{
+  display:inline-block;
+  white-space:nowrap;
+  will-change:transform, clip-path, opacity, -webkit-mask-size, mask-size;
+}
+
+/* Animasi kombinasi: Wipe, Peek in, Random Bars */
+.anim-wipe{
+  animation:badgeWipe 650ms ease both;
+}
+@keyframes badgeWipe{
+  /* wipe kiri -> kanan */
+  from{ clip-path: inset(0 100% 0 0); opacity:0.2; transform:translateY(-1px); }
+  to{ clip-path: inset(0 0 0 0); opacity:1; transform:translateY(0); }
+}
+
+.anim-peek{
+  animation:badgePeek 650ms cubic-bezier(.2,.9,.2,1) both;
+}
+@keyframes badgePeek{
+  from{ transform:translateY(10px) scale(0.98); opacity:0; filter:blur(2px); }
+  to{ transform:translateY(0) scale(1); opacity:1; filter:blur(0); }
+}
+
+/* Random Bars: efek reveal garis-garis */
+.anim-bars{
+  -webkit-mask-image: repeating-linear-gradient(90deg, #000 0 10px, transparent 10px 14px);
+  mask-image: repeating-linear-gradient(90deg, #000 0 10px, transparent 10px 14px);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 0% 100%;
+  mask-size: 0% 100%;
+  animation:badgeBars 700ms ease both;
+}
+@keyframes badgeBars{
+  from{ -webkit-mask-size: 0% 100%; mask-size: 0% 100%; opacity:0.35; transform:translateY(-1px); }
+  to{ -webkit-mask-size: 100% 100%; mask-size: 100% 100%; opacity:1; transform:translateY(0); }
+}
+
+/* Mobile: jaga agar badge tetap rapi */
+@media (max-width: 640px){
+  .program-title-inline{ gap:10px; }
+  .badge-glass-blue{ padding:0.26rem 0.6rem; }
+}
+
+/* Extra small: kalau layar sempit banget, tetap rapi (center) */
+@media (max-width: 380px){
+  .program-title-inline{ flex-wrap:wrap; }
+  .program-title-text{ font-size:1.35rem; }
+}
+
+/* Aksesibilitas: hormati reduce motion */
+@media (prefers-reduced-motion: reduce){
+  .anim-wipe, .anim-peek, .anim-bars{ animation:none !important; }
+}
+/* === STAT CARDS UPGRADE === */
+.stats-grid { 
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.stat-card{
+  position: relative;
+  border: 1px solid rgba(30, 64, 175, .12);
+  background: rgba(239, 246, 255, .65);
+  border-radius: 18px;
+  padding: 18px 18px 16px;
+  box-shadow: 0 10px 24px rgba(2, 6, 23, .06);
+  overflow: hidden;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+/* accent bar */
+.stat-card::before{
+  content:"";
+  position:absolute;
+  inset:0 auto auto 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, rgba(37,99,235,1), rgba(59,130,246,1), rgba(14,165,233,1));
+}
+
+/* subtle glow */
+.stat-card::after{
+  content:"";
+  position:absolute;
+  width: 140px;
+  height: 140px;
+  right: -60px;
+  top: -60px;
+  background: radial-gradient(circle, rgba(37,99,235,.22), transparent 60%);
+  filter: blur(2px);
+}
+
+.stat-card:hover{
+  transform: translateY(-4px);
+  border-color: rgba(37, 99, 235, .35);
+  box-shadow: 0 16px 34px rgba(2, 6, 23, .10);
+}
+
+.stat-head{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.stat-icon{
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  background: rgba(37,99,235,.12);
+  border: 1px solid rgba(37,99,235,.18);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  backdrop-filter: blur(8px);
+}
+
+.stat-title{
+  font-weight: 700;
+  color: rgba(30,64,175,1);
+  font-size: 14px;
+  letter-spacing: .2px;
+}
+
+.stat-value{
+  margin-top: 10px;
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 1.05;
+  color: rgba(30,58,138,1);
+  font-variant-numeric: tabular-nums;
+  position: relative;
+  z-index: 1;
+}
+
+.stat-plus{
+  font-size: 18px;
+  vertical-align: super;
+  opacity: .85;
+  margin-left: 2px;
+}
+
+/* optional small note */
+.stat-note{
+  margin-top: 6px;
+  font-size: 12px;
+  color: rgba(30,41,59,.68);
+  position: relative;
+  z-index: 1;
+}
+
+/* responsive */
+@media (max-width: 900px){
+  .stats-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 520px){
+  .stats-grid{ grid-template-columns: 1fr; }
+  .stat-value{ font-size: 38px; }
 }

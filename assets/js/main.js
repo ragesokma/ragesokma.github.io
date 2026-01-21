@@ -153,6 +153,68 @@ const initSite = () => {
     showSlide(currentSlide);
     timerId = setInterval(nextSlide, 6000);
   }
+
+  // =========================
+  // Program badge (index): judul bergantian + jumlah program + animasi teks badge
+  // =========================
+  const programBadge = document.getElementById('programBadge');
+  if (programBadge) {
+    const badgeTextEl = programBadge.querySelector('.badge-text') || programBadge;
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const cards = Array.from(document.querySelectorAll('[data-program-card]'));
+    const count = cards.length;
+
+    if (count === 0) {
+      programBadge.style.display = 'none';
+    } else {
+      // Ambil judul program dari setiap card (prioritas <h3>)
+      const titles = cards
+        .map((card) => {
+          const h3 = card.querySelector('h3');
+          const t = (h3 && h3.textContent) ? h3.textContent : (card.dataset.title || '');
+          return String(t || '').trim().replace(/\s+/g, ' ');
+        })
+        .filter(Boolean);
+
+      // Animasi bergantian: Wipe -> Peek In -> Random Bars
+      const animClasses = ['anim-wipe', 'anim-peek', 'anim-bars'];
+      let animIndex = 0;
+
+      const applyAnim = () => {
+        if (reduceMotion) return;
+        // reset anim agar selalu “main” saat teks berubah
+        badgeTextEl.classList.remove(...animClasses);
+        // force reflow
+        void badgeTextEl.offsetWidth;
+        badgeTextEl.classList.add(animClasses[animIndex]);
+        animIndex = (animIndex + 1) % animClasses.length;
+      };
+
+      if (titles.length === 0) {
+        // tanpa angka
+        badgeTextEl.textContent = `PROGRAM`;
+        applyAnim();
+      } else {
+        let i = 0;
+
+        const render = () => {
+          const title = (titles[i] || 'PROGRAM').toUpperCase();
+          // tanpa angka
+          badgeTextEl.textContent = `${title}`;
+          applyAnim();
+        };
+
+        render();
+        if (!reduceMotion) {
+          window.setInterval(() => {
+            i = (i + 1) % titles.length;
+            render();
+          }, 2400);
+        }
+      }
+    }
+  }
 };
 
 // Run safely whether the script loads before or after DOMContentLoaded.

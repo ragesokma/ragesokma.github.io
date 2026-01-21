@@ -269,7 +269,7 @@
 </section>
 <section class="py-14 bg-white" aria-label="Dampak dalam angka">
   <div class="max-w-7xl mx-auto px-6">
-    <div class="flex items-end justify-between gap-6 flex-wrap">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
       <div>
         <h2 class="text-3xl font-bold text-blue-800">Dampak yang Telah Kami Lakukan</h2>
         <p class="mt-2 text-gray-600">Angka berikut diperbarui secara berkala.</p>
@@ -278,19 +278,74 @@
     </div>
 
     <div class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6">
-      <div class="bg-blue-50 border border-blue-100 rounded-2xl p-6">
-        <p class="text-sm text-blue-800 font-semibold">Penerima Manfaat</p>
-        <p class="mt-2 text-4xl font-bold text-blue-900">120+</p>
+  <!-- Card 1 -->
+  <div class="group relative overflow-hidden rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50/80 to-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+    <!-- Accent bar -->
+    <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-700 via-blue-600 to-sky-500"></div>
+    <!-- Soft glow -->
+    <div class="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-blue-600/10 blur-2xl"></div>
+
+    <div class="relative flex items-center gap-3">
+      <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-blue-200 bg-blue-600/10 backdrop-blur">
+        <!-- icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-800" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M16 11c1.66 0 3-1.57 3-3.5S17.66 4 16 4s-3 1.57-3 3.5S14.34 11 16 11ZM8 11c1.66 0 3-1.57 3-3.5S9.66 4 8 4 5 5.57 5 7.5 6.34 11 8 11Zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13Zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.95 1.97 3.45V19h6v-2.5C23 14.17 18.33 13 16 13Z"/>
+        </svg>
       </div>
-      <div class="bg-blue-50 border border-blue-100 rounded-2xl p-6">
-        <p class="text-sm text-blue-800 font-semibold">Kegiatan Sosial</p>
-        <p class="mt-2 text-4xl font-bold text-blue-900">35+</p>
-      </div>
-      <div class="bg-blue-50 border border-blue-100 rounded-2xl p-6">
-        <p class="text-sm text-blue-800 font-semibold">Relawan Terlibat</p>
-        <p class="mt-2 text-4xl font-bold text-blue-900">50+</p>
-      </div>
+
+      <p class="text-sm font-semibold text-blue-800">Penerima Manfaat</p>
     </div>
+
+    <p class="relative mt-3 text-5xl font-extrabold tracking-tight text-blue-900 tabular-nums">
+      120<span class="align-super text-xl font-bold text-blue-800/80">+</span>
+    </p>
+
+    <p class="relative mt-2 text-xs text-slate-600">Diperbarui berkala</p>
+  </div>
+
+  <!-- Card 2 -->
+  <div class="group relative overflow-hidden rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50/80 to-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+    <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-700 via-blue-600 to-sky-500"></div>
+    <div class="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-blue-600/10 blur-2xl"></div>
+
+    <div class="relative flex items-center gap-3">
+      <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-blue-200 bg-blue-600/10 backdrop-blur">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-800" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2Zm0 16H5V10h14v10Zm0-12H5V6h14v2Z"/>
+        </svg>
+      </div>
+      <p class="text-sm font-semibold text-blue-800">Kegiatan Sosial</p>
+    </div>
+
+    <p class="relative mt-3 text-5xl font-extrabold tracking-tight text-blue-900 tabular-nums">
+      35<span class="align-super text-xl font-bold text-blue-800/80">+</span>
+    </p>
+
+    <p class="relative mt-2 text-xs text-slate-600">Program berjalan</p>
+  </div>
+
+  <!-- Card 3 -->
+  <div class="group relative overflow-hidden rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50/80 to-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+    <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-700 via-blue-600 to-sky-500"></div>
+    <div class="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-blue-600/10 blur-2xl"></div>
+
+    <div class="relative flex items-center gap-3">
+      <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-blue-200 bg-blue-600/10 backdrop-blur">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-800" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M16 11c1.66 0 3-1.57 3-3.5S17.66 4 16 4s-3 1.57-3 3.5S14.34 11 16 11ZM8 11c1.66 0 3-1.57 3-3.5S9.66 4 8 4 5 5.57 5 7.5 6.34 11 8 11Zm8 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5Z"/>
+        </svg>
+      </div>
+      <p class="text-sm font-semibold text-blue-800">Relawan Terlibat</p>
+    </div>
+
+    <p class="relative mt-3 text-5xl font-extrabold tracking-tight text-blue-900 tabular-nums">
+      50<span class="align-super text-xl font-bold text-blue-800/80">+</span>
+    </p>
+
+    <p class="relative mt-2 text-xs text-slate-600">Kolaborator aktif</p>
+  </div>
+</div>
+
   </div>
 </section>
 
@@ -637,11 +692,19 @@
     <div class="max-w-7xl mx-auto px-6">
 
         <!-- Judul Section -->
-        <div class="text-center mb-20">
-            <h2 class="text-3xl font-bold text-blue-800 mb-3">
-                Program Unggulan
-            </h2>
-            <div class="w-20 h-1 bg-emerald-400 mx-auto rounded-full"></div>
+        <div class="mb-20 text-center">
+            <!-- Judul + Badge (satu kesatuan, center) -->
+	            <h2 class="program-title-inline">
+	                <span class="program-title-text">PROGRAM UNGGULAN</span>
+	                <span id="programBadge" class="badge-glass-blue" aria-label="Program unggulan">
+	                    <span class="badge-text badge-anim anim-wipe">PROGRAM</span>
+	                </span>
+	            </h2>
+
+            <!-- Garis bawah (center) -->
+	            <div class="w-20 h-1 bg-blue-700 mx-auto rounded-full mt-4"></div>
+
+            <!-- Sub judul (center) -->
             <p class="text-gray-600 text-lg mt-5 max-w-2xl mx-auto">
                 Program utama RAGE SOKMA sebagai bentuk kepedulian sosial
                 dan keagamaan yang berkelanjutan.
@@ -654,15 +717,15 @@
             <!-- PROGRAM 1 -->
             <div class="relative text-center">
                 <!-- Pin -->
-                <div class="flex flex-col items-center mb-6">
-                    <div class="w-4 h-4 bg-emerald-500 rounded-full"></div>
-                    <div class="w-0.5 h-8 bg-emerald-300"></div>
-                </div>
+	                <div class="flex flex-col items-center mb-6">
+	                    <div class="w-4 h-4 bg-blue-700 rounded-full"></div>
+	                    <div class="w-0.5 h-8 bg-blue-700"></div>
+	                </div>
 
-                <a href="program/santunan-yatim.html"
+                <a href="program/santunan-yatim.html" data-program-card
                    class="block bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl hover:-translate-y-1 transition cursor-pointer">
 
-                    <div class="w-20 h-20 mx-auto mb-6 rounded-full border-4 border-emerald-400 flex items-center justify-center">
+	                    <div class="w-20 h-20 mx-auto mb-6 rounded-full border-4 border-blue-700 flex items-center justify-center">
                         <span class="text-3xl font-bold text-blue-700">Y</span>
                     </div>
 
@@ -675,7 +738,7 @@
                         untuk mendukung kebutuhan hidup dan pendidikan.
                     </p>
 
-                    <p class="text-emerald-600 font-semibold text-sm mt-5">
+	                    <p class="text-blue-700 font-semibold text-sm mt-5">
                         Lihat Detail →
                     </p>
                 </a>
@@ -683,15 +746,15 @@
 
             <!-- PROGRAM 2 -->
             <div class="relative text-center">
-                <div class="flex flex-col items-center mb-6">
-                    <div class="w-4 h-4 bg-emerald-500 rounded-full"></div>
-                    <div class="w-0.5 h-8 bg-emerald-300"></div>
-                </div>
+	                <div class="flex flex-col items-center mb-6">
+	                    <div class="w-4 h-4 bg-blue-700 rounded-full"></div>
+	                    <div class="w-0.5 h-8 bg-blue-700"></div>
+	                </div>
 
-                <a href="program/peduli-dhuafa.html"
+                <a href="program/peduli-dhuafa.html" data-program-card
                    class="block bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl hover:-translate-y-1 transition cursor-pointer">
 
-                    <div class="w-20 h-20 mx-auto mb-6 rounded-full border-4 border-emerald-400 flex items-center justify-center">
+	                    <div class="w-20 h-20 mx-auto mb-6 rounded-full border-4 border-blue-700 flex items-center justify-center">
                         <span class="text-3xl font-bold text-blue-700">D</span>
                     </div>
 
@@ -704,7 +767,7 @@
                         kurang mampu untuk meningkatkan kesejahteraan.
                     </p>
 
-                    <p class="text-emerald-600 font-semibold text-sm mt-5">
+	                    <p class="text-blue-700 font-semibold text-sm mt-5">
                         Lihat Detail →
                     </p>
                 </a>
@@ -712,15 +775,15 @@
 
             <!-- PROGRAM 3 -->
             <div class="relative text-center">
-                <div class="flex flex-col items-center mb-6">
-                    <div class="w-4 h-4 bg-emerald-500 rounded-full"></div>
-                    <div class="w-0.5 h-8 bg-emerald-300"></div>
-                </div>
+	                <div class="flex flex-col items-center mb-6">
+	                    <div class="w-4 h-4 bg-blue-700 rounded-full"></div>
+	                    <div class="w-0.5 h-8 bg-blue-700"></div>
+	                </div>
 
-                <a href="program/sosial-keagamaan.html"
+                <a href="program/sosial-keagamaan.html" data-program-card
                    class="block bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl hover:-translate-y-1 transition cursor-pointer">
 
-                    <div class="w-20 h-20 mx-auto mb-6 rounded-full border-4 border-emerald-400 flex items-center justify-center">
+	                    <div class="w-20 h-20 mx-auto mb-6 rounded-full border-4 border-blue-700 flex items-center justify-center">
                         <span class="text-3xl font-bold text-blue-700">S</span>
                     </div>
 
@@ -733,7 +796,7 @@
                         sosial masyarakat secara berkelanjutan.
                     </p>
 
-                    <p class="text-emerald-600 font-semibold text-sm mt-5">
+	                    <p class="text-blue-700 font-semibold text-sm mt-5">
                         Lihat Detail →
                     </p>
                 </a>
