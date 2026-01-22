@@ -979,31 +979,6 @@ details[open] .faq-summary::after{
   100%{ transform: translate3d(var(--hx,0px), var(--hy,0px), 0) scale(1); }
 }
 
-.hero-scrollcue{
-  position: absolute;
-  z-index: 40;
-  left: 50%;
-  bottom: 18px;
-  transform: translateX(-50%);
-  width: 34px;
-  height: 52px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.35);
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 28px rgba(0,0,0,0.18);
-}
-
-.hero-scrollcue-dot{
-  display: block;
-  width: 6px;
-  height: 6px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.92);
-  margin: 10px auto 0;
-  animation: scrollDot 1.6s ease-in-out infinite;
-}
-
 @keyframes scrollDot{
   0%{ transform: translateY(0); opacity: 0.85; }
   70%{ transform: translateY(16px); opacity: 0.35; }
@@ -1027,8 +1002,7 @@ details[open] .faq-summary::after{
 
 @media (prefers-reduced-motion: reduce){
   .hero-blob{ animation: none; }
-  .hero-scrollcue-dot{ animation: none; }
-}
+  }
 
 
 /* =====================================================
@@ -1045,7 +1019,7 @@ details[open] .faq-summary::after{
 .hero-dots{
   position:absolute;
   left:50%;
-  bottom: 84px;
+  bottom: 18px;
   transform:translateX(-50%);
   z-index: 45;
   display:flex;
