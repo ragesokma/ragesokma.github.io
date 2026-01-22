@@ -57,6 +57,12 @@ const initSite = () => {
   // =========================
   const menuBtn = document.getElementById('menuBtn');
   const mobileMenu = document.getElementById('mobileMenu');
+  const updateBodyLock = () => {
+    const mm = document.getElementById('mobileMenu');
+    const qm = document.getElementById('quickMenu');
+    const anyOpen = (mm && !mm.classList.contains('hidden')) || (qm && !qm.classList.contains('hidden'));
+    document.body.classList.toggle('no-scroll', anyOpen);
+  };
 
   // Ensure mobile drawer is attached to <body> so `position: fixed` works even when header uses transforms
   if (mobileMenu && mobileMenu.parentElement !== document.body) {
@@ -74,6 +80,7 @@ const initSite = () => {
       const isHidden = mobileMenu.classList.contains('hidden');
       mobileMenu.classList.toggle('hidden', !isHidden);
       setExpanded(isHidden);
+      updateBodyLock();
     });
 
     
@@ -83,6 +90,7 @@ const initSite = () => {
       mobileCloseBtn.addEventListener('click', () => {
         mobileMenu.classList.add('hidden');
         setExpanded(false);
+        updateBodyLock();
       });
     }
 
@@ -92,6 +100,7 @@ const initSite = () => {
       if (panel && !panel.contains(e.target)) {
         mobileMenu.classList.add('hidden');
         setExpanded(false);
+        updateBodyLock();
       }
     });
 
@@ -101,9 +110,72 @@ const initSite = () => {
       if (target && target.tagName === 'A') {
         mobileMenu.classList.add('hidden');
         setExpanded(false);
+        updateBodyLock();
       }
     });
   }
+
+// =========================
+// Quick Actions (right drawer) toggle
+// =========================
+const quickBtn = document.getElementById('quickBtn');
+const quickMenu = document.getElementById('quickMenu');
+
+// Ensure quick drawer is attached to <body>
+if (quickMenu && quickMenu.parentElement !== document.body) {
+  document.body.appendChild(quickMenu);
+}
+
+if (quickBtn && quickMenu) {
+  const setQuickExpanded = (isExpanded) => {
+    quickBtn.setAttribute('aria-expanded', String(isExpanded));
+  };
+
+  setQuickExpanded(false);
+
+  quickBtn.addEventListener('click', () => {
+    // Close left drawer if open
+    if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+      mobileMenu.classList.add('hidden');
+      if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+    }
+
+    const isHidden = quickMenu.classList.contains('hidden');
+    quickMenu.classList.toggle('hidden', !isHidden);
+    setQuickExpanded(isHidden);
+    updateBodyLock();
+  });
+
+  const quickCloseBtn = document.getElementById('quickClose');
+  if (quickCloseBtn) {
+    quickCloseBtn.addEventListener('click', () => {
+      quickMenu.classList.add('hidden');
+      setQuickExpanded(false);
+      updateBodyLock();
+    });
+  }
+
+  // Close when tapping outside the panel (transparent left side)
+  quickMenu.addEventListener('click', (e) => {
+    const panel = quickMenu.querySelector('.mobile-panel');
+    if (panel && !panel.contains(e.target)) {
+      quickMenu.classList.add('hidden');
+      setQuickExpanded(false);
+      updateBodyLock();
+    }
+  });
+
+  // Close quick menu when clicking any link inside it
+  quickMenu.addEventListener('click', (e) => {
+    const target = e.target;
+    const a = target && target.closest ? target.closest('a') : null;
+    if (a) {
+      quickMenu.classList.add('hidden');
+      setQuickExpanded(false);
+      updateBodyLock();
+    }
+  });
+}
 
   // =========================
   // Hero slider (enhanced): dots + synced text animations + safer pointer events

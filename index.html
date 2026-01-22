@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="id">
 <head>
 <meta charset="utf-8"/>
@@ -48,12 +49,12 @@
 <div class="max-w-7xl mx-auto px-6">
 <div class="site-header__inner flex items-center justify-between h-16 lg:h-20 transition-all duration-300">
 <!-- LOGO -->
-<a class="flex items-center gap-3" href="index.html">
+<a class="site-brand flex items-center gap-3 order-2 lg:order-none mx-auto lg:mx-0" href="index.html">
 <img alt="Logo RAGE SOKMA" class="site-logo h-10 lg:h-12 w-auto transition-all duration-300" src="assets/images/logo.png"/>
 <span class="font-bold text-blue-800 text-lg">RAGE SOKMA</span>
 </a>
 <!-- NAV DESKTOP -->
-<nav aria-label="Navigasi utama" class="hidden lg:flex items-center gap-8 text-gray-800 font-medium">
+<nav aria-label="Navigasi utama" class="items-center gap-8 text-gray-800 font-medium desktop-nav">
 <a class="nav-link" data-nav="" href="index.html">Beranda</a>
 <!-- Tentang (dropdown) -->
 <div class="relative group">
@@ -86,7 +87,7 @@
 <a class="nav-link" data-nav="" href="relawan.html">Relawan</a>
 </nav>
 <!-- LOGIN ICON -->
-<div class="hidden lg:flex">
+<div class="desktop-login">
 <a aria-label="Login" class="login-icon" href="login.html">
 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 <path d="M20 21a8 8 0 0 0-16 0"></path>
@@ -95,7 +96,19 @@
 </a>
 </div>
 <!-- MOBILE BUTTON -->
-<button aria-expanded="false" aria-label="Buka menu" class="lg:hidden text-3xl text-blue-700" id="menuBtn" type="button">☰</button>
+<button aria-expanded="false" aria-label="Buka menu" class="lg:hidden text-3xl text-blue-700 mobile-btn order-3" id="menuBtn" type="button">☰</button>
+<!-- QUICK BUTTON -->
+<button aria-expanded="false" aria-label="Aksi cepat" class="lg:hidden text-blue-700 mobile-btn order-1" id="quickBtn" type="button"><svg aria-hidden="true" class="w-7 h-7" fill="currentColor" viewbox="0 0 24 24">
+<circle cx="6" cy="6" r="1.7"></circle>
+<circle cx="12" cy="6" r="1.7"></circle>
+<circle cx="18" cy="6" r="1.7"></circle>
+<circle cx="6" cy="12" r="1.7"></circle>
+<circle cx="12" cy="12" r="1.7"></circle>
+<circle cx="18" cy="12" r="1.7"></circle>
+<circle cx="6" cy="18" r="1.7"></circle>
+<circle cx="12" cy="18" r="1.7"></circle>
+<circle cx="18" cy="18" r="1.7"></circle>
+</svg></button>
 </div>
 </div>
 <!-- MOBILE MENU -->
@@ -142,6 +155,55 @@
 <circle cx="12" cy="8" r="4"></circle>
 </svg>
 </a>
+</div>
+</div>
+<!-- QUICK ACTION MENU (MOBILE) -->
+<div class="hidden lg:hidden mobile-drawer mobile-drawer--right" id="quickMenu">
+<div class="mobile-panel px-6 py-6 text-gray-800">
+<div class="mobile-drawer-head">
+<div class="mobile-drawer-brand">
+<img alt="Logo RAGE SOKMA" class="mobile-drawer-logo" src="assets/images/logo.png"/><span class="mobile-drawer-title">AKSI CEPAT</span>
+</div>
+<button aria-label="Tutup aksi cepat" class="mobile-drawer-close" id="quickClose" type="button">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M18 6 6 18"></path><path d="M6 6l12 12"></path>
+</svg>
+</button>
+</div>
+<div class="quick-grid">
+<a class="quick-item quick-item--donasi" href="donasi.html">
+<span aria-hidden="true" class="quick-emoji">❤️</span>
+<span class="quick-text">Donasi</span>
+</a>
+<a class="quick-item" href="relawan.html">
+<span aria-hidden="true" class="quick-emoji">🤝</span>
+<span class="quick-text">Relawan</span>
+</a>
+<a class="quick-item" href="transparansi.html">
+<span aria-hidden="true" class="quick-emoji">📊</span>
+<span class="quick-text">Transparansi</span>
+</a>
+<a class="quick-item" href="semua-berita.html">
+<span aria-hidden="true" class="quick-emoji">📰</span>
+<span class="quick-text">Berita</span>
+</a>
+<a class="quick-item" href="gallery.html">
+<span aria-hidden="true" class="quick-emoji">🖼️</span>
+<span class="quick-text">Galeri</span>
+</a>
+<a class="quick-item" href="program.html">
+<span aria-hidden="true" class="quick-emoji">⭐</span>
+<span class="quick-text">Program Unggulan</span>
+</a>
+<a class="quick-item" href="kontak.html#wa">
+<span aria-hidden="true" class="quick-emoji">💬</span>
+<span class="quick-text">Hubungi (WA)</span>
+</a>
+<a class="quick-item" href="transparansi.html#dokumen">
+<span aria-hidden="true" class="quick-emoji">📄</span>
+<span class="quick-text">Laporan &amp; Dokumen</span>
+</a>
+</div>
 </div>
 </div>
 </header>
