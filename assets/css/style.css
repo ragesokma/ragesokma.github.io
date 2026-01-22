@@ -1044,43 +1044,7 @@ details[open] .faq-summary::after{
 .hero-slide[data-accent="pendidikan"]{ --hero-accent: #60a5fa; }  /* blue */
 .hero-slide[data-accent="keagamaan"]{ --hero-accent: #a78bfa; }   /* indigo/purple */
 
-/* Dots indicator */
-.hero-dots{
-  position:absolute;
-  left:50%;
-  bottom: 18px;
-  transform:translateX(-50%);
-  z-index: 45;
-  display:flex;
-  gap: 10px;
-  padding: 10px 12px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.22);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 12px 34px rgba(0,0,0,0.18);
-}
-
-.hero-dot{
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.55);
-  background: rgba(255,255,255,0.22);
-  transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
-  outline: none;
-}
-
-.hero-dot[aria-selected="true"]{
-  background: rgba(255,255,255,0.92);
-  border-color: rgba(255,255,255,0.92);
-  transform: scale(1.15);
-  box-shadow: 0 0 0 6px rgba(255,255,255,0.10);
-}
-
-.hero-dot:focus-visible{
-  box-shadow: 0 0 0 6px rgba(255,255,255,0.16);
-}
+/* Dots indicator removed */
 
 /* CTA glass + glow by category */
 .hero-cta{
@@ -1180,19 +1144,6 @@ details[open] .faq-summary::after{
 @keyframes heroCtasIn{
   from{ opacity:0; transform: translateY(12px) scale(0.98); }
   to{ opacity:1; transform: translateY(0) scale(1); }
-}
-
-/* Responsive placement tweaks */
-@media (max-width: 640px){
-  .hero-dots{ bottom: 76px; }
-}
-
-@media (max-width: 480px){
-  .hero-dots{
-    bottom: 72px;
-    gap: 8px;
-    padding: 8px 10px;
-  }
 }
 
 /* Accessibility: reduce motion */
@@ -1731,3 +1682,123 @@ body.no-scroll{ overflow: hidden !important; }
 }
 #quickMenu .quick-item:last-child{ border-bottom: 0; }
 #quickMenu .quick-item--donasi{ font-weight: 700; }
+
+
+/* =========================
+   UX: One-time quick hint
+   ========================= */
+.ux-hint{
+  position: fixed;
+  z-index: 9999;
+  max-width: 260px;
+  background: rgba(255,255,255,.98);
+  border: 1px solid rgba(15,23,42,.12);
+  border-radius: 14px;
+  box-shadow: 0 18px 50px rgba(2,6,23,.18);
+  padding: 0;
+  transform: translateY(0);
+  opacity: 1;
+  transition: opacity .2s ease, transform .2s ease;
+}
+.ux-hint.is-hiding{
+  opacity: 0;
+  transform: translateY(-6px);
+}
+.ux-hint__inner{
+  padding: 12px 12px 10px 12px;
+}
+.ux-hint__title{
+  font-weight: 900;
+  letter-spacing: .04em;
+  font-size: 12px;
+  color: #1d4ed8;
+}
+.ux-hint__text{
+  margin-top: 4px;
+  font-size: 13px;
+  line-height: 1.25rem;
+  color: rgba(15,23,42,.78);
+}
+.ux-hint__close{
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 0;
+  background: transparent;
+  font-size: 20px;
+  line-height: 28px;
+  cursor: pointer;
+  color: rgba(15,23,42,.65);
+}
+.ux-hint__close:hover{
+  background: rgba(2,6,23,.06);
+}
+.ux-hint__arrow{
+  position: absolute;
+  top: -7px;
+  left: 18px;
+  width: 14px;
+  height: 14px;
+  background: rgba(255,255,255,.98);
+  border-left: 1px solid rgba(15,23,42,.12);
+  border-top: 1px solid rgba(15,23,42,.12);
+  transform: rotate(45deg);
+}
+
+/* =========================
+   Active link indicator
+   ========================= */
+.nav-link.is-active,
+.mobile-panel a.is-active,
+.quick-item.is-active{
+  color: #1d4ed8 !important;
+  font-weight: 800;
+}
+.nav-link.is-active{
+  position: relative;
+}
+.nav-link.is-active::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  height: 2px;
+  background: rgba(29,78,216,.9);
+  border-radius: 999px;
+}
+.mobile-panel a.is-active{
+  text-decoration: none;
+}
+.mobile-panel a.is-active::before{
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(29,78,216,.9);
+  margin-right: 10px;
+  transform: translateY(-1px);
+}
+
+
+/* Mobile tap targets (polish) */
+.mobile-btn{
+  min-width:44px;
+  min-height:44px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:14px;
+  padding:8px;
+  -webkit-tap-highlight-color: transparent;
+}
+.mobile-btn:active{ transform: scale(0.96); }
+.mobile-btn:focus-visible{
+  outline: 3px solid rgba(29,78,216,0.35);
+  outline-offset: 2px;
+}
+

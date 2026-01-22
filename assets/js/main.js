@@ -3,6 +3,128 @@
 // - Hero slider (only if elements exist)
 // - Mobile menu toggle
 
+
+/** ------------------------------------------------------------
+ * UX helpers: one-time Quick Action hint + active nav indicator
+ * ------------------------------------------------------------ */
+function setupQuickActionHint() {
+  try {
+    // Only on mobile widths
+    const isMobile = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
+    if (!isMobile) return;
+
+    const quickBtn = document.getElementById('quickBtn');
+    if (!quickBtn) return;
+
+    const key = 'rage_quick_hint_seen_v1';
+    if (localStorage.getItem(key) === '1') return;
+
+    // Build tooltip
+    const tip = document.createElement('div');
+    tip.className = 'ux-hint ux-hint--quick';
+    tip.setAttribute('role', 'dialog');
+    tip.setAttribute('aria-label', 'Petunjuk Aksi Cepat');
+
+    tip.innerHTML = `
+      <div class="ux-hint__inner">
+        <div class="ux-hint__title">AKSI CEPAT</div>
+        <div class="ux-hint__text">Akses Donasi, Relawan, Laporan &amp; lainnya di sini.</div>
+        <button class="ux-hint__close" type="button" aria-label="Tutup">×</button>
+      </div>
+      <div class="ux-hint__arrow" aria-hidden="true"></div>
+    `;
+
+    document.body.appendChild(tip);
+
+    const place = () => {
+      const r = quickBtn.getBoundingClientRect();
+      // Place below the header button, near left
+      const top = Math.min(window.innerHeight - 120, r.bottom + 10);
+      const left = Math.max(12, r.left - 6);
+      tip.style.top = `${top}px`;
+      tip.style.left = `${left}px`;
+    };
+
+    const dismiss = () => {
+      if (!tip.isConnected) return;
+      tip.classList.add('is-hiding');
+      localStorage.setItem(key, '1');
+      setTimeout(() => {
+        tip.remove();
+      }, 250);
+      window.removeEventListener('resize', place);
+      window.removeEventListener('scroll', place, true);
+    };
+
+    tip.querySelector('.ux-hint__close')?.addEventListener('click', dismiss);
+
+    // Dismiss when user uses quick action
+    quickBtn.addEventListener('click', () => {
+      localStorage.setItem(key, '1');
+      // allow open, but hide tip immediately
+      dismiss();
+    }, { once: true });
+
+    // Auto dismiss after a few seconds
+    setTimeout(dismiss, 6000);
+
+    // Position now and on changes
+    place();
+    window.addEventListener('resize', place);
+    window.addEventListener('scroll', place, true);
+  } catch (e) {
+    // fail silently
+  }
+}
+
+function setupActiveNavIndicator() {
+  try {
+    const normalize = (href) => {
+      if (!href) return '';
+      // Strip protocol/domain if present
+      try {
+        const u = new URL(href, window.location.origin);
+        let p = u.pathname || '';
+        // Handle directory index
+        if (p.endsWith('/')) p += 'index.html';
+        return p.replace(/\/+$/, '');
+      } catch {
+        return href.split('#')[0].split('?')[0];
+      }
+    };
+
+    const currentPath = normalize(window.location.pathname);
+
+    // Collect candidate links in desktop + mobile
+    const links = Array.from(document.querySelectorAll('a.nav-link, .mobile-panel a.nav-link, .mobile-panel a.mobile-sub, .quick-grid a.quick-item, footer a'));
+    links.forEach((a) => {
+      const href = a.getAttribute('href');
+      if (!href || href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+
+      const targetPath = normalize(href);
+
+      // direct match
+      const isMatch = targetPath === currentPath
+        // also allow matching by filename when relative paths differ
+        || (targetPath && currentPath.endsWith(targetPath.split('/').pop()));
+
+      if (isMatch) {
+        a.classList.add('is-active');
+        a.setAttribute('aria-current', 'page');
+      }
+    });
+
+    // Highlight parent buttons for sections (Tentang/Program) on desktop
+    const parentTentang = document.querySelector('[data-dd-btn="tentang"], [data-nav-parent="tentang"]');
+    const parentProgram = document.querySelector('[data-dd-btn="program"], [data-nav-parent="program"]');
+
+    if (parentTentang && currentPath.includes('/tentang/')) parentTentang.classList.add('is-active');
+    if (parentProgram && currentPath.includes('/program/')) parentProgram.classList.add('is-active');
+  } catch (e) {
+    // fail silently
+  }
+}
+
 const initSite = () => {
   // =========================
   // Sticky header: glass + shrink on scroll
@@ -848,6 +970,13 @@ if (quickBtn && quickMenu) {
       applyBeritaTab(active);
     });
   }
+
+
+  // First-time hint (one-time) for Quick Action (mobile)
+  setupQuickActionHint();
+
+  // Active menu indicator (desktop + mobile)
+  setupActiveNavIndicator();
 
   initImpactStats();
 };
