@@ -20,7 +20,7 @@
 .line-clamp-3 {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  overflow: hidden;
+  overflow: visible; /* allow tooltip */
 }
 
 .line-clamp-1 { -webkit-line-clamp: 1; }
@@ -95,6 +95,7 @@
 .nav-link::after {
   content: "";
   position: absolute;
+  z-index: 9999;
   left: 0;
   right: 0;
   bottom: 0;
@@ -874,6 +875,265 @@ details[open] .faq-summary::after{
 }
 
 /* =====================================================
+   Expressive Hero + Wave Dividers
+   ===================================================== */
+.hero-wrap{
+  isolation: isolate;
+}
+
+.hero-atmo{
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.hero-blob{
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  border-radius: 999px;
+  filter: blur(40px);
+  opacity: 0.35;
+  transform: translate3d(0,0,0);
+  background: radial-gradient(circle at 30% 30%, rgba(37,99,235,0.85), transparent 60%);
+  animation: heroFloat 10s ease-in-out infinite;
+}
+
+.hero-blob--a{ left: -180px; top: -220px; animation-duration: 12s; }
+.hero-blob--b{ right: -220px; top: 12%; opacity: 0.26; background: radial-gradient(circle at 40% 40%, rgba(14,165,233,0.8), transparent 60%); animation-duration: 14s; }
+.hero-blob--c{ left: 22%; bottom: -260px; opacity: 0.24; background: radial-gradient(circle at 40% 40%, rgba(29,78,216,0.9), transparent 60%); animation-duration: 16s; }
+
+@keyframes heroFloat{
+  0%{ transform: translate3d(var(--hx,0px), var(--hy,0px), 0) scale(1); }
+  50%{ transform: translate3d(calc(var(--hx,0px) + 12px), calc(var(--hy,0px) - 10px), 0) scale(1.04); }
+  100%{ transform: translate3d(var(--hx,0px), var(--hy,0px), 0) scale(1); }
+}
+
+.hero-scrollcue{
+  position: absolute;
+  z-index: 40;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  width: 34px;
+  height: 52px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.18);
+}
+
+.hero-scrollcue-dot{
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.92);
+  margin: 10px auto 0;
+  animation: scrollDot 1.6s ease-in-out infinite;
+}
+
+@keyframes scrollDot{
+  0%{ transform: translateY(0); opacity: 0.85; }
+  70%{ transform: translateY(16px); opacity: 0.35; }
+  100%{ transform: translateY(0); opacity: 0.85; }
+}
+
+.wave-divider{
+  position: relative;
+  z-index: 20;
+  width: 100%;
+  line-height: 0;
+}
+
+.wave-divider svg{ display:block; width:100%; height:44px; }
+.wave-divider--blue{ color: #ffffff; }
+.wave-divider--blue svg path{ fill: #ffffff; }
+
+.wave-divider--gray{ color: #f9fafb; }
+.wave-divider--gray svg path{ fill: #f9fafb; }
+
+@media (prefers-reduced-motion: reduce){
+  .hero-blob{ animation: none; }
+  .hero-scrollcue-dot{ animation: none; }
+}
+
+
+/* =====================================================
+   Hero: dots + synced text animations + CTA glass accents
+   ===================================================== */
+
+/* Accent colors per category (slide-level) */
+.hero-slide{ --hero-accent: #3b82f6; } /* default */
+.hero-slide[data-accent="sosial"]{ --hero-accent: #34d399; }      /* emerald */
+.hero-slide[data-accent="pendidikan"]{ --hero-accent: #60a5fa; }  /* blue */
+.hero-slide[data-accent="keagamaan"]{ --hero-accent: #a78bfa; }   /* indigo/purple */
+
+/* Dots indicator */
+.hero-dots{
+  position:absolute;
+  left:50%;
+  bottom: 84px;
+  transform:translateX(-50%);
+  z-index: 45;
+  display:flex;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.22);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 34px rgba(0,0,0,0.18);
+}
+
+.hero-dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.55);
+  background: rgba(255,255,255,0.22);
+  transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+  outline: none;
+}
+
+.hero-dot[aria-selected="true"]{
+  background: rgba(255,255,255,0.92);
+  border-color: rgba(255,255,255,0.92);
+  transform: scale(1.15);
+  box-shadow: 0 0 0 6px rgba(255,255,255,0.10);
+}
+
+.hero-dot:focus-visible{
+  box-shadow: 0 0 0 6px rgba(255,255,255,0.16);
+}
+
+/* CTA glass + glow by category */
+.hero-cta{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap: 10px;
+  padding: 0.78rem 1.1rem;
+  border-radius: 14px;
+  font-weight: 700;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.22);
+  background: rgba(255,255,255,0.10);
+  backdrop-filter: blur(12px);
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.18);
+}
+
+.hero-cta--primary{
+  border-color: color-mix(in srgb, var(--hero-accent) 55%, rgba(255,255,255,0.18));
+  background: color-mix(in srgb, var(--hero-accent) 22%, rgba(255,255,255,0.10));
+  box-shadow:
+    0 14px 36px rgba(0,0,0,0.22),
+    0 0 0 1px rgba(255,255,255,0.10),
+    0 0 28px color-mix(in srgb, var(--hero-accent) 45%, transparent);
+}
+
+.hero-cta--secondary{
+  background: rgba(255,255,255,0.08);
+}
+
+.hero-cta:hover{
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--hero-accent) 55%, rgba(255,255,255,0.22));
+  box-shadow:
+    0 16px 44px rgba(0,0,0,0.26),
+    0 0 0 1px rgba(255,255,255,0.12),
+    0 0 34px color-mix(in srgb, var(--hero-accent) 55%, transparent);
+}
+
+.hero-cta:active{ transform: translateY(0); }
+
+/* Synced slide text animations (headline + copy) */
+.hero-slide .hero-anim{ opacity: 0; transform: translateY(10px); }
+
+.hero-slide.is-active .hero-kicker{
+  animation: heroKickerIn 520ms cubic-bezier(.2,.9,.2,1) both;
+  animation-delay: 40ms;
+}
+
+.hero-slide.is-active .hero-title{
+  animation: heroTitleWipe 780ms cubic-bezier(.2,.9,.15,1) both;
+  animation-delay: 110ms;
+}
+
+.hero-slide.is-active .hero-desc{
+  animation: heroFadeUp 640ms ease both;
+  animation-delay: 320ms;
+}
+
+.hero-slide.is-active .hero-readmore{
+  animation: heroFadeUp 640ms ease both;
+  animation-delay: 420ms;
+}
+
+.hero-slide.is-active .hero-actions{
+  animation: heroCtasIn 700ms cubic-bezier(.2,.9,.2,1) both;
+  animation-delay: 520ms;
+}
+
+@keyframes heroKickerIn{
+  from{ opacity:0; transform: translateY(8px) scale(0.98); filter: blur(1px); }
+  to{ opacity:1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+/* Wipe (clip reveal) + slight slide */
+@keyframes heroTitleWipe{
+  from{
+    opacity: 0;
+    transform: translateY(12px);
+    clip-path: inset(0 100% 0 0);
+    filter: blur(2px);
+  }
+  to{
+    opacity: 1;
+    transform: translateY(0);
+    clip-path: inset(0 0 0 0);
+    filter: blur(0);
+  }
+}
+
+@keyframes heroFadeUp{
+  from{ opacity:0; transform: translateY(10px); filter: blur(2px); }
+  to{ opacity:1; transform: translateY(0); filter: blur(0); }
+}
+
+@keyframes heroCtasIn{
+  from{ opacity:0; transform: translateY(12px) scale(0.98); }
+  to{ opacity:1; transform: translateY(0) scale(1); }
+}
+
+/* Responsive placement tweaks */
+@media (max-width: 640px){
+  .hero-dots{ bottom: 76px; }
+}
+
+@media (max-width: 480px){
+  .hero-dots{
+    bottom: 72px;
+    gap: 8px;
+    padding: 8px 10px;
+  }
+}
+
+/* Accessibility: reduce motion */
+@media (prefers-reduced-motion: reduce){
+  .hero-slide .hero-anim{ opacity:1 !important; transform:none !important; }
+  .hero-slide.is-active .hero-kicker,
+  .hero-slide.is-active .hero-title,
+  .hero-slide.is-active .hero-desc,
+  .hero-slide.is-active .hero-readmore,
+  .hero-slide.is-active .hero-actions{ animation:none !important; }
+}
+
+/* =====================================================
    Impact Stats ("Dampak dalam angka")
    ===================================================== */
 .impact-grid{
@@ -885,12 +1145,17 @@ details[open] .faq-summary::after{
   overflow: hidden;
   border-radius: 18px;
   border: 1px solid rgba(37, 99, 235, 0.16);
-  background: linear-gradient(135deg, rgba(239, 246, 255, 0.78), rgba(255, 255, 255, 0.98));
+  --mx: 70%;
+  --my: 20%;
+  background:
+    radial-gradient(circle at var(--mx) var(--my), rgba(37, 99, 235, 0.18), transparent 55%),
+    linear-gradient(135deg, rgba(239, 246, 255, 0.78), rgba(255, 255, 255, 0.98));
   padding: 18px 18px 16px;
   box-shadow: 0 10px 24px rgba(2, 6, 23, 0.06);
   transform: translateZ(0);
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
+
 
 .impact-card:hover{
   transform: translateY(-4px);
@@ -901,6 +1166,10 @@ details[open] .faq-summary::after{
 .impact-card.is-active{
   border-color: rgba(37, 99, 235, 0.40);
   box-shadow: 0 18px 40px rgba(2, 6, 23, 0.12);
+}
+
+.impact-card.is-active .impact-value{
+  animation: impactPulse 900ms ease-out 1;
 }
 
 /* Accent bar (top) */
@@ -923,6 +1192,19 @@ details[open] .faq-summary::after{
   border-radius: 999px;
   background: radial-gradient(circle, rgba(37, 99, 235, 0.22), transparent 60%);
   filter: blur(2px);
+  animation: impactBreathe 4.8s ease-in-out infinite;
+}
+
+@keyframes impactBreathe{
+  0%{ transform: translate3d(0,0,0) scale(1); opacity: 0.22; }
+  50%{ transform: translate3d(-6px,4px,0) scale(1.08); opacity: 0.30; }
+  100%{ transform: translate3d(0,0,0) scale(1); opacity: 0.22; }
+}
+
+@keyframes impactPulse{
+  0%{ transform: translateZ(0) scale(1); }
+  45%{ transform: translateZ(0) scale(1.03); }
+  100%{ transform: translateZ(0) scale(1); }
 }
 
 /* Motion line on hover */
@@ -1043,7 +1325,7 @@ details[open] .faq-summary::after{
   transform: rotate(-12deg);
 }
 
-/* Tooltip */
+/* Tooltip (impact cards) */
 .impact-info{
   position: relative;
   width: 20px;
@@ -1056,6 +1338,7 @@ details[open] .faq-summary::after{
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  z-index: 20;
 }
 
 .impact-info::before{
@@ -1065,31 +1348,58 @@ details[open] .faq-summary::after{
   line-height: 1;
 }
 
-.impact-info[data-tooltip]:hover::after,
-.impact-info[data-open="true"]::after{
-  content: attr(data-tooltip);
-  position: absolute;
-  left: 50%;
-  bottom: calc(100% + 10px);
-  transform: translateX(-50%);
-  width: max-content;
-  max-width: 240px;
+/* Global floating tooltip (anti-clipping) */
+.impact-tooltip-floating{
+  position: fixed;
+  z-index: 999999;
+  max-width: 260px;
   padding: 10px 12px;
   border-radius: 12px;
   border: 1px solid rgba(37, 99, 235, 0.20);
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 14px 34px rgba(2, 6, 23, 0.12);
-  color: rgba(15, 23, 42, 0.90);
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 18px 44px rgba(2, 6, 23, 0.16);
+  color: rgba(15, 23, 42, 0.92);
   font-size: 12px;
   line-height: 1.35;
-  white-space: normal;
-  z-index: 30;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .18s ease, transform .18s ease;
+  pointer-events: none; /* desktop follow-cursor */
 }
 
-.impact-info[data-tooltip]:hover::before,
-.impact-info[data-open="true"]::before{
-  content: "i";
+.impact-tooltip-floating.show{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.impact-tooltip-floating.is-locked{
+  pointer-events: auto; /* allow close button on mobile */
+}
+
+.impact-tooltip-content{
+  padding-right: 24px;
+}
+
+.impact-tooltip-close{
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 10px;
+  border: 1px solid rgba(37, 99, 235, 0.20);
+  background: rgba(37, 99, 235, 0.08);
+  color: rgba(30, 64, 175, 0.92);
+  font-weight: 900;
+  line-height: 1;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.impact-tooltip-floating.is-locked .impact-tooltip-close{
+  display: inline-flex;
 }
 
 /* A11y: reduce motion */
@@ -1097,6 +1407,8 @@ details[open] .faq-summary::after{
   .impact-card{ transition: none; }
   .impact-card:hover{ transform: none; }
   .impact-card::after{ transition: none; }
+  .impact-glow{ animation: none; }
+  .impact-card.is-active .impact-value{ animation: none; }
 }
 
 /* Mobile tweak */
@@ -1104,3 +1416,40 @@ details[open] .faq-summary::after{
   .impact-value{ font-size: 40px; }
   .impact-note{ white-space: normal; }
 }
+
+
+/* === Section spacing tune (Dampak -> Berita) === */
+.impact-section{ padding-bottom: 2rem; } /* pepetkan ke bawah */
+#berita{ padding-top: 3rem; }           /* pepetkan ke atas */
+@media (max-width: 640px){
+  .impact-section{ padding-bottom: 1.5rem; }
+  #berita{ padding-top: 2rem; }
+}
+
+
+/* === Mobile UX: Impact cards horizontal snap (hide scrollbar) === */
+@media (max-width: 639px){
+  .impact-grid{
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+  }
+  .impact-grid::-webkit-scrollbar{ display:none; }
+}
+
+
+
+/* === Mobile UX: Berita tabs === */
+.berita-tab{
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 14px;
+  color: rgb(29 78 216);
+  transition: background .15s ease, color .15s ease, box-shadow .15s ease;
+}
+.berita-tab.is-active{
+  background: rgb(37 99 235);
+  color: white;
+  box-shadow: 0 10px 20px rgba(2,6,23,.10);
+}
+

@@ -47,11 +47,11 @@
 <body>
     <header id="siteHeader" class="site-header sticky top-0 z-50">
   <div class="max-w-7xl mx-auto px-6">
-    <div class="site-header__inner flex items-center justify-between h-20 transition-all duration-300">
+    <div class="site-header__inner flex items-center justify-between h-16 lg:h-20 transition-all duration-300">
 
       <!-- LOGO -->
       <a href="index.html" class="flex items-center gap-3">
-        <img src="assets/images/logo.png" alt="Logo RAGE SOKMA" class="site-logo h-12 w-auto transition-all duration-300">
+        <img src="assets/images/logo.png" alt="Logo RAGE SOKMA" class="site-logo h-10 lg:h-12 w-auto transition-all duration-300">
         <span class="font-bold text-blue-800 text-lg">RAGE SOKMA</span>
       </a>
 
@@ -158,39 +158,49 @@
   </div>
 </header>
 <main>
-<section id="beranda" class="relative overflow-hidden h-[75vh]" aria-label="Sorotan utama">
+<section id="beranda" class="relative overflow-hidden h-[75vh] hero-wrap" aria-label="Sorotan utama">
+    <!-- Atmosfer hero (ekspresif, ringan) -->
+    <div class="hero-atmo" aria-hidden="true">
+        <span class="hero-blob hero-blob--a"></span>
+        <span class="hero-blob hero-blob--b"></span>
+        <span class="hero-blob hero-blob--c"></span>
+    </div>
+
+    <a class="hero-scrollcue" href="#dampak" aria-label="Scroll ke dampak">
+      <span class="hero-scrollcue-dot" aria-hidden="true"></span>
+    </a>
     <!-- Slider Wrapper -->
     <div id="heroSlider" class="relative h-full">
 
         <!-- Slide -->
         <article class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-700"
-                 style="background-image:url('assets/images/Santunan-Anak-Yatim-RAGE-SOKMA-Bulan-Ramadhan.jpg')">
+                 style="background-image:url('assets/images/Santunan-Anak-Yatim-RAGE-SOKMA-Bulan-Ramadhan.jpg')" data-accent="sosial">
             <div class="absolute inset-0 bg-black/60"></div>
 
             <div class="relative z-10 h-full flex items-center">
                 <div class="max-w-7xl mx-auto px-6 text-white">
 
-                    <span class="inline-block mb-4 px-4 py-1 bg-emerald-400 text-blue-900 text-sm font-semibold rounded">
+                    <span class="inline-block mb-4 px-4 py-1 bg-emerald-400 text-blue-900 text-sm font-semibold rounded" hero-kicker hero-anim" data-hero-anim="kicker">
                         Sosial
                     </span>
 
-                    <h1 class="text-4xl md:text-5xl font-bold max-w-3xl leading-tight">
+                    <h1 class="text-4xl md:text-5xl font-bold max-w-3xl leading-tight hero-title hero-anim" data-hero-anim="title">
                         Santunan Anak Yatim RAGE SOKMA Bulan Ramadhan
                     </h1>
 
-                    <p class="mt-4 max-w-2xl text-lg text-gray-200 line-clamp-2">
+                    <p class="mt-4 max-w-2xl text-lg text-gray-200 line-clamp-2 hero-desc hero-anim" data-hero-anim="desc">
                         RAGE SOKMA kembali melaksanakan kegiatan santunan anak yatim piatu
                         sebagai bentuk kepedulian sosial dan keagamaan.
                     </p>
 
                     <a href="berita/santunan-anak-yatim-rage-sokma-bulan-ramadhan.html"
-                       class="inline-flex items-center gap-2 mt-6 px-6 py-3 rounded-lg font-semibold text-white bg-white/10 border border-white/25 backdrop-blur-md shadow-lg hover:bg-white/15 hover:border-white/35 transition">
+                       class="inline-flex items-center gap-2 mt-6 px-6 py-3 rounded-lg font-semibold text-white bg-white/10 border border-white/25 backdrop-blur-md shadow-lg hover:bg-white/15 hover:border-white/35 transition hero-readmore hero-anim" data-hero-anim="readmore">
                         Baca Selengkapnya →
                     </a>
 
-                    <div class="mt-5 flex flex-wrap gap-3">
-                        <a href="donasi.html" class="inline-block bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-800 transition">Donasi Sekarang</a>
-                        <a href="relawan.html" class="inline-block bg-white/20 text-white px-6 py-3 rounded-lg font-semibold hover:bg-white/30 transition">Gabung Relawan</a>
+                    <div class="mt-5 flex flex-wrap gap-3 hero-actions hero-anim" data-hero-anim="ctas">
+                        <a href="donasi.html" class="hero-cta hero-cta--primary">Donasi Sekarang</a>
+                        <a href="relawan.html" class="hero-cta hero-cta--secondary">Gabung Relawan</a>
                     </div>
                 </div>
             </div>
@@ -198,28 +208,28 @@
 
         <!-- Slide 2 -->
         <article class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-700"
-                 style="background-image:url('assets/images/Program-Beasiswa-Pendidikan-Anak-Dhuafa.jpg')">
+                 style="background-image:url('assets/images/Program-Beasiswa-Pendidikan-Anak-Dhuafa.jpg')" data-accent="pendidikan">
             <div class="absolute inset-0 bg-black/60"></div>
             <div class="relative z-10 h-full flex items-center">
                 <div class="max-w-7xl mx-auto px-6 text-white">
-                    <span class="inline-block mb-4 px-4 py-1 bg-blue-400 text-white text-sm font-semibold rounded">
+                    <span class="inline-block mb-4 px-4 py-1 bg-blue-400 text-white text-sm font-semibold rounded" hero-kicker hero-anim" data-hero-anim="kicker">
                         Pendidikan
                     </span>
-                    <h1 class="text-4xl md:text-5xl font-bold max-w-3xl">
+                    <h1 class="text-4xl md:text-5xl font-bold max-w-3xl hero-title hero-anim" data-hero-anim="title">
                         Program Beasiswa Pendidikan Anak Dhuafa
                     </h1>
-                    <p class="mt-4 max-w-2xl text-lg text-gray-200">
+                    <p class="mt-4 max-w-2xl text-lg text-gray-200 hero-desc hero-anim" data-hero-anim="desc">
                         Program bantuan pendidikan berkelanjutan bagi anak dhuafa.
                     </p>
 
                     <a href="berita/program-beasiswa-pendidikan-anak-dhuafa.html"
-                       class="inline-flex items-center gap-2 mt-6 px-6 py-3 rounded-lg font-semibold text-white bg-white/10 border border-white/25 backdrop-blur-md shadow-lg hover:bg-white/15 hover:border-white/35 transition">
+                       class="inline-flex items-center gap-2 mt-6 px-6 py-3 rounded-lg font-semibold text-white bg-white/10 border border-white/25 backdrop-blur-md shadow-lg hover:bg-white/15 hover:border-white/35 transition hero-readmore hero-anim" data-hero-anim="readmore">
                         Baca Selengkapnya →
                     </a>
 
-                    <div class="mt-6 flex flex-wrap gap-3">
-                        <a href="donasi.html" class="inline-block bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-800 transition">Donasi Sekarang</a>
-                        <a href="relawan.html" class="inline-block bg-white/20 text-white px-6 py-3 rounded-lg font-semibold hover:bg-white/30 transition">Gabung Relawan</a>
+                    <div class="mt-6 flex flex-wrap gap-3 hero-actions hero-anim" data-hero-anim="ctas">
+                        <a href="donasi.html" class="hero-cta hero-cta--primary">Donasi Sekarang</a>
+                        <a href="relawan.html" class="hero-cta hero-cta--secondary">Gabung Relawan</a>
                     </div>
                 </div>
             </div>
@@ -227,28 +237,28 @@
 
         <!-- Slide 3 -->
         <article class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-700"
-                 style="background-image:url('assets/images/Pengajian-Rutin-dan-Doa-Bersama.jpg')">
+                 style="background-image:url('assets/images/Pengajian-Rutin-dan-Doa-Bersama.jpg')" data-accent="keagamaan">
             <div class="absolute inset-0 bg-black/60"></div>
             <div class="relative z-10 h-full flex items-center">
                 <div class="max-w-7xl mx-auto px-6 text-white">
-                    <span class="inline-block mb-4 px-4 py-1 bg-indigo-400 text-white text-sm font-semibold rounded">
+                    <span class="inline-block mb-4 px-4 py-1 bg-indigo-400 text-white text-sm font-semibold rounded" hero-kicker hero-anim" data-hero-anim="kicker">
                         Keagamaan
                     </span>
-                    <h1 class="text-4xl md:text-5xl font-bold max-w-3xl">
+                    <h1 class="text-4xl md:text-5xl font-bold max-w-3xl hero-title hero-anim" data-hero-anim="title">
                         Pengajian Rutin dan Doa Bersama
                     </h1>
-                    <p class="mt-4 max-w-2xl text-lg text-gray-200">
+                    <p class="mt-4 max-w-2xl text-lg text-gray-200 hero-desc hero-anim" data-hero-anim="desc">
                         Pengajian rutin sebagai sarana pembinaan spiritual dan mempererat ukhuwah.
                     </p>
 
                     <a href="berita/pengajian-rutin-dan-doa-bersama.html"
-                       class="inline-flex items-center gap-2 mt-6 px-6 py-3 rounded-lg font-semibold text-white bg-white/10 border border-white/25 backdrop-blur-md shadow-lg hover:bg-white/15 hover:border-white/35 transition">
+                       class="inline-flex items-center gap-2 mt-6 px-6 py-3 rounded-lg font-semibold text-white bg-white/10 border border-white/25 backdrop-blur-md shadow-lg hover:bg-white/15 hover:border-white/35 transition hero-readmore hero-anim" data-hero-anim="readmore">
                         Baca Selengkapnya →
                     </a>
 
-                    <div class="mt-6 flex flex-wrap gap-3">
-                        <a href="donasi.html" class="inline-block bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-800 transition">Donasi Sekarang</a>
-                        <a href="relawan.html" class="inline-block bg-white/20 text-white px-6 py-3 rounded-lg font-semibold hover:bg-white/30 transition">Gabung Relawan</a>
+                    <div class="mt-6 flex flex-wrap gap-3 hero-actions hero-anim" data-hero-anim="ctas">
+                        <a href="donasi.html" class="hero-cta hero-cta--primary">Donasi Sekarang</a>
+                        <a href="relawan.html" class="hero-cta hero-cta--secondary">Gabung Relawan</a>
                     </div>
                 </div>
             </div>
@@ -266,8 +276,19 @@
             class="absolute right-6 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white p-3 rounded-full z-30">
         ›
     </button>
+
+    <!-- Dots indicator -->
+    <div id="heroDots" class="hero-dots" role="tablist" aria-label="Sorotan slide"></div>
 </section>
-<section class="py-14 bg-white impact-section" aria-label="Dampak dalam angka">
+
+<!-- Wave divider (Hero -> Dampak) -->
+<div class="wave-divider wave-divider--blue" aria-hidden="true">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none" focusable="false" aria-hidden="true">
+    <path d="M0,64L60,58.7C120,53,240,43,360,48C480,53,600,75,720,80C840,85,960,75,1080,64C1200,53,1320,43,1380,37.3L1440,32L1440,120L1380,120C1320,120,1200,120,1080,120C960,120,840,120,720,120C600,120,480,120,360,120C240,120,120,120,60,120L0,120Z"></path>
+  </svg>
+</div>
+
+<section id="dampak" class="pt-10 pb-5 bg-white impact-section" aria-label="Dampak dalam angka">
   <div class="max-w-7xl mx-auto px-6">
     <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
       <div>
@@ -277,9 +298,9 @@
       <a href="transparansi.html" class="text-blue-700 font-semibold hover:underline">Lihat Transparansi →</a>
     </div>
 
-    <div class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 impact-grid" data-impact-grid>
+    <div class="mt-10 flex gap-6 overflow-x-auto snap-x snap-mandatory -mx-6 px-6 pb-2 sm:pb-0 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 impact-grid" data-impact-grid>
       <!-- Cards will be hydrated from assets/data/impact.json -->
-      <div class="impact-card" data-impact-key="beneficiaries">
+      <div class="impact-card snap-start shrink-0 w-[85%] sm:w-auto sm:shrink sm:snap-none" data-impact-key="beneficiaries">
         <div class="impact-accent" aria-hidden="true"></div>
         <div class="impact-glow" aria-hidden="true"></div>
         <div class="impact-head">
@@ -296,7 +317,7 @@
         </div>
       </div>
 
-      <div class="impact-card" data-impact-key="activities">
+      <div class="impact-card snap-start shrink-0 w-[85%] sm:w-auto sm:shrink sm:snap-none" data-impact-key="activities">
         <div class="impact-accent" aria-hidden="true"></div>
         <div class="impact-glow" aria-hidden="true"></div>
         <div class="impact-head">
@@ -313,7 +334,7 @@
         </div>
       </div>
 
-      <div class="impact-card" data-impact-key="volunteers">
+      <div class="impact-card snap-start shrink-0 w-[85%] sm:w-auto sm:shrink sm:snap-none" data-impact-key="volunteers">
         <div class="impact-accent" aria-hidden="true"></div>
         <div class="impact-glow" aria-hidden="true"></div>
         <div class="impact-head">
@@ -337,8 +358,15 @@
   </div>
 </section>
 
+<!-- Wave divider (Dampak -> Berita) -->
+<div class="wave-divider wave-divider--gray" aria-hidden="true">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none" focusable="false" aria-hidden="true">
+    <path d="M0,96L60,85.3C120,75,240,53,360,53.3C480,53,600,75,720,80C840,85,960,75,1080,69.3C1200,64,1320,64,1380,64L1440,64L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path>
+  </svg>
+</div>
 
-<section id="berita" class="py-20 bg-gray-50">
+
+<section id="berita" class="pt-6 pb-14 bg-gray-50">
   <div class="max-w-7xl mx-auto px-6">
 
     <!-- ================= HEADER JUDUL ================= -->
@@ -363,6 +391,14 @@
           </h2>
         </div>
       </div>
+    <!-- Mobile tabs (Berita / Populer) -->
+    <div class="lg:hidden -mt-2 mb-6">
+      <div class="inline-flex p-1 rounded-xl border border-blue-100 bg-white/70 backdrop-blur">
+        <button type="button" class="berita-tab is-active" data-berita-tab="news" aria-controls="beritaPanel" aria-selected="true">Berita</button>
+        <button type="button" class="berita-tab" data-berita-tab="popular" aria-controls="populerPanel" aria-selected="false">Populer</button>
+      </div>
+    </div>
+
 
     </div>
 
@@ -370,7 +406,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
 
       <!-- ===== BERITA TERKINI (3 KOLOM) ===== -->
-      <div class="lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div id="beritaPanel" class="lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
 
         <!-- Card 1 -->
         <article class="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden">
@@ -441,7 +477,7 @@
       </div>
 
       <!-- ===== ARTIKEL POPULER (SIDEBAR) ===== -->
-      <aside class="bg-white rounded-xl shadow p-6 space-y-5">
+      <aside id="populerPanel" class="bg-white rounded-xl shadow p-6 space-y-5 lg:block hidden">
 
         <!-- Judul Artikel Populer (MOBILE SAJA) -->
         <div class="lg:hidden">

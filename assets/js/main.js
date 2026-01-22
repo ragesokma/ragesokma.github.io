@@ -106,31 +106,81 @@ const initSite = () => {
   }
 
   // =========================
-  // Hero slider
+  // Hero slider (enhanced): dots + synced text animations + safer pointer events
   // =========================
   const slides = Array.from(document.querySelectorAll('.hero-slide'));
   const nextBtn = document.getElementById('nextSlide');
   const prevBtn = document.getElementById('prevSlide');
+  const dotsWrap = document.getElementById('heroDots');
+  const heroSlider = document.getElementById('heroSlider');
 
   if (slides.length > 0 && nextBtn && prevBtn) {
     let currentSlide = 0;
     let timerId = null;
 
+    // Build dots indicator (optional container)
+    let dots = [];
+    if (dotsWrap) {
+      dotsWrap.innerHTML = '';
+      dots = slides.map((_, i) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'hero-dot';
+        btn.setAttribute('role', 'tab');
+        btn.setAttribute('aria-label', `Slide ${i + 1}`);
+        btn.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+        btn.dataset.index = String(i);
+        btn.addEventListener('click', () => {
+          showSlide(i);
+          if (timerId) {
+            clearInterval(timerId);
+            timerId = setInterval(nextSlide, 6000);
+          }
+        });
+        dotsWrap.appendChild(btn);
+        return btn;
+      });
+    }
+
+    const syncDots = (index) => {
+      if (!dots || dots.length === 0) return;
+      dots.forEach((d, i) => d.setAttribute('aria-selected', i === index ? 'true' : 'false'));
+    };
+
     const showSlide = (index) => {
       slides.forEach((slide, i) => {
-        slide.classList.toggle('opacity-100', i === index);
-        slide.classList.toggle('opacity-0', i !== index);
+        const isActive = i === index;
+
+        slide.classList.toggle('opacity-100', isActive);
+        slide.classList.toggle('opacity-0', !isActive);
+
+        // trigger synced animations via class
+        slide.classList.toggle('is-active', isActive);
+
+        // prevent hidden slides from capturing clicks/focus
+        slide.style.pointerEvents = isActive ? 'auto' : 'none';
+        slide.setAttribute('aria-hidden', isActive ? 'false' : 'true');
       });
+
+      currentSlide = index;
+      syncDots(index);
+
+      // Optional: keep an accent variable on wrapper (useful for future global accents)
+      if (heroSlider) {
+        const active = slides[index];
+        const accent = getComputedStyle(active).getPropertyValue('--hero-accent').trim();
+        if (accent) heroSlider.style.setProperty('--hero-accent', accent);
+      }
     };
 
     const nextSlide = () => {
-      currentSlide = (currentSlide + 1) % slides.length;
-      showSlide(currentSlide);
+      const next = (currentSlide + 1) % slides.length;
+      showSlide(next);
     };
 
     const prevSlide = () => {
-      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-      showSlide(currentSlide);
+      const prev = (currentSlide - 1 + slides.length) % slides.length;
+      showSlide(prev);
     };
 
     nextBtn.addEventListener('click', () => {
@@ -149,9 +199,72 @@ const initSite = () => {
       }
     });
 
+    // Keyboard: left/right arrows when focus is inside hero
+    if (heroSlider) {
+      heroSlider.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          nextSlide();
+        }
+        if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          prevSlide();
+        }
+      });
+      heroSlider.setAttribute('tabindex', '0');
+    }
+
     // Init
-    showSlide(currentSlide);
+    showSlide(0);
     timerId = setInterval(nextSlide, 6000);
+  }
+
+  // =========================
+  // Hero expressive: parallax blobs + smoother feel (desktop & mobile)
+  // =========================
+  {
+    const hero = document.getElementById('beranda');
+    if (hero) {
+      const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduceMotion) {
+        let rafId = null;
+        let targetX = 0;
+        let targetY = 0;
+        const apply = () => {
+          hero.style.setProperty('--hx', `${targetX}px`);
+          hero.style.setProperty('--hy', `${targetY}px`);
+          rafId = null;
+        };
+        const schedule = () => {
+          if (rafId) return;
+          rafId = requestAnimationFrame(apply);
+        };
+
+        // Pointer parallax (desktop)
+        hero.addEventListener('mousemove', (e) => {
+          const r = hero.getBoundingClientRect();
+          const nx = (e.clientX - r.left) / r.width - 0.5;
+          const ny = (e.clientY - r.top) / r.height - 0.5;
+          targetX = Math.round(nx * 18);
+          targetY = Math.round(ny * 14);
+          schedule();
+        });
+
+        hero.addEventListener('mouseleave', () => {
+          targetX = 0;
+          targetY = 0;
+          schedule();
+        });
+
+        // Scroll parallax (mobile friendly)
+        window.addEventListener('scroll', () => {
+          const y = window.scrollY || 0;
+          // small drift so terasa hidup, tapi aman
+          targetY = Math.max(-18, Math.min(18, Math.round(-y * 0.02)));
+          schedule();
+        }, { passive: true });
+      }
+    }
   }
 
   // =========================
@@ -315,42 +428,259 @@ const initSite = () => {
     };
 
     const initTooltips = () => {
-      // Click-to-toggle (mobile friendly), click outside to close
-      const btns = Array.from(grid.querySelectorAll('.impact-info'));
+      const btns = Array.from(grid.querySelectorAll('.impact-info[data-tooltip]'));
       if (btns.length === 0) return;
 
-      const closeAll = () => btns.forEach((b) => b.setAttribute('data-open', 'false'));
+      const isDesktopHover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-      btns.forEach((btn) => {
-        btn.setAttribute('data-open', 'false');
-        btn.addEventListener('click', (e) => {
+      const DELAY_MS = 120;
+      const OFFSET_X = 14;
+      const OFFSET_Y = 14;
+
+      let tip;
+      let tipText;
+      let tipClose;
+      let activeBtn = null;
+      let showTimer = null;
+      let locked = false;
+      let lastMouse = { x: 0, y: 0 };
+
+      const ensureTip = () => {
+        if (tip) return;
+        tip = document.createElement('div');
+        tip.className = 'impact-tooltip-floating';
+        tip.innerHTML = `
+          <div class="impact-tooltip-content" data-tip-content></div>
+          <button class="impact-tooltip-close" type="button" aria-label="Tutup" data-tip-close>×</button>
+        `;
+        document.body.appendChild(tip);
+        tipText = tip.querySelector('[data-tip-content]');
+        tipClose = tip.querySelector('[data-tip-close]');
+        tipClose.addEventListener('click', (e) => {
           e.stopPropagation();
-          const isOpen = btn.getAttribute('data-open') === 'true';
-          closeAll();
-          btn.setAttribute('data-open', isOpen ? 'false' : 'true');
+          hideTip();
+        });
+      };
+
+      const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+
+      const placeTipNear = (x, y) => {
+        if (!tip) return;
+        const pad = 10;
+        const r = tip.getBoundingClientRect();
+        let left = x;
+        let top = y;
+
+        left = clamp(left, pad, window.innerWidth - r.width - pad);
+        top = clamp(top, pad, window.innerHeight - r.height - pad);
+
+        tip.style.left = `${left}px`;
+        tip.style.top = `${top}px`;
+      };
+
+      const placeTipForButton = (btn) => {
+        const br = btn.getBoundingClientRect();
+        // default: below the button, centered
+        const x = br.left + br.width / 2;
+        const y = br.bottom + 12;
+
+        // after render, position with width known
+        requestAnimationFrame(() => {
+          const r = tip.getBoundingClientRect();
+          let left = x - r.width / 2;
+          let top = y;
+
+          // if overflow bottom, flip to top
+          if (top + r.height + 10 > window.innerHeight) {
+            top = br.top - r.height - 12;
+          }
+
+          placeTipNear(left, top);
+        });
+      };
+
+      const showTip = (btn, opts = {}) => {
+        ensureTip();
+        const text = (btn.getAttribute('data-tooltip') || '').trim();
+        if (!text) return;
+
+        activeBtn = btn;
+        locked = !!opts.locked;
+
+        tipText.textContent = text;
+        tip.classList.add('show');
+        tip.classList.toggle('is-locked', locked);
+
+        if (locked) {
+          placeTipForButton(btn);
+        } else if (isDesktopHover) {
+          placeTipNear(lastMouse.x + OFFSET_X, lastMouse.y + OFFSET_Y);
+        } else {
+          // fallback for non-hover devices: place near button
+          placeTipForButton(btn);
+        }
+      };
+
+      const hideTip = () => {
+        if (showTimer) {
+          clearTimeout(showTimer);
+          showTimer = null;
+        }
+        if (!tip) return;
+        tip.classList.remove('show');
+        tip.classList.remove('is-locked');
+        activeBtn = null;
+        locked = false;
+      };
+
+      // Desktop: follow cursor + delay
+      if (isDesktopHover) {
+        btns.forEach((btn) => {
+          btn.addEventListener('mouseenter', () => {
+            if (showTimer) clearTimeout(showTimer);
+            showTimer = setTimeout(() => showTip(btn, { locked: false }), DELAY_MS);
+          });
+
+          btn.addEventListener('mouseleave', () => {
+            hideTip();
+          });
+
+          btn.addEventListener('mousemove', (e) => {
+            lastMouse = { x: e.clientX, y: e.clientY };
+            if (tip && tip.classList.contains('show') && !locked) {
+              placeTipNear(e.clientX + OFFSET_X, e.clientY + OFFSET_Y);
+            }
+          });
+        });
+
+        // keep tooltip pinned during scroll/resize
+        window.addEventListener('scroll', () => hideTip(), { passive: true });
+        window.addEventListener('resize', () => hideTip(), { passive: true });
+      } else {
+        // Mobile: tap-lock + close + click outside
+        btns.forEach((btn) => {
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            // toggle
+            if (activeBtn === btn && tip && tip.classList.contains('show')) {
+              hideTip();
+              return;
+            }
+            showTip(btn, { locked: true });
+          });
+        });
+
+        // tap outside closes
+        document.addEventListener('click', () => hideTip());
+        window.addEventListener('scroll', () => hideTip(), { passive: true });
+        window.addEventListener('resize', () => hideTip(), { passive: true });
+      }
+    };
+
+    const initPointerGlow = () => {
+      // pointer-follow highlight (desktop + touch)
+      cards.forEach((card) => {
+        const setVars = (clientX, clientY) => {
+          const r = card.getBoundingClientRect();
+          const x = ((clientX - r.left) / r.width) * 100;
+          const y = ((clientY - r.top) / r.height) * 100;
+          const clamp = (v) => Math.max(0, Math.min(100, v));
+          card.style.setProperty('--mx', `${clamp(x).toFixed(2)}%`);
+          card.style.setProperty('--my', `${clamp(y).toFixed(2)}%`);
+        };
+
+        card.addEventListener('pointermove', (e) => {
+          if (reduceMotion) return;
+          setVars(e.clientX, e.clientY);
+        });
+        card.addEventListener('pointerleave', () => {
+          card.style.removeProperty('--mx');
+          card.style.removeProperty('--my');
+        });
+      });
+    };
+
+    const initStoryMode = (items) => {
+      const timeline = document.querySelector('[data-impact-timeline]');
+      if (!timeline || cards.length === 0) return;
+
+      const DEFAULT_STORIES = {
+        beneficiaries: 'Setiap angka mewakili manusia nyata yang terbantu.',
+        activities: 'Gerakan kecil yang konsisten melahirkan dampak besar.',
+        volunteers: 'Kolaborasi relawan adalah mesin kebaikan yang terus tumbuh.'
+      };
+
+      const ordered = (Array.isArray(items) && items.length) ? items : cards.map((c) => ({ key: c.dataset.impactKey }));
+      const stories = ordered.map((it) => ({
+        key: it.key,
+        text: (it.story || DEFAULT_STORIES[it.key] || 'Dampak ini terus bertambah seiring berjalannya program.')
+      }));
+
+      const isCoarse = window.matchMedia && window.matchMedia('(max-width: 640px), (pointer: coarse)').matches;
+      const intervalMs = reduceMotion ? 9999999 : (isCoarse ? 2800 : 4200);
+
+      let idx = 0;
+      let timer = null;
+      let paused = false;
+
+      const setActive = (i) => {
+        idx = i;
+        cards.forEach((c, j) => c.classList.toggle('is-active', j === i));
+        const st = stories[i] ? stories[i].text : 'Dampak ini terus bertambah seiring berjalannya program.';
+        timeline.textContent = st;
+      };
+
+      const start = () => {
+        if (timer || reduceMotion) return;
+        timer = window.setInterval(() => {
+          if (paused) return;
+          setActive((idx + 1) % cards.length);
+        }, intervalMs);
+      };
+
+      const stop = () => {
+        if (timer) {
+          window.clearInterval(timer);
+          timer = null;
+        }
+      };
+
+      // Init
+      setActive(0);
+      start();
+
+      // Desktop: hover/focus to take over
+      cards.forEach((c, i) => {
+        const onEnter = () => {
+          paused = true;
+          setActive(i);
+        };
+        const onLeave = () => {
+          paused = false;
+        };
+        c.addEventListener('mouseenter', onEnter);
+        c.addEventListener('mouseleave', onLeave);
+        c.addEventListener('focusin', onEnter);
+        c.addEventListener('focusout', onLeave);
+
+        // Mobile: tap to focus
+        c.addEventListener('click', () => {
+          setActive(i);
         });
       });
 
-      document.addEventListener('click', () => closeAll());
-      window.addEventListener('scroll', () => closeAll(), { passive: true });
-    };
-
-    const initEmphasisRotation = () => {
-      // Recommended: mainly for mobile/coarse pointers
-      const mq = window.matchMedia('(max-width: 640px), (pointer: coarse)');
-      const isMobile = mq && mq.matches;
-      if (!isMobile || reduceMotion) return;
-
-      let i = 0;
-      const setActive = (idx) => {
-        cards.forEach((c, j) => c.classList.toggle('is-active', j === idx));
-      };
-      setActive(0);
-
-      window.setInterval(() => {
-        i = (i + 1) % cards.length;
-        setActive(i);
-      }, 3000);
+      // Pause rotation when user scrolls away (small perf)
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) stop();
+            else start();
+          });
+        }, { threshold: 0.15 });
+        io.observe(timeline);
+      }
     };
 
     const initCountOnView = () => {
@@ -391,10 +721,61 @@ const initSite = () => {
 
       // 2) Enhance UI behaviors
       initTooltips();
-      initEmphasisRotation();
+      initPointerGlow();
       initCountOnView();
+      initStoryMode(data && data.items ? data.items : null);
     });
   };
+
+  
+  // =========================
+  // Mobile UX: Berita tabs (Berita / Populer)
+  // =========================
+  const tabBtns = Array.from(document.querySelectorAll('[data-berita-tab]'));
+  const beritaPanel = document.getElementById('beritaPanel');
+  const populerPanel = document.getElementById('populerPanel');
+
+  const applyBeritaTab = (key) => {
+    const isMobile = window.matchMedia('(max-width: 1023px)').matches; // < lg
+    if (!beritaPanel || !populerPanel) return;
+
+    if (!isMobile) {
+      // Desktop: show both in grid layout
+      beritaPanel.classList.remove('hidden');
+      populerPanel.classList.remove('hidden');
+      populerPanel.classList.add('lg:block');
+      return;
+    }
+
+    if (key === 'popular') {
+      beritaPanel.classList.add('hidden');
+      populerPanel.classList.remove('hidden');
+    } else {
+      populerPanel.classList.add('hidden');
+      beritaPanel.classList.remove('hidden');
+    }
+
+    tabBtns.forEach((b) => {
+      const active = b.getAttribute('data-berita-tab') === key;
+      b.classList.toggle('is-active', active);
+      b.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+  };
+
+  if (tabBtns.length && beritaPanel && populerPanel) {
+    // Default: berita
+    applyBeritaTab('news');
+
+    tabBtns.forEach((btn) => {
+      btn.addEventListener('click', () => applyBeritaTab(btn.getAttribute('data-berita-tab')));
+    });
+
+    window.addEventListener('resize', () => {
+      // keep current state; infer from active button
+      const active = tabBtns.find((b) => b.classList.contains('is-active'))?.getAttribute('data-berita-tab') || 'news';
+      applyBeritaTab(active);
+    });
+  }
 
   initImpactStats();
 };
