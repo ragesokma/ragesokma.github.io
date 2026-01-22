@@ -535,13 +535,43 @@ details[open] .faq-summary::after{
 
 /* Mobile drawer overlay (right 20vw transparent) */
 @media (max-width: 1024px){
-  #mobileMenu.mobile-drawer{
+  .mobile-drawer{
     position: fixed;
     inset: 0;
     z-index: 9999;
     background: transparent; /* right side shows underlying page */
+  
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .22s ease, visibility 0s linear .22s;
   }
-  #mobileMenu.mobile-drawer.hidden{ display:none !important; }
+
+  .mobile-drawer:not(.hidden){
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity .22s ease;
+  }
+  /* Override Tailwind's .hidden (display:none) so drawers can animate */
+  .mobile-drawer.hidden{
+    display: block !important;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+
+  /* Panel slide animation (left) */
+  .mobile-drawer .mobile-panel{
+    transform: translateX(-14px);
+    transition: transform .22s ease;
+    will-change: transform;
+  }
+  .mobile-drawer:not(.hidden) .mobile-panel{
+    transform: translateX(0);
+  }
+
 
   /* Drawer panel: full height, 80vw width already set elsewhere */
   #mobileMenu.mobile-drawer .mobile-panel{
@@ -554,16 +584,15 @@ details[open] .faq-summary::after{
     box-shadow: 18px 0 40px rgba(0,0,0,0.10);
   }
 /* Right drawer (Quick Actions) */
-#quickMenu.mobile-drawer.hidden{ display:none !important; }
 #quickMenu.mobile-drawer .mobile-panel{
   position: absolute;
   top: 0;
-  right: 0;
-  left: auto;
+  left: 0;
+  right: auto;
   height: 100%;
   overflow-y: auto;
-  border-left: 1px solid rgba(226,232,240,0.85);
-  box-shadow: -18px 0 40px rgba(0,0,0,0.10);
+  border-right: 1px solid rgba(226,232,240,0.85);
+  box-shadow: 18px 0 40px rgba(0,0,0,0.10);
 }
 
 .mobile-drawer--right{
@@ -1614,8 +1643,15 @@ body.no-scroll{ overflow: hidden !important; }
   /* ensure panels are above backdrop */
   #mobileMenu.mobile-drawer .mobile-panel,
   #quickMenu.mobile-drawer .mobile-panel{
-    background: rgba(255,255,255,0.96);
-  }
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: auto;
+  height: 100%;
+  overflow-y: auto;
+  border-right: 1px solid rgba(226,232,240,0.85);
+  box-shadow: 18px 0 40px rgba(0,0,0,0.10);
+}
   /* sticky drawer header so close button never gets hidden when scrolling */
   .mobile-drawer-head{
     position: sticky;
@@ -1631,9 +1667,15 @@ body.no-scroll{ overflow: hidden !important; }
 
   /* Right drawer (Quick Actions) should be full width on mobile */
   #quickMenu.mobile-drawer .mobile-panel{
-    width: 80vw !important;
-    max-width: 420px !important;
-  }
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: auto;
+  height: 100%;
+  overflow-y: auto;
+  border-right: 1px solid rgba(226,232,240,0.85);
+  box-shadow: 18px 0 40px rgba(0,0,0,0.10);
+}
 
   /* Quick actions: list style (no card background) */
   #quickMenu .quick-grid{
@@ -1660,14 +1702,14 @@ body.no-scroll{ overflow: hidden !important; }
 /* ===== Mobile UX FIX: Right drawer positioning & width ===== */
 #quickMenu.mobile-drawer{ position: fixed !important; inset: 0 !important; z-index: 10050 !important; }
 #quickMenu.mobile-drawer .mobile-panel{
-  position: fixed !important;
-  top: 0 !important;
-  right: 0 !important;
-  left: auto !important;
-  height: 100vh !important;
-  width: 80vw !important;
-  max-width: 420px !important;
-  overflow-y: auto !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: auto;
+  height: 100%;
+  overflow-y: auto;
+  border-right: 1px solid rgba(226,232,240,0.85);
+  box-shadow: 18px 0 40px rgba(0,0,0,0.10);
 }
 
 /* Ensure close/header always above content */
@@ -1689,4 +1731,3 @@ body.no-scroll{ overflow: hidden !important; }
 }
 #quickMenu .quick-item:last-child{ border-bottom: 0; }
 #quickMenu .quick-item--donasi{ font-weight: 700; }
-
