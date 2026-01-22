@@ -1522,3 +1522,35 @@ details[open] .faq-summary::after{
   z-index: 40 !important;
   transform: translate(25%,-50%) translateZ(10px) rotateY(-40deg) rotateZ(2deg) scale(.70) !important;
 }
+
+
+
+/* ===== Mobile Safety Override (after 3D front-lock) ===== */
+@media (max-width:768px){
+  .gallery-stage{
+    isolation: auto !important;
+    perspective: none !important;
+    transform-style: flat !important;
+  }
+  .gallery-card{
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    z-index: auto !important;
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    -webkit-box-reflect: unset !important;
+  }
+  .gallery-center,
+  .gallery-left-1,
+  .gallery-left-2,
+  .gallery-right-1,
+  .gallery-right-2{
+    z-index: auto !important;
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    -webkit-box-reflect: unset !important;
+  }
+}
