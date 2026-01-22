@@ -56,10 +56,10 @@
 <nav aria-label="Navigasi utama" class="items-center gap-8 text-gray-800 font-medium desktop-nav">
 <a class="nav-link" data-nav="" href="index.html">Beranda</a>
 <!-- Tentang (dropdown) -->
-<div class="relative group">
-<button aria-haspopup="true" aria-label="Menu Tentang" class="nav-link nav-parent" data-nav-parent="tentang" type="button">Tentang</button>
-<div class="absolute left-0 top-full pt-3">
-<div class="w-56 glass-panel rounded-xl opacity-0 invisible pointer-events-none group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto transition">
+<div class="relative">
+<button aria-haspopup="true" aria-label="Menu Tentang" class="nav-link nav-parent peer" data-nav-parent="tentang" type="button">Tentang</button>
+<div class="absolute left-0 top-full pt-3 hidden peer-hover:block peer-focus:block hover:block">
+<div class="w-56 glass-panel rounded-xl">
 <a class="block px-4 py-3 hover:bg-white/20 rounded-t-xl" data-nav="" href="tentang/sejarah.html">Sejarah</a>
 <a class="block px-4 py-3 hover:bg-white/20" data-nav="" href="tentang/visi-misi.html">Visi &amp; Misi</a>
 <a class="block px-4 py-3 hover:bg-white/20" data-nav="" href="tentang/pengurus.html">Pengurus</a>
@@ -68,10 +68,10 @@
 </div>
 </div>
 <!-- Program (dropdown) -->
-<div class="relative group">
-<button aria-haspopup="true" aria-label="Menu Program" class="nav-link nav-parent" data-nav-parent="program" type="button">Program</button>
-<div class="absolute left-0 top-full pt-3">
-<div class="w-72 glass-panel rounded-xl opacity-0 invisible pointer-events-none group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto transition">
+<div class="relative">
+<button aria-haspopup="true" aria-label="Menu Program" class="nav-link nav-parent peer" data-nav-parent="program" type="button">Program</button>
+<div class="absolute left-0 top-full pt-3 hidden peer-hover:block peer-focus:block hover:block">
+<div class="w-72 glass-panel rounded-xl">
 <a class="block px-4 py-3 hover:bg-white/20 rounded-t-xl" data-nav="" href="program/santunan-yatim.html">Santunan Anak Yatim</a>
 <a class="block px-4 py-3 hover:bg-white/20" data-nav="" href="program/peduli-dhuafa.html">Peduli Dhu’afa</a>
 <a class="block px-4 py-3 hover:bg-white/20" data-nav="" href="program/sosial-keagamaan.html">Sosial Keagamaan</a>

@@ -39,6 +39,11 @@
 <title>Transparansi &amp; Laporan | RAGE SOKMA</title>
 <link href="assets/css/style.css" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Page-specific override: remove decorative ring on impact cards (Transparansi summary) -->
+<style>
+  .impact-card.no-ring::before{ display:none !important; }
+</style>
 <link href="/assets/images/logo.png" rel="icon" type="image/png"/>
 <link href="/assets/images/logo.png" rel="apple-touch-icon"/>
 </link></head>
@@ -55,10 +60,10 @@
 <nav aria-label="Navigasi utama" class="items-center gap-8 text-gray-800 font-medium desktop-nav">
 <a class="nav-link" data-nav="" href="index.html">Beranda</a>
 <!-- Tentang (dropdown) -->
-<div class="relative group">
-<button aria-haspopup="true" aria-label="Menu Tentang" class="nav-link nav-parent" data-nav-parent="tentang" type="button">Tentang</button>
-<div class="absolute left-0 top-full pt-3">
-<div class="w-56 glass-panel rounded-xl opacity-0 invisible pointer-events-none group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto transition">
+<div class="relative">
+<button aria-haspopup="true" aria-label="Menu Tentang" class="nav-link nav-parent peer" data-nav-parent="tentang" type="button">Tentang</button>
+<div class="absolute left-0 top-full pt-3 hidden peer-hover:block peer-focus:block hover:block">
+<div class="w-56 glass-panel rounded-xl">
 <a class="block px-4 py-3 hover:bg-white/20 rounded-t-xl" data-nav="" href="tentang/sejarah.html">Sejarah</a>
 <a class="block px-4 py-3 hover:bg-white/20" data-nav="" href="tentang/visi-misi.html">Visi &amp; Misi</a>
 <a class="block px-4 py-3 hover:bg-white/20" data-nav="" href="tentang/pengurus.html">Pengurus</a>
@@ -67,10 +72,10 @@
 </div>
 </div>
 <!-- Program (dropdown) -->
-<div class="relative group">
-<button aria-haspopup="true" aria-label="Menu Program" class="nav-link nav-parent" data-nav-parent="program" type="button">Program</button>
-<div class="absolute left-0 top-full pt-3">
-<div class="w-72 glass-panel rounded-xl opacity-0 invisible pointer-events-none group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto transition">
+<div class="relative">
+<button aria-haspopup="true" aria-label="Menu Program" class="nav-link nav-parent peer" data-nav-parent="program" type="button">Program</button>
+<div class="absolute left-0 top-full pt-3 hidden peer-hover:block peer-focus:block hover:block">
+<div class="w-72 glass-panel rounded-xl">
 <a class="block px-4 py-3 hover:bg-white/20 rounded-t-xl" data-nav="" href="program/santunan-yatim.html">Santunan Anak Yatim</a>
 <a class="block px-4 py-3 hover:bg-white/20" data-nav="" href="program/peduli-dhuafa.html">Peduli Dhu’afa</a>
 <a class="block px-4 py-3 hover:bg-white/20" data-nav="" href="program/sosial-keagamaan.html">Sosial Keagamaan</a>
@@ -218,7 +223,7 @@
 <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
 <div>
 <h2 class="text-2xl font-bold text-blue-800">Transparansi &amp; Akuntabilitas</h2>
-<p class="mt-2 text-gray-700 leading-relaxed">Ringkasan berikut dibuat agar donatur dan masyarakat mudah memantau program. Data transparansi diperbarui secara berkala dan dapat dikonfirmasi langsung kepada admin RAGE SOKMA..</p>
+<p class="mt-2 text-gray-700 leading-relaxed">Ringkasan berikut dibuat agar donatur dan masyarakat mudah memantau program. Data diperbarui realtime berdasarkan sistem informasi database rage sokma.</p>
 <p class="mt-1 text-sm text-gray-500">Pembaruan terakhir: <b>2026-01-21</b></p>
 </div>
 <div class="flex gap-3">
@@ -226,18 +231,55 @@
 <a class="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-white border border-blue-200 text-blue-800 font-extrabold hover:bg-blue-50 transition" href="kontak.html#form-kontak">Konfirmasi / Tanya Admin</a>
 </div>
 </div>
-<div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-<div class="bg-white rounded-2xl border border-blue-100 p-6">
-<p class="text-sm text-gray-600">Total donasi masuk (berjalan)</p>
-<p class="mt-2 text-2xl font-bold text-blue-800">Rp.7.400.000,-</p>
-</div>
-<div class="bg-white rounded-2xl border border-blue-100 p-6">
-<p class="text-sm text-gray-600">Total penyaluran (berjalan)</p>
-<p class="mt-2 text-2xl font-bold text-blue-800">Rp. 6.347.000,-</p>
-</div>
-<div class="bg-white rounded-2xl border border-blue-100 p-6">
-<p class="text-sm text-gray-600">Program aktif</p>
-<p class="mt-2 text-2xl font-bold text-blue-800">3</p>
+<!-- Ringkasan (mobile: vertikal / desktop: 3 kolom) -->
+<div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3 impact-grid">
+  <div class="impact-card no-ring">
+    <div aria-hidden="true" class="impact-accent"></div>
+    <div aria-hidden="true" class="impact-glow"></div>
+    <div class="impact-head">
+      <span aria-hidden="true" class="text-xl">💝</span>
+      <div class="impact-titlewrap">
+        <p class="impact-title">Total Donasi Masuk</p>
+      </div>
+    </div>
+    <p class="impact-value">Rp 7.400.000</p>
+    <div class="impact-meta">
+      <span class="impact-period">Berjalan</span>
+      <span class="impact-note">Diperbarui berkala</span>
+    </div>
+  </div>
+
+  <div class="impact-card no-ring">
+    <div aria-hidden="true" class="impact-accent"></div>
+    <div aria-hidden="true" class="impact-glow"></div>
+    <div class="impact-head">
+      <span aria-hidden="true" class="text-xl">📦</span>
+      <div class="impact-titlewrap">
+        <p class="impact-title">Total Penyaluran</p>
+      </div>
+    </div>
+    <p class="impact-value">Rp 6.347.000</p>
+    <div class="impact-meta">
+      <span class="impact-period">Berjalan</span>
+      <span class="impact-note">Program tersalurkan</span>
+    </div>
+  </div>
+
+  <div class="impact-card no-ring">
+    <div aria-hidden="true" class="impact-accent"></div>
+    <div aria-hidden="true" class="impact-glow"></div>
+    <div class="impact-head">
+      <span aria-hidden="true" class="text-xl">⭐</span>
+      <div class="impact-titlewrap">
+        <p class="impact-title">Program Aktif</p>
+      </div>
+    </div>
+    <p class="impact-value">3</p>
+    <div class="impact-meta">
+      <span class="impact-period">Aktif</span>
+      <span class="impact-note">Program berjalan</span>
+    </div>
+  </div>
 </div>
 </div>
 <div class="mt-10 bg-white rounded-2xl border border-blue-100 p-6">
