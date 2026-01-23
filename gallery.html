@@ -39,9 +39,259 @@
 <title>Galeri | RAGE SOKMA</title>
 <link href="assets/css/style.css" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="/assets/images/logo.png" rel="icon" type="image/png">
-<link href="/assets/images/logo.png" rel="apple-touch-icon"/>
-</link></head>
+<link href="/assets/images/logo.png" rel="icon" type="image/png"/>
+<link href="/assets/images/logo.png" rel="apple-touch-icon">
+</link><style>
+/* ===== RAGE Gallery 3D (Light Architecture) ===== */
+.rg-wrap{ width:100%; }
+.rg-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top: 1.25rem; }
+.rg-head h2{ font-size: .95rem; margin:0; letter-spacing:.3px; color: rgba(15,23,42,.85); font-weight:800; }
+.rg-pill{
+  font-size:12px;
+  padding:8px 10px;
+  border:1px solid rgba(29,78,216,.25);
+  background: rgba(29,78,216,.08);
+  border-radius:999px;
+  color: rgba(29,78,216,.95);
+  font-weight:700;
+}
+.rg-gallery{
+  position:relative;
+  width:100%;
+  height: 520px;
+  border-radius:22px;
+  border: 1px solid rgba(29,78,216,.16);
+  background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.65));
+  box-shadow: 0 24px 80px rgba(2,6,23,.12);
+  overflow:hidden;
+}
+.rg-stage{
+  position:absolute;
+  inset:0;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+.rg-nav{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  width:44px;height:44px;
+  border-radius:14px;
+  border:1px solid rgba(29,78,216,.22);
+  background: rgba(255,255,255,.55);
+  backdrop-filter: blur(10px);
+  color:#0f172a;
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  z-index: 40;
+  transition: transform .15s ease, background .15s ease;
+  user-select:none;
+}
+.rg-nav:hover{ background: rgba(29,78,216,.10); }
+.rg-nav:active{ transform:translateY(-50%) scale(.96); }
+.rg-prev{ left: 16px; }
+.rg-next{ right: 16px; }
+
+.rg-card{
+  position:absolute;
+  top:50%;
+  left:50%;
+  width: min(520px, 86vw);
+  height: min(320px, 52vw);
+  max-width: 520px;
+  max-height: 320px;
+  border-radius: 20px;
+  border: 1px solid rgba(29,78,216,.20);
+  box-shadow: 0 18px 60px rgba(2,6,23,.18);
+  overflow:hidden;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform, opacity, filter;
+  transition: transform .45s ease, opacity .35s ease, filter .35s ease;
+  cursor:pointer;
+  background: #f8fafc;
+}
+
+.rg-img{
+  width:100%; height:100%;
+  background-size: cover;
+  background-position: center;
+  display:flex;
+  align-items:flex-end;
+  padding: 14px 14px 12px;
+}
+.rg-meta{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.rg-badge{
+  display:inline-flex;
+  gap:8px;
+  align-items:center;
+  padding:7px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.35);
+  background: rgba(2,6,23,.30);
+  backdrop-filter: blur(8px);
+  color:#e2e8f0;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.2px;
+  white-space:nowrap;
+  max-width: 45%;
+  overflow:hidden;
+  text-overflow: ellipsis;
+}
+.rg-dot{
+  width:8px;height:8px;border-radius:50%;
+  background: rgba(59,130,246,.95);
+  box-shadow: 0 0 0 3px rgba(59,130,246,.18);
+}
+.rg-title{
+  font-size:14px;
+  font-weight:900;
+  color:#f8fafc;
+  text-shadow: 0 10px 22px rgba(0,0,0,.35);
+  max-width: 55%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+/* slots */
+.rg-off{ opacity:0; pointer-events:none; filter: blur(1px); }
+.rg-center{
+  transform: translate(-50%,-50%) translateZ(90px) scale(1.18);
+    z-index: 30;
+  opacity:1;
+  filter:none;
+  border-color: rgba(29,78,216,.35);
+  box-shadow: 0 24px 90px rgba(2,6,23,.26);
+}
+.rg-left1{
+  transform: translate(-88%,-50%) translateZ(10px) rotateY(28deg) rotateZ(-1deg) scale(.88);
+  z-index: 14; opacity:.88;
+  filter: saturate(.98) contrast(.98);
+}
+.rg-left2{
+  transform: translate(-122%,-50%) translateZ(-70px) rotateY(38deg) rotateZ(-2deg) scale(.72);
+  z-index: 10; opacity:.65;
+  filter: blur(.2px) saturate(.95) contrast(.95);
+}
+.rg-right1{
+  transform: translate(-12%,-50%) translateZ(10px) rotateY(-28deg) rotateZ(1deg) scale(.88);
+  z-index: 14; opacity:.88;
+  filter: saturate(.98) contrast(.98);
+}
+.rg-right2{
+  transform: translate(22%,-50%) translateZ(-70px) rotateY(-38deg) rotateZ(2deg) scale(.72);
+  z-index: 10; opacity:.65;
+  filter: blur(.2px) saturate(.95) contrast(.95);
+}
+
+/* subtle rim light */
+.rg-left1::after, .rg-right1::after, .rg-left2::after, .rg-right2::after, .rg-center::after{
+  content:"";
+  position:absolute; inset:0;
+  border-radius: inherit;
+  pointer-events:none;
+  box-shadow: inset 0 0 0 1px rgba(29,78,216,.10);
+}
+.rg-center::after{
+  box-shadow:
+    inset 0 0 0 1px rgba(29,78,216,.16),
+    0 0 0 1px rgba(29,78,216,.10);
+}
+
+.rg-foot{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  margin-top:12px;
+  color:#64748b;
+  font-size:12px;
+}
+.rg-btn{
+  padding:9px 12px;
+  border-radius:12px;
+  border:1px solid rgba(29,78,216,.20);
+  background: rgba(255,255,255,.70);
+  color:#0f172a;
+  cursor:pointer;
+  transition: background .15s ease, transform .15s ease;
+}
+.rg-btn:hover{ background: rgba(29,78,216,.08); }
+.rg-btn:active{ transform: scale(.98); }
+
+/* Mobile: jadi strip horizontal (swipe) */
+@media (max-width: 768px){
+  /* container harus punya tinggi (default stage absolute akan membuat tinggi 0) */
+  .rg-gallery{
+    height: auto !important;
+    padding: 14px 0 18px !important;
+  }
+  .rg-nav{ display:none !important; }
+
+  /* ubah stage dari absolute -> normal flow, agar konten kebaca dan tidak hilang */
+  .rg-stage{
+    position: relative !important;
+    inset: auto !important;
+    perspective: none !important;
+    transform-style: flat !important;
+
+    display: flex !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    gap: 12px;
+    padding: 0 16px;
+    align-items: center;
+  }
+  .rg-card{
+    position:relative;
+    top:auto; left:auto;
+    transform:none !important;
+    opacity:1 !important;
+    filter:none !important;
+    scroll-snap-align: center;
+    flex: 0 0 auto;
+    width: min(420px, 92vw);
+    aspect-ratio: 16 / 9;
+    height: auto;
+    max-width: 420px;
+    max-height: none;
+  }
+  .rg-off{ opacity: 1 !important; pointer-events:auto !important; }
+  .rg-title{ font-size:13px; }
+
+
+/* Hide all texts/controls on mobile: photo-only swipe */
+main > section.py-16 h1,
+main > section.py-16 p,
+.rg-head,
+.rg-foot,
+#galleryEmpty,
+#galleryLabel{
+  display:none !important;
+}
+
+/* Reduce vertical whitespace so gallery starts immediately */
+main > section.py-16{
+  padding-top: 0.75rem !important;
+  padding-bottom: 1.25rem !important;
+}
+.rg-wrap{ margin-top: 0.75rem !important; }
+}
+
+
+#lightbox:not(.hidden){ display:flex; }
+</style>
+</head>
 <body class="font-sans">
 <header class="site-header sticky top-0 z-50" id="siteHeader">
 <div class="max-w-7xl mx-auto px-6">
@@ -206,32 +456,45 @@
 </div>
 </header>
 <main>
-  <section class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-6">
-      <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 text-center">
+<section class="py-2 bg-white">
+<div class="max-w-7xl mx-auto px-6">
+<h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 text-center">
         Galeri Kegiatan RAGE SOKMA
       </h1>
-      <p class="mt-3 text-center text-slate-600 max-w-2xl mx-auto">
+<p class="mt-3 text-center text-slate-600 max-w-2xl mx-auto">
         Dokumentasi kegiatan dari berita dan artikel. Klik foto untuk memperbesar.
       </p>
-
-      <div class="mt-10">
-        <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-        <p id="galleryEmpty" class="hidden mt-8 text-center text-slate-600">
-          Galeri belum tersedia. Pastikan <code>assets/data/posts.json</code> berisi data dan setiap post punya <code>image</code>.
+<div class="mt-2 rg-wrap">
+<div class="rg-head">
+<h2>Galeri Interaktif (klik kartu tengah untuk zoom)</h2>
+<span class="rg-pill" id="galleryLabel">Memuat...</span>
+</div>
+<div class="rg-gallery mt-3">
+<div aria-label="Sebelumnya" class="rg-nav rg-prev" id="galleryPrev">‹</div>
+<div aria-label="Berikutnya" class="rg-nav rg-next" id="galleryNext">›</div>
+<div aria-label="Panggung Galeri" class="rg-stage" id="galleryStage"></div>
+</div>
+<div class="rg-foot">
+<div>Desktop: klik ‹ › / panah keyboard. Mobile: swipe kiri/kanan.</div>
+<div style="display:flex;gap:10px;align-items:center;">
+<button class="rg-btn" id="galleryToggle" type="button">Autoplay: ON</button>
+<button class="rg-btn" id="galleryShuffle" type="button">Shuffle</button>
+</div>
+</div>
+<p class="hidden mt-6 text-center text-slate-600" id="galleryEmpty">
+          Galeri belum tersedia.
         </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Lightbox -->
-  <div id="lightbox" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50">
-    <button id="closeLightbox" aria-label="Tutup" class="absolute top-6 right-6 text-white text-4xl leading-none font-bold">×</button>
-    <figure class="max-w-[92vw]">
-      <img id="lightboxImg" alt="" class="max-h-[85vh] max-w-[92vw] rounded-2xl shadow-2xl"/>
-      <figcaption id="lightboxCap" class="mt-3 text-center text-white/90 text-sm"></figcaption>
-    </figure>
-  </div>
+</div>
+</div>
+</section>
+<!-- Lightbox -->
+<div class="fixed inset-0 bg-black/80 hidden flex items-center justify-center z-50" id="lightbox">
+<button aria-label="Tutup" class="absolute top-6 right-6 text-white text-4xl leading-none font-bold" id="closeLightbox">×</button>
+<figure class="max-w-[92vw]">
+<img alt="" class="max-h-[85vh] max-w-[92vw] rounded-2xl shadow-2xl" id="lightboxImg"/>
+<figcaption class="mt-3 text-center text-white/90 text-sm" id="lightboxCap"></figcaption>
+</figure>
+</div>
 </main>
 <footer class="bg-blue-800 text-gray-200 pt-16">
 <div class="max-w-7xl mx-auto px-6 pb-10">

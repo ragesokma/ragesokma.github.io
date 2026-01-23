@@ -1,13 +1,17 @@
 (function () {
-  const GRID_ID = "galleryGrid";
-  const EMPTY_ID = "galleryEmpty";
   const DATA_URL = "assets/data/posts.json";
 
-  const grid = document.getElementById(GRID_ID);
-  if (!grid) return;
-  const empty = document.getElementById(EMPTY_ID);
+  // 3D gallery elements
+  const stage = document.getElementById("galleryStage");
+  const label = document.getElementById("galleryLabel");
+  const btnPrev = document.getElementById("galleryPrev");
+  const btnNext = document.getElementById("galleryNext");
+  const btnToggle = document.getElementById("galleryToggle");
+  const btnShuffle = document.getElementById("galleryShuffle");
 
-  // Lightbox elements
+  if (!stage) return;
+
+  // Lightbox elements (reuse existing)
   const lb = document.getElementById("lightbox");
   const lbImg = document.getElementById("lightboxImg");
   const lbCap = document.getElementById("lightboxCap");
@@ -46,41 +50,139 @@
     document.body.style.overflow = "";
   }
 
-  function makeCard(post) {
-    const title = safeText(post.title) || "Dokumentasi";
-    const img = safeText(post.image);
-    if (!img) return null;
+  // helper mod (loop)
+  function mod(n, m) {
+    return ((n % m) + m) % m;
+  }
 
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className =
-      "group relative w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600/40";
-    btn.setAttribute("aria-label", "Buka foto: " + title);
+  let slides = [];
+  let cards = [];
+  let index = 0;
 
-    const figure = document.createElement("div");
-    figure.className = "aspect-[4/3] bg-slate-100";
+  function buildCards() {
+    stage.innerHTML = "";
+    cards = slides.map((s, idx) => {
+      const el = document.createElement("div");
+      el.className = "rg-card rg-off";
+      el.dataset.idx = String(idx);
 
-    const image = document.createElement("img");
-    image.src = img;
-    image.alt = title;
-    image.loading = "lazy";
-    image.className =
-      "h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]";
-    figure.appendChild(image);
+      const img = document.createElement("div");
+      img.className = "rg-img";
+      // background image + overlay gradient
+      img.style.backgroundImage = `linear-gradient(180deg, rgba(2,6,23,.20), rgba(2,6,23,.60)), url('${s.image}')`;
 
-    const overlay = document.createElement("div");
-    overlay.className =
-      "absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/55 via-black/20 to-transparent";
-    const cap = document.createElement("div");
-    cap.className = "text-white text-sm font-semibold leading-snug";
-    cap.textContent = title;
-    overlay.appendChild(cap);
+      const badge = document.createElement("span");
+      badge.className = "rg-badge";
+      badge.innerHTML = `<span class="rg-dot"></span>${safeText(s.badge) || "DOKUMENTASI"}`;
 
-    btn.appendChild(figure);
-    btn.appendChild(overlay);
+      const title = document.createElement("span");
+      title.className = "rg-title";
+      title.textContent = safeText(s.title) || "Dokumentasi";
 
-    btn.addEventListener("click", () => openLightbox(img, title));
-    return btn;
+      const meta = document.createElement("div");
+      meta.className = "rg-meta";
+      meta.append(badge, title);
+
+      img.appendChild(meta);
+      el.appendChild(img);
+
+      el.addEventListener("click", () => {
+        if (idx !== index) {
+          index = idx;
+          render();
+        } else {
+          openLightbox(s.image, s.title);
+        }
+      });
+
+      stage.appendChild(el);
+      return el;
+    });
+  }
+
+  function applySlot(i, cls) {
+    if (!cards[i]) return;
+    cards[i].className = "rg-card " + cls;
+  }
+
+  function render() {
+    const n = cards.length;
+    if (!n) return;
+
+    // reset
+    cards.forEach((c) => (c.className = "rg-card rg-off"));
+
+    // slot mapping: 2 kiri + center + 2 kanan (fallback kalau jumlah sedikit)
+    if (n === 1) {
+      applySlot(0, "rg-center");
+    } else if (n === 2) {
+      applySlot(mod(index, n), "rg-center");
+      applySlot(mod(index + 1, n), "rg-right1");
+    } else if (n === 3) {
+      applySlot(mod(index - 1, n), "rg-left1");
+      applySlot(mod(index, n), "rg-center");
+      applySlot(mod(index + 1, n), "rg-right1");
+    } else if (n === 4) {
+      applySlot(mod(index - 1, n), "rg-left1");
+      applySlot(mod(index, n), "rg-center");
+      applySlot(mod(index + 1, n), "rg-right1");
+      applySlot(mod(index + 2, n), "rg-right2");
+    } else {
+      applySlot(mod(index - 2, n), "rg-left2");
+      applySlot(mod(index - 1, n), "rg-left1");
+      applySlot(mod(index, n), "rg-center");
+      applySlot(mod(index + 1, n), "rg-right1");
+      applySlot(mod(index + 2, n), "rg-right2");
+    }
+
+    if (label) label.textContent = `Slide ${index + 1} / ${n}`;
+  }
+
+  function goPrev() {
+    const n = cards.length;
+    if (!n) return;
+    index = mod(index - 1, n);
+    render();
+  }
+  function goNext() {
+    const n = cards.length;
+    if (!n) return;
+    index = mod(index + 1, n);
+    render();
+  }
+
+  // autoplay
+  let autoplay = true;
+  let timer = null;
+
+  function startTimer() {
+    stopTimer();
+    timer = window.setInterval(() => {
+      if (!autoplay) return;
+      // on mobile (<=768px) autoplay off by default to avoid "melawan swipe"
+      if (window.matchMedia && window.matchMedia("(max-width: 768px)").matches) return;
+      goNext();
+    }, 4200);
+  }
+  function stopTimer() {
+    if (timer) window.clearInterval(timer);
+    timer = null;
+  }
+
+  function toggleAutoplay() {
+    autoplay = !autoplay;
+    if (btnToggle) btnToggle.textContent = `Autoplay: ${autoplay ? "ON" : "OFF"}`;
+  }
+
+  function shuffleSlides() {
+    // Fisher–Yates
+    for (let i = slides.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [slides[i], slides[j]] = [slides[j], slides[i]];
+    }
+    index = 0;
+    buildCards();
+    render();
   }
 
   async function init() {
@@ -88,24 +190,13 @@
       const res = await fetch(DATA_URL, { cache: "no-store" });
       if (!res.ok) throw new Error("Gagal memuat posts.json: " + res.status);
       const data = await res.json();
-
-      // This project uses Array posts.json, but also support {posts:[...]}
-      const posts = Array.isArray(data)
-        ? data
-        : (data && Array.isArray(data.posts) ? data.posts : []);
+      const posts = Array.isArray(data) ? data : (data && Array.isArray(data.posts) ? data.posts : []);
 
       const withImg = posts.filter((p) => p && p.image);
 
-      // Mix: latest berita + latest artikel, unique by image
-      const berita = withImg
-        .filter((p) => normalizeType(p) === "berita")
-        .sort(sortByDateDesc)
-        .slice(0, 24);
-
-      const artikel = withImg
-        .filter((p) => normalizeType(p) === "artikel")
-        .sort(sortByDateDesc)
-        .slice(0, 24);
+      // Prefer latest berita+artikel, unique by image; cap 14 so it stays snappy
+      const berita = withImg.filter((p) => normalizeType(p) === "berita").sort(sortByDateDesc).slice(0, 24);
+      const artikel = withImg.filter((p) => normalizeType(p) === "artikel").sort(sortByDateDesc).slice(0, 24);
 
       const seen = new Set();
       const merged = [];
@@ -116,21 +207,44 @@
         merged.push(p);
       });
 
-      grid.innerHTML = "";
-      merged.forEach((p) => {
-        const card = makeCard(p);
-        if (card) grid.appendChild(card);
-      });
+      // fallback: kalau tidak ada berita/artikel bergambar, ambil apapun yang bergambar
+      const base = merged.length ? merged : withImg.sort(sortByDateDesc);
 
-      if (empty) {
-        if (merged.length === 0) empty.classList.remove("hidden");
-        else empty.classList.add("hidden");
+      slides = base.slice(0, 14).map((p) => ({
+        title: safeText(p.title) || "Dokumentasi",
+        image: safeText(p.image),
+        badge:
+          (safeText(p.category) || safeText(p.type) || "Dokumentasi")
+            .toUpperCase()
+            .replace(/[_-]+/g, " ")
+            .slice(0, 16),
+      })).filter(s => s.image);
+
+      if (!slides.length) {
+        if (label) label.textContent = "Tidak ada gambar";
+        return;
       }
+
+      buildCards();
+      render();
+      startTimer();
     } catch (err) {
       console.error(err);
-      if (empty) empty.classList.remove("hidden");
+      if (label) label.textContent = "Gagal memuat galeri";
     }
   }
+
+  // events
+  if (btnPrev) btnPrev.addEventListener("click", goPrev);
+  if (btnNext) btnNext.addEventListener("click", goNext);
+  if (btnToggle) btnToggle.addEventListener("click", toggleAutoplay);
+  if (btnShuffle) btnShuffle.addEventListener("click", shuffleSlides);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") goPrev();
+    if (e.key === "ArrowRight") goNext();
+    if (e.key === "Escape") closeLightbox();
+  });
 
   // Lightbox events
   if (lbClose) lbClose.addEventListener("click", closeLightbox);
@@ -139,8 +253,11 @@
       if (e.target === lb) closeLightbox();
     });
   }
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeLightbox();
+
+  // keep timer stable when tab hidden
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) stopTimer();
+    else startTimer();
   });
 
   init();
