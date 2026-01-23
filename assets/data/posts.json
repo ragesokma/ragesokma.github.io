@@ -1,0 +1,112 @@
+[
+  {
+    "title": "Indahnya Jumat Berbagi",
+    "slug": "indahnya-jumat-berbagi",
+    "url": "berita/indahnya-jumat-berbagi.html",
+    "date": "2026-01-23",
+    "type": "berita",
+    "category": "Kegiatan",
+    "excerpt": "RAGE SOKMA menghadirkan program sosial rutin “Indahnya Jumat Berbagi” setiap hari Jumat untuk menyalurkan sedekah donatur kepada dhuafa dan fakir miskin.",
+    "image": "assets/images/indahnya-jumat-berbagi.jpg",
+    "popular": false
+  },
+  {
+    "title": "Aksi Peduli Dhuafa: Paket Sembako untuk Warga",
+    "slug": "aksi-peduli-dhuafa-paket-sembako-untuk-warga",
+    "url": "berita/aksi-peduli-dhuafa-paket-sembako-untuk-warga.html",
+    "date": "2026-01-22",
+    "type": "berita",
+    "category": "Kegiatan",
+    "excerpt": "RAGE SOKMA menyalurkan paket sembako untuk membantu warga dhuafa dan memperkuat kepedulian sosial.",
+    "image": "assets/images/paket-sembako-untuk-warga.jpg",
+    "popular": true
+  },
+  {
+    "title": "Rekap Penyaluran Donasi Januari 2026",
+    "slug": "rekap-penyaluran-donasi-januari-2026",
+    "url": "berita/rekap-penyaluran-donasi-januari-2026.html",
+    "date": "2026-01-21",
+    "type": "berita",
+    "category": "Transparansi",
+    "excerpt": "Ringkasan penyaluran donasi bulan Januari 2026 beserta tautan dokumentasi dan program terkait.",
+    "image": "assets/images/rekap-penyaluran-donasi-januari-2026.jpg",
+    "popular": false
+  },
+  {
+    "title": "Cara Berdonasi yang Aman dan Tepat Sasaran",
+    "slug": "cara-berdonasi-yang-aman-dan-tepat-sasaran",
+    "url": "artikel/cara-berdonasi-yang-aman-dan-tepat-sasaran.html",
+    "date": "2026-01-18",
+    "type": "artikel",
+    "category": "Edukasi",
+    "excerpt": "Panduan singkat agar donasi Anda terasa tenang: jelas tujuannya, tercatat, dan bisa dipantau transparansinya.",
+    "image": "assets/images/peran-komunitas-dalam-membantu-dhuafa.jpg",
+    "popular": true
+  },
+  {
+    "title": "Santunan Anak Yatim RAGE SOKMA Bulan Ramadhan",
+    "slug": "santunan-anak-yatim-rage-sokma-bulan-ramadhan",
+    "url": "berita/santunan-anak-yatim-rage-sokma-bulan-ramadhan.html",
+    "date": "2026-01-12",
+    "type": "berita",
+    "category": "Kegiatan",
+    "excerpt": "RAGE SOKMA melaksanakan santunan anak yatim sebagai wujud kepedulian sosial dan keagamaan.",
+    "image": "assets/images/Santunan-Anak-Yatim-RAGE-SOKMA-Bulan-Ramadhan.jpg",
+    "popular": false
+  },
+  {
+    "title": "Program Beasiswa Pendidikan Anak Dhuafa",
+    "slug": "program-beasiswa-pendidikan-anak-dhuafa",
+    "url": "berita/program-beasiswa-pendidikan-anak-dhuafa.html",
+    "date": "2026-01-10",
+    "type": "berita",
+    "category": "Program",
+    "excerpt": "Program bantuan pendidikan berkelanjutan untuk meningkatkan kualitas pendidikan anak dhuafa.",
+    "image": "assets/images/Program-Beasiswa-Pendidikan-Anak-Dhuafa.jpg",
+    "popular": false
+  },
+  {
+    "title": "Pengajian Rutin dan Doa Bersama",
+    "slug": "pengajian-rutin-dan-doa-bersama",
+    "url": "berita/pengajian-rutin-dan-doa-bersama.html",
+    "date": "2026-01-08",
+    "type": "berita",
+    "category": "Kegiatan",
+    "excerpt": "Pengajian rutin sebagai sarana pembinaan spiritual dan mempererat ukhuwah.",
+    "image": "assets/images/Pengajian-Rutin-dan-Doa-Bersama.jpg",
+    "popular": false
+  },
+  {
+    "title": "Makna Kepedulian Sosial dalam Islam",
+    "slug": "makna-kepedulian-sosial-dalam-islam",
+    "url": "artikel/makna-kepedulian-sosial-dalam-islam.html",
+    "date": "2025-12-25",
+    "type": "artikel",
+    "category": "Edukasi",
+    "excerpt": "Nilai kepedulian sosial dalam Islam sebagai fondasi gerakan berbagi.",
+    "image": "assets/images/makna-kepedulian-sosial-dalam-islam.jpg",
+    "popular": true
+  },
+  {
+    "title": "Peran Komunitas dalam Membantu Dhuafa",
+    "slug": "peran-komunitas-dalam-membantu-dhuafa",
+    "url": "artikel/peran-komunitas-dalam-membantu-dhuafa.html",
+    "date": "2025-12-18",
+    "type": "artikel",
+    "category": "Edukasi",
+    "excerpt": "Kolaborasi relawan dan donatur sebagai kunci program sosial yang berkelanjutan.",
+    "image": "assets/images/peran-komunitas-dalam-membantu-dhuafa.jpg",
+    "popular": true
+  },
+  {
+    "title": "Pentingnya Pendidikan untuk Anak Yatim",
+    "slug": "pentingnya-pendidikan-untuk-anak-yatim",
+    "url": "artikel/pentingnya-pendidikan-untuk-anak-yatim.html",
+    "date": "2025-12-10",
+    "type": "artikel",
+    "category": "Edukasi",
+    "excerpt": "Pendidikan sebagai fondasi masa depan dan jalan memperkuat kemandirian anak yatim.",
+    "image": "assets/images/pentingnya-pendidikan-untuk-anak-yatim.jpg",
+    "popular": true
+  }
+]
