@@ -7,14 +7,14 @@
   const DATA_URL = "assets/data/posts.json";
 
   const DEFAULT_CATEGORY_BY_TYPE = {
-    berita: "Kegiatan",
-    artikel: "Edukasi",
-    program: "Program",
-    transparansi: "Transparansi",
-    relawan: "Relawan"
+    berita: "Sosial Keagamaan",
+    artikel: "Sosial Keagamaan",
+    program: "Sosial Keagamaan",
+    transparansi: "Sosial Keagamaan",
+    relawan: "Sosial Keagamaan"
   };
 
-  const CATEGORY_ORDER = ["Kegiatan", "Program", "Transparansi", "Dokumentasi", "Pengumuman", "Relawan", "Edukasi"];
+  const CATEGORY_ORDER = ["Santunan Yatim", "Peduli Dhu’afa", "Sosial Keagamaan"];
 
   function safeText(s) {
     return (s || "").toString();
@@ -35,7 +35,7 @@
   function normalizeCategory(post) {
     if (post.category && post.category.trim()) return post.category.trim();
     const t = (post.type || "").toLowerCase();
-    return DEFAULT_CATEGORY_BY_TYPE[t] || "Pengumuman";
+    return DEFAULT_CATEGORY_BY_TYPE[t] || "Sosial Keagamaan";
   }
 
   function getAllCategories(posts) {
