@@ -41,6 +41,11 @@
    ========================================================= */
 
 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10002;
+  pointer-events: auto;
+
   /* Glass background */
   background: rgba(255, 255, 255, 0.55);
   -webkit-backdrop-filter: blur(14px);
@@ -562,16 +567,15 @@ details[open] .faq-summary::after{
     pointer-events: auto;
     transition: opacity .22s ease;
   }
-  /* Override Tailwind's .hidden (display:none) so drawers can animate */
+  /* Drawers hidden = fully removed to prevent click-blocking on mobile */
   .mobile-drawer.hidden{
-    display: block !important;
+    display: none !important;
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
   }
 
-
-  /* Panel slide animation (left) */
+/* Panel slide animation (left) */
   .mobile-drawer .mobile-panel{
     transform: translateX(-14px);
     transition: transform .22s ease;
@@ -1386,6 +1390,7 @@ details[open] .faq-summary::after{
 /* Global floating tooltip (anti-clipping) */
 .impact-tooltip-floating{
   position: fixed;
+  pointer-events: none;
   z-index: 999999;
   max-width: 260px;
   padding: 10px 12px;
@@ -1578,10 +1583,28 @@ details[open] .faq-summary::after{
     grid-template-columns: 48px 1fr 48px;
     align-items: center;
     justify-items: center;
+    position: relative;
   }
-  .site-brand{ justify-self: center; }
-  #quickBtn{ justify-self: start; }
-  #menuBtn{ justify-self: end; }
+
+  /* Pin each element to a dedicated grid column so the logo link never overlaps buttons */
+  #quickBtn{
+    grid-column: 1;
+    justify-self: start;
+  }
+  .site-brand{
+    grid-column: 2;
+    justify-self: center;
+    /* override mx-auto on mobile to prevent overlap */
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width: calc(100% - 96px);
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  #menuBtn{
+    grid-column: 3;
+    justify-self: end;
+  }
 }
 
 /* Desktop (>=1024px): show nav + login, hide mobile buttons */
