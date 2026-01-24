@@ -76,6 +76,33 @@
   height: 2.25rem; /* from 3rem */
 }
 
+/* =========================================================
+   LOGO SIZE SAFETY
+   Saat Tailwind CDN diganti ke CSS static, kadang ada kasus
+   class utility tidak ter-apply karena cache/build mismatch.
+   Ini memastikan logo header tidak pernah membesar/overflow.
+   ========================================================= */
+.site-brand img.site-logo{
+  height: 2.25rem !important;
+  width: auto !important;
+  max-height: 2.75rem;
+  flex-shrink: 0;
+}
+
+@media (min-width: 1024px){
+  .site-brand img.site-logo{
+    height: 2.75rem !important;
+    max-height: 3rem;
+  }
+}
+
+/* Logo pada mobile drawer */
+.mobile-drawer-logo{
+  height: 2.5rem;
+  width: auto;
+  flex-shrink: 0;
+}
+
 /* Underline hover + active indicator */
 .nav-link {
   position: relative;
@@ -2117,3 +2144,7 @@ body.no-scroll{ overflow: hidden !important; }
     display: none !important;
   }
 }
+
+
+/* PERF: image sizing */
+img[width][height]{height:auto;}
