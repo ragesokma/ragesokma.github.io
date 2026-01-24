@@ -86,6 +86,38 @@
   outline: 1px solid transparent;
 }
 
+/* Nav with icons (tight + consistent spacing) */
+.nav-item{
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.nav-ico{
+  width: 16px;
+  height: 16px;
+  color: rgba(29, 78, 216, 0.92);
+  flex: 0 0 auto;
+}
+
+/* Make icon-nav a bit tighter so logo/title fits */
+.nav-item.nav-link{ padding: 0.38rem 0.55rem; }
+
+/* Site title sizing (avoid wrapping in tight widths) */
+.site-title{
+  font-weight: 800;
+  color: rgb(30, 64, 175);
+  letter-spacing: -0.2px;
+  font-size: 1.0rem;
+  white-space: nowrap;
+}
+@media (min-width: 1024px){
+  .site-title{ font-size: 1.05rem; }
+}
+@media (max-width: 380px){
+  .site-title{ font-size: 0.95rem; }
+}
+
 /* Glass blue hover surface for navbar items (calm) */
 .nav-link:hover,
 .nav-link:focus-visible {
@@ -144,6 +176,20 @@
   backdrop-filter: blur(18px);
   border-top: 1px solid rgba(255, 255, 255, 0.55);
 }
+  /* Mobile drawer: keep icon on the LEFT (Tailwind preflight makes svg display:block) */
+  .mobile-panel .nav-link.nav-item{
+    display: flex !important;
+    align-items: center;
+    gap: 0.65rem;
+  }
+  .mobile-panel .nav-link.nav-item .nav-ico{
+    flex: 0 0 auto;
+  }
+  .mobile-panel .nav-link.nav-item span{
+    display: inline-block;
+    line-height: 1.2;
+  }
+
 
 /* Login icon button */
 .login-icon {
@@ -717,12 +763,16 @@ details[open] .faq-summary::after{
 /* Mobile drawer submenu chevron */
 @media (max-width: 1024px){
   .mobile-panel details{ margin: 0; }
+
+  /* Icon + label in mobile menu should stay tight, with chevron on the right */
+  .mobile-panel .nav-item{ width: 100%; }
+
   .mobile-panel summary.mobile-summary{
     list-style: none;
     cursor: pointer;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     gap: 10px;
     padding: 0.7rem 0.9rem;
     border-radius: 14px;
@@ -737,6 +787,7 @@ details[open] .faq-summary::after{
     font-weight: 900;
     color: rgba(15,23,42,0.65);
     transform: translateY(-0.5px);
+    margin-left: auto;
   }
   .mobile-panel details[open] > summary.mobile-summary{
     background: rgba(37, 99, 235, 0.10);
@@ -1609,7 +1660,7 @@ details[open] .faq-summary::after{
 
 /* Desktop (>=1024px): show nav + login, hide mobile buttons */
 @media (min-width: 1024px) {
-  .desktop-nav{ display: flex; align-items: center; gap: 28px; }
+  .desktop-nav{ display: flex; align-items: center; gap: 18px; }
   .desktop-login{ display: flex; align-items: center; }
   #menuBtn, #quickBtn{ display: none !important; }
   .site-header__inner{ display: flex; }
@@ -1819,14 +1870,9 @@ body.no-scroll{ overflow: hidden !important; }
   text-decoration: none;
 }
 .mobile-panel a.is-active::before{
-  content: "";
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-radius: 999px;
-  background: rgba(29,78,216,.9);
-  margin-right: 10px;
-  transform: translateY(-1px);
+  /* Hide bullet/dot indicator in the mobile drawer (keeps blue active text) */
+  content: none;
+  display: none;
 }
 
 

@@ -16,6 +16,28 @@
   const lbImg = document.getElementById("lightboxImg");
   const lbCap = document.getElementById("lightboxCap");
   const lbClose = document.getElementById("closeLightbox");
+  // Preload cache (biar zoom langsung tajam)
+  const preloadCache = new Map();
+  function preloadImage(src) {
+    const s = (src || "").toString().trim();
+    if (!s || preloadCache.has(s)) return;
+    const img = new Image();
+    // Hint: decode asynchronously so it doesn't block UI
+    img.decoding = "async";
+    img.loading = "eager";
+    img.src = s;
+    preloadCache.set(s, img);
+  }
+  function preloadAround(centerIdx, radius = 2) {
+    const n = slides.length;
+    if (!n) return;
+    for (let d = -radius; d <= radius; d++) {
+      const i = mod(centerIdx + d, n);
+      const src = slides[i] && slides[i].image;
+      if (src) preloadImage(src);
+    }
+  }
+
 
   function safeText(v) {
     return (v == null ? "" : String(v)).trim();
@@ -37,6 +59,7 @@
 
   function openLightbox(src, title) {
     if (!lb || !lbImg) return;
+    preloadImage(src);
     lbImg.src = src;
     lbImg.alt = title || "";
     if (lbCap) lbCap.textContent = title || "";
@@ -81,7 +104,17 @@
 
       const meta = document.createElement("div");
       meta.className = "rg-meta";
-      meta.append(badge, title);
+      const zoom = document.createElement("button");
+      zoom.className = "rg-zoom";
+      zoom.type = "button";
+      zoom.setAttribute("aria-label", "Perbesar foto");
+      zoom.textContent = "🔍";
+      zoom.addEventListener("click", (e) => {
+        e.stopPropagation();
+        openLightbox(s.image, s.title);
+      });
+
+      meta.append(badge, title, zoom);
 
       img.appendChild(meta);
       el.appendChild(img);
@@ -91,7 +124,12 @@
           index = idx;
           render();
         } else {
-          openLightbox(s.image, s.title);
+          // default: open the post page
+          if (s.url) {
+            window.location.href = s.url;
+          } else {
+            openLightbox(s.image, s.title);
+          }
         }
       });
 
@@ -136,6 +174,9 @@
     }
 
     if (label) label.textContent = `Slide ${index + 1} / ${n}`;
+
+    // Preload active + neighbors so lightbox opens crisp
+    preloadAround(index, 2);
   }
 
   function goPrev() {
@@ -213,6 +254,7 @@
       slides = base.slice(0, 14).map((p) => ({
         title: safeText(p.title) || "Dokumentasi",
         image: safeText(p.image),
+        url: safeText(p.url) || (safeText(p.type) ? (safeText(p.type).toLowerCase()+"/"+safeText(p.slug)+".html") : ""),
         badge:
           (safeText(p.category) || safeText(p.type) || "Dokumentasi")
             .toUpperCase()
@@ -227,6 +269,7 @@
 
       buildCards();
       render();
+      preloadAround(index, 2);
       startTimer();
     } catch (err) {
       console.error(err);
