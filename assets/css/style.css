@@ -76,33 +76,6 @@
   height: 2.25rem; /* from 3rem */
 }
 
-/* =========================================================
-   LOGO SIZE SAFETY
-   Saat Tailwind CDN diganti ke CSS static, kadang ada kasus
-   class utility tidak ter-apply karena cache/build mismatch.
-   Ini memastikan logo header tidak pernah membesar/overflow.
-   ========================================================= */
-.site-brand img.site-logo{
-  height: 2.25rem !important;
-  width: auto !important;
-  max-height: 2.75rem;
-  flex-shrink: 0;
-}
-
-@media (min-width: 1024px){
-  .site-brand img.site-logo{
-    height: 2.75rem !important;
-    max-height: 3rem;
-  }
-}
-
-/* Logo pada mobile drawer */
-.mobile-drawer-logo{
-  height: 2.5rem;
-  width: auto;
-  flex-shrink: 0;
-}
-
 /* Underline hover + active indicator */
 .nav-link {
   position: relative;
@@ -398,15 +371,18 @@
   background: rgba(255,255,255,0.60);
   box-shadow: 0 12px 28px rgba(0,0,0,0.08);
   transform: translateZ(0);
+  /* lock height so overlay never creates extra area */
+  height: 220px;
 }
 
 .gallery-tease-card img{
   width:100%;
-  height: 220px;
+  height: 100%;
   object-fit: cover;
   display:block;
   transition: transform 300ms ease;
 }
+
 
 .gallery-tease-card:hover img,
 .gallery-tease-card:focus-visible img{
@@ -708,6 +684,51 @@ details[open] .faq-summary::after{
   border-color: rgba(244,63,94,0.25);
   background: rgba(244,63,94,0.06);
 }
+
+/* Follow us (Quick Action - Mobile) */
+.quick-follow{
+  margin-top: 14px;
+  padding: 12px 12px;
+  border: 1px solid rgba(226,232,240,0.95);
+  border-radius: 16px;
+  background: rgba(29,78,216,0.04);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+}
+.quick-follow__label{
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(15,23,42,0.75);
+  margin: 0;
+}
+.quick-follow__icons{
+  display:flex;
+  gap: 10px;
+  align-items:center;
+}
+.quick-follow__icon{
+  width: 36px;
+  height: 36px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius: 999px;
+  border: 1px solid rgba(29,78,216,0.18);
+  background: rgba(255,255,255,0.92);
+  color: rgba(29,78,216,0.95);
+  box-shadow: 0 10px 18px -16px rgba(29,78,216,0.55);
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.quick-follow__icon:hover{
+  background: rgba(29,78,216,0.06);
+  box-shadow: 0 14px 22px -18px rgba(29,78,216,0.7);
+}
+.quick-follow__icon svg{ width: 18px; height: 18px; fill: currentColor; }
+.quick-follow__icon:active{ transform: scale(0.98); }
+.quick-follow__icon svg{ width: 18px; height: 18px; fill: currentColor; }
+
 
   .mobile-drawer-head{
     display:flex;
@@ -1048,6 +1069,25 @@ details[open] .faq-summary::after{
   to{ -webkit-mask-size: 100% 100%; mask-size: 100% 100%; opacity:1; transform:translateY(0); }
 }
 
+
+/* Shine Sweep: kilau halus lewat sekali (pengganti bars) */
+.anim-shine{
+  position: relative;
+  overflow: hidden;
+}
+.anim-shine::after{
+  content:"";
+  position:absolute;
+  inset:-40% -60%;
+  background: linear-gradient(120deg, transparent 45%, rgba(255,255,255,.55) 50%, transparent 55%);
+  transform: translateX(-60%);
+  animation: badgeShine 900ms ease-out both;
+  pointer-events:none;
+}
+@keyframes badgeShine{
+  to{ transform: translateX(60%); }
+}
+
 /* Mobile: jaga agar badge tetap rapi */
 @media (max-width: 640px){
   .program-title-inline{ gap:10px; }
@@ -1062,7 +1102,8 @@ details[open] .faq-summary::after{
 
 /* Aksesibilitas: hormati reduce motion */
 @media (prefers-reduced-motion: reduce){
-  .anim-wipe, .anim-peek, .anim-bars{ animation:none !important; }
+  .anim-wipe, .anim-peek, .anim-bars, .anim-shine{ animation:none !important; }
+  .anim-shine::after{ animation:none !important; }
 }
 
 /* =====================================================
@@ -2148,3 +2189,19 @@ body.no-scroll{ overflow: hidden !important; }
 
 /* PERF: image sizing */
 img[width][height]{height:auto;}
+
+
+/* LOGO SIZE SAFETY (prevents logo from overscaling on some builds) */
+.site-logo{max-height:2.75rem;height:2.75rem;width:auto !important;}
+.mobile-drawer-logo{max-height:2.5rem;height:2.5rem;width:auto !important;}
+@media (min-width:1024px){.site-logo{max-height:2.75rem;height:2.75rem;}}
+@media (max-width:640px){.site-logo{max-height:2.25rem;height:2.25rem;}}
+
+
+@media (max-width: 900px){
+  .gallery-tease-grid{ grid-template-columns: 1fr; }
+  .gallery-tease-card{ height: 200px; }
+}
+@media (max-width: 480px){
+  .gallery-tease-card{ height: 180px; }
+}

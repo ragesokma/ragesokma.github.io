@@ -498,7 +498,7 @@ if (quickBtn && quickMenu) {
         .filter(Boolean);
 
       // Animasi bergantian: Wipe -> Peek In -> Random Bars
-      const animClasses = ['anim-wipe', 'anim-peek', 'anim-bars'];
+      const animClasses = ['anim-wipe', 'anim-peek', 'anim-shine'];
       let animIndex = 0;
 
       const applyAnim = () => {
