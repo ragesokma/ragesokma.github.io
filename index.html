@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-
-<html lang="id">
-<head>
+<html lang="id"><head>
 <meta charset="utf-8"/>
 <title>RAGE SOKMA | Komunitas Peduli Yatim &amp; Dhuafa</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -13,7 +11,7 @@
 <meta content="RAGE SOKMA | Komunitas Peduli Yatim &amp; Dhuafa" property="og:title"/>
 <meta content="RAGE SOKMA adalah komunitas peduli yatim &amp; dhuafa melalui program pendidikan, sosial, sosial, dan keagamaan. Donasi dan relawan untuk dampak nyata." property="og:description"/>
 <meta content="https://ragesokma.org/index.html" property="og:url"/>
-<meta content="https://ragesokma.org/assets/images/logo.png" property="og:image"/>
+<meta content="https://ragesokma.org/assets/images/logo.webp" property="og:image"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="RAGE SOKMA | Komunitas Peduli Yatim &amp; Dhuafa" name="twitter:title"/>
 <meta content="RAGE SOKMA adalah komunitas peduli yatim &amp; dhuafa melalui program pendidikan, sosial, sosial, dan keagamaan. Donasi dan relawan untuk dampak nyata." name="twitter:description"/>
@@ -24,7 +22,7 @@
       "@type": "Organization",
       "name": "RAGE SOKMA",
       "url": "https://ragesokma.org/index.html",
-      "logo": "https://ragesokma.org/assets/images/logo.png",
+      "logo": "https://ragesokma.org/assets/images/logo.webp",
       "sameAs": []
     }
     </script>
@@ -38,9 +36,8 @@
     }
     </script>
 <!-- CSS -->
-<link href="assets/css/style.css" rel="stylesheet"/><link as="image" fetchpriority="high" href="assets/images/Santunan-Anak-Yatim-RAGE-SOKMA-Bulan-Ramadhan.jpg" rel="preload"/>
-<!-- Tailwind (CDN) -->
-<link rel="stylesheet" href="assets/tailwind.css">
+<link href="assets/css/app.css" rel="stylesheet"/><link as="image" fetchpriority="high" href="assets/images/Santunan-Anak-Yatim-RAGE-SOKMA-Bulan-Ramadhan.webp" rel="preload"/>
+<link href="assets/css/utilities.css" rel="stylesheet"/>
 <link href="/assets/images/logo.png" rel="icon" type="image/png"/>
 <link href="/assets/images/logo.png" rel="apple-touch-icon"/>
 </head>
@@ -50,15 +47,15 @@
 <div class="site-header__inner flex items-center justify-between h-16 lg:h-20 transition-all duration-300">
 <!-- LOGO -->
 <a class="site-brand flex items-center gap-2 order-2 lg:order-none mx-auto lg:mx-0" href="index.html">
-<img alt="Logo RAGE SOKMA" class="site-logo h-9 lg:h-11 w-auto transition-all duration-300" decoding="async" height="516" loading="lazy" src="assets/images/logo.png" width="484"/>
+<img alt="Logo RAGE SOKMA" class="site-logo h-9 lg:h-11 w-auto transition-all duration-300" decoding="async" height="516" loading="lazy" src="assets/images/logo.webp" width="484"/>
 <span class="site-title">RAGE SOKMA</span>
 </a>
 <!-- NAV DESKTOP -->
 <nav aria-label="Navigasi utama" class="items-center text-gray-800 font-medium desktop-nav">
-<a class="nav-link nav-item" data-nav="" href="index.html"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg><span>Beranda</span></a>
+<a class="nav-link nav-item" data-nav="" href="index.html"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg><span>Beranda</span></a>
 <!-- Tentang (dropdown) -->
 <div class="relative">
-<button aria-haspopup="true" aria-label="Menu Tentang" class="nav-link nav-parent nav-item peer" data-nav-parent="tentang" type="button"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg><span>Tentang</span></button>
+<button aria-haspopup="true" aria-label="Menu Tentang" class="nav-link nav-parent nav-item peer" data-nav-parent="tentang" type="button"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg><span>Tentang</span></button>
 <div class="absolute left-0 top-full pt-3 hidden peer-hover:block peer-focus:block hover:block">
 <div class="w-56 glass-panel rounded-xl">
 <a class="block px-4 py-3 hover:bg-white/20 rounded-t-xl" data-nav="" href="/tentang/sejarah.html">Sejarah</a>
@@ -70,7 +67,7 @@
 </div>
 <!-- Program (dropdown) -->
 <div class="relative">
-<button aria-haspopup="true" aria-label="Menu Program" class="nav-link nav-parent nav-item peer" data-nav-parent="program" type="button"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M12 2l1.2 5.2L18 9l-4.8 1.8L12 16l-1.2-5.2L6 9l4.8-1.8L12 2z"></path><path d="M19 14l.7 3 2.3 1-.0 0-2.3 1-.7 3-.7-3-2.3-1 2.3-1 .7-3z"></path></svg><span>Program</span></button>
+<button aria-haspopup="true" aria-label="Menu Program" class="nav-link nav-parent nav-item peer" data-nav-parent="program" type="button"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l1.2 5.2L18 9l-4.8 1.8L12 16l-1.2-5.2L6 9l4.8-1.8L12 2z"></path><path d="M19 14l.7 3 2.3 1-.0 0-2.3 1-.7 3-.7-3-2.3-1 2.3-1 .7-3z"></path></svg><span>Program</span></button>
 <div class="absolute left-0 top-full pt-3 hidden peer-hover:block peer-focus:block hover:block">
 <div class="w-72 glass-panel rounded-xl">
 <a class="block px-4 py-3 hover:bg-white/20 rounded-t-xl" data-nav="" href="/program/santunan-yatim.html">Santunan Anak Yatim</a>
@@ -80,21 +77,21 @@
 </div>
 </div>
 </div>
-<a class="nav-link nav-item" data-nav="" href="faq.html"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.1 9a3 3 0 1 1 5.8 1c0 2-3 2-3 4"></path><path d="M12 17h.01"></path></svg><span>FAQ</span></a>
-<a class="nav-link nav-item" data-nav="" href="transparansi.html"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M3 3v18h18"></path><path d="M7 14l3-3 3 3 5-6"></path></svg><span>Transparansi</span></a>
-<a class="nav-link nav-item" data-nav="" href="kontak.html"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1A19.5 19.5 0 0 1 3.2 12.8 19.8 19.8 0 0 1 .1 4.2 2 2 0 0 1 2.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .6 3a2 2 0 0 1-.5 2.1L6 10a16 16 0 0 0 8 8l1.2-1.2a2 2 0 0 1 2.1-.5c1 .3 2 .5 3 .6a2 2 0 0 1 1.7 2z"></path></svg><span>Kontak</span></a>
-<a class="nav-link nav-item font-semibold" data-nav="" href="donasi.html"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.6z"></path></svg><span>Donasi</span></a>
-<a class="nav-link nav-item" data-nav="" href="relawan.html"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg><span>Relawan</span></a>
+<a class="nav-link nav-item" data-nav="" href="faq.html"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.1 9a3 3 0 1 1 5.8 1c0 2-3 2-3 4"></path><path d="M12 17h.01"></path></svg><span>FAQ</span></a>
+<a class="nav-link nav-item" data-nav="" href="transparansi.html"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3v18h18"></path><path d="M7 14l3-3 3 3 5-6"></path></svg><span>Transparansi</span></a>
+<a class="nav-link nav-item" data-nav="" href="kontak.html"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1A19.5 19.5 0 0 1 3.2 12.8 19.8 19.8 0 0 1 .1 4.2 2 2 0 0 1 2.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .6 3a2 2 0 0 1-.5 2.1L6 10a16 16 0 0 0 8 8l1.2-1.2a2 2 0 0 1 2.1-.5c1 .3 2 .5 3 .6a2 2 0 0 1 1.7 2z"></path></svg><span>Kontak</span></a>
+<a class="nav-link nav-item font-semibold" data-nav="" href="donasi.html"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.6z"></path></svg><span>Donasi</span></a>
+<a class="nav-link nav-item" data-nav="" href="relawan.html"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg><span>Relawan</span></a>
 </nav>
 <!-- DESKTOP LOGIN -->
 <div class="desktop-login">
-  <a aria-label="Login" class="login-icon" href="login.html" title="Login / Daftar"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg></a>
+  <a aria-label="Login" class="login-icon" href="login.html" title="Login / Daftar"><svg aria-hidden="true" fill="none" height="22" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6" viewBox="0 0 24 24" width="22"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" x2="3" y1="12" y2="12"></line></svg></a>
 </div>
 <!-- MOBILE BUTTON -->
 <button aria-expanded="false" aria-label="Buka menu" class="lg:hidden text-3xl text-blue-700 mobile-btn order-3" id="menuBtn" type="button">☰</button>
 <!-- QUICK BUTTON -->
 <button aria-expanded="false" aria-label="Aksi cepat" class="lg:hidden text-blue-700 mobile-btn order-1" id="quickBtn" type="button">
-<svg aria-hidden="true" class="w-7 h-7" fill="currentColor" viewbox="0 0 24 24">
+<svg aria-hidden="true" class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
 <circle cx="6" cy="6" r="1.7"></circle>
 <circle cx="12" cy="6" r="1.7"></circle>
 <circle cx="18" cy="6" r="1.7"></circle>
@@ -113,16 +110,16 @@
 <div class="mobile-panel px-6 py-6 space-y-4 text-gray-800">
 <div class="mobile-drawer-head">
 <div class="mobile-drawer-brand">
-<img alt="Logo RAGE SOKMA" class="mobile-drawer-logo" decoding="async" height="516" loading="lazy" src="assets/images/logo.png" width="484"/>
+<img alt="Logo RAGE SOKMA" class="mobile-drawer-logo" decoding="async" height="516" loading="lazy" src="assets/images/logo.webp" width="484"/>
 <span class="mobile-drawer-title">RAGE SOKMA</span>
 </div>
 <button aria-label="Tutup menu" class="mobile-drawer-close" id="mobileClose" type="button">
-<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg>
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg>
 </button>
 </div>
-<a class="block nav-link nav-item" data-nav="" href="index.html"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg><span>Beranda</span></a>
+<a class="block nav-link nav-item" data-nav="" href="index.html"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg><span>Beranda</span></a>
 <details>
-<summary class="mobile-summary"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg><span>Tentang</span></summary>
+<summary class="mobile-summary"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg><span>Tentang</span></summary>
 <div class="pl-4 mt-2 space-y-2">
 <a class="mobile-sub" data-nav="" href="/tentang/sejarah.html">Sejarah</a>
 <a class="mobile-sub" data-nav="" href="/tentang/visi-misi.html">Visi &amp; Misi</a>
@@ -131,7 +128,7 @@
 </div>
 </details>
 <details>
-<summary class="mobile-summary"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M12 2l1.2 5.2L18 9l-4.8 1.8L12 16l-1.2-5.2L6 9l4.8-1.8L12 2z"></path><path d="M19 14l.7 3 2.3 1-.0 0-2.3 1-.7 3-.7-3-2.3-1 2.3-1 .7-3z"></path></svg><span>Program</span></summary>
+<summary class="mobile-summary"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l1.2 5.2L18 9l-4.8 1.8L12 16l-1.2-5.2L6 9l4.8-1.8L12 2z"></path><path d="M19 14l.7 3 2.3 1-.0 0-2.3 1-.7 3-.7-3-2.3-1 2.3-1 .7-3z"></path></svg><span>Program</span></summary>
 <div class="pl-4 mt-2 space-y-2">
 <a class="mobile-sub" data-nav="" href="/program/santunan-yatim.html">Santunan Anak Yatim</a>
 <a class="mobile-sub" data-nav="" href="/program/peduli-dhuafa.html">Peduli Dhu’afa</a>
@@ -139,12 +136,12 @@
 <a class="mobile-sub font-semibold" data-nav="" href="program.html">Semua Program →</a>
 </div>
 </details>
-<a class="block nav-link nav-item" data-nav="" href="transparansi.html"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M3 3v18h18"></path><path d="M7 14l3-3 3 3 5-6"></path></svg><span>Transparansi</span></a>
-<a class="block nav-link nav-item font-semibold" data-nav="" href="donasi.html"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.6z"></path></svg><span>Donasi</span></a>
-<a class="block nav-link nav-item" data-nav="" href="relawan.html"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg><span>Relawan</span></a>
-<a class="block nav-link nav-item" data-nav="" href="kontak.html"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1A19.5 19.5 0 0 1 3.2 12.8 19.8 19.8 0 0 1 .1 4.2 2 2 0 0 1 2.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .6 3a2 2 0 0 1-.5 2.1L6 10a16 16 0 0 0 8 8l1.2-1.2a2 2 0 0 1 2.1-.5c1 .3 2 .5 3 .6a2 2 0 0 1 1.7 2z"></path></svg><span>Kontak</span></a>
-<a class="block nav-link nav-item" data-nav="" href="faq.html"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.1 9a3 3 0 1 1 5.8 1c0 2-3 2-3 4"></path><path d="M12 17h.01"></path></svg><span>FAQ</span></a>
-<a class="block nav-link nav-item" data-nav="" href="login.html"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg><span>Login</span></a>
+<a class="block nav-link nav-item" data-nav="" href="transparansi.html"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3v18h18"></path><path d="M7 14l3-3 3 3 5-6"></path></svg><span>Transparansi</span></a>
+<a class="block nav-link nav-item font-semibold" data-nav="" href="donasi.html"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.6z"></path></svg><span>Donasi</span></a>
+<a class="block nav-link nav-item" data-nav="" href="relawan.html"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg><span>Relawan</span></a>
+<a class="block nav-link nav-item" data-nav="" href="kontak.html"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1A19.5 19.5 0 0 1 3.2 12.8 19.8 19.8 0 0 1 .1 4.2 2 2 0 0 1 2.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .6 3a2 2 0 0 1-.5 2.1L6 10a16 16 0 0 0 8 8l1.2-1.2a2 2 0 0 1 2.1-.5c1 .3 2 .5 3 .6a2 2 0 0 1 1.7 2z"></path></svg><span>Kontak</span></a>
+<a class="block nav-link nav-item" data-nav="" href="faq.html"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.1 9a3 3 0 1 1 5.8 1c0 2-3 2-3 4"></path><path d="M12 17h.01"></path></svg><span>FAQ</span></a>
+<a class="block nav-link nav-item" data-nav="" href="login.html"><svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" x2="3" y1="12" y2="12"></line></svg><span>Login</span></a>
 </div>
 </div>
 <!-- QUICK ACTION MENU (MOBILE) -->
@@ -152,10 +149,10 @@
 <div class="mobile-panel px-6 py-6 text-gray-800">
 <div class="mobile-drawer-head">
 <div class="mobile-drawer-brand">
-<img alt="Logo RAGE SOKMA" class="mobile-drawer-logo" decoding="async" height="516" loading="lazy" src="assets/images/logo.png" width="484"/><span class="mobile-drawer-title">AKSI CEPAT</span>
+<img alt="Logo RAGE SOKMA" class="mobile-drawer-logo" decoding="async" height="516" loading="lazy" src="assets/images/logo.webp" width="484"/><span class="mobile-drawer-title">AKSI CEPAT</span>
 </div>
 <button aria-label="Tutup aksi cepat" class="mobile-drawer-close" id="quickClose" type="button">
-<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg>
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg>
 </button>
 </div>
 <div class="quick-grid">
@@ -171,11 +168,11 @@
     <div class="quick-follow">
       <div class="quick-follow__label">Follow us</div>
       <div class="quick-follow__icons">
-        <a class="quick-follow__icon" href="https://www.facebook.com/profile.php?id=61552373463791" target="_blank" rel="noopener" aria-label="Facebook">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.7V12h2.7V9.8c0-2.7 1.6-4.2 4-4.2 1.2 0 2.4.2 2.4.2v2.6h-1.3c-1.3 0-1.7.8-1.7 1.6V12h2.9l-.5 2.9h-2.4v7A10 10 0 0 0 22 12z"/></svg>
+        <a aria-label="Facebook" class="quick-follow__icon" href="https://www.facebook.com/profile.php?id=61552373463791" rel="noopener" target="_blank">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.7V12h2.7V9.8c0-2.7 1.6-4.2 4-4.2 1.2 0 2.4.2 2.4.2v2.6h-1.3c-1.3 0-1.7.8-1.7 1.6V12h2.9l-.5 2.9h-2.4v7A10 10 0 0 0 22 12z"></path></svg>
         </a>
-        <a class="quick-follow__icon" href="https://www.instagram.com/paguyuban_ragesokma/" target="_blank" rel="noopener" aria-label="Instagram">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-5 4.5A5.5 5.5 0 1 1 6.5 12 5.5 5.5 0 0 1 12 8.5zm0 2A3.5 3.5 0 1 0 15.5 12 3.5 3.5 0 0 0 12 10.5zM18 6.7a1.1 1.1 0 1 1-1.1-1.1A1.1 1.1 0 0 1 18 6.7z"/></svg>
+        <a aria-label="Instagram" class="quick-follow__icon" href="https://www.instagram.com/paguyuban_ragesokma/" rel="noopener" target="_blank">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-5 4.5A5.5 5.5 0 1 1 6.5 12 5.5 5.5 0 0 1 12 8.5zm0 2A3.5 3.5 0 1 0 15.5 12 3.5 3.5 0 0 0 12 10.5zM18 6.7a1.1 1.1 0 1 1-1.1-1.1A1.1 1.1 0 0 1 18 6.7z"></path></svg>
         </a>
       </div>
     </div>
@@ -194,7 +191,7 @@
 <!-- Slider Wrapper -->
 <div class="relative h-full" id="heroSlider">
 <!-- Slide -->
-<article class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-700" data-accent="sosial" style="background-image:url('assets/images/Santunan-Anak-Yatim-RAGE-SOKMA-Bulan-Ramadhan.jpg')">
+<article class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-700" data-accent="sosial" style="background-image:url('assets/images/Santunan-Anak-Yatim-RAGE-SOKMA-Bulan-Ramadhan.webp')">
 <div class="absolute inset-0 bg-black/60"></div>
 <div class="relative z-10 h-full flex items-center">
 <div class="max-w-7xl mx-auto px-6 text-white">
@@ -219,7 +216,7 @@
 </div>
 </article>
 <!-- Slide 2 -->
-<article class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-700" data-accent="pendidikan" style="background-image:url('assets/images/Program-Beasiswa-Pendidikan-Anak-Dhuafa.jpg')">
+<article class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-700" data-accent="pendidikan" style="background-image:url('assets/images/Program-Beasiswa-Pendidikan-Anak-Dhuafa.webp')">
 <div class="absolute inset-0 bg-black/60"></div>
 <div class="relative z-10 h-full flex items-center">
 <div class="max-w-7xl mx-auto px-6 text-white">
@@ -243,7 +240,7 @@
 </div>
 </article>
 <!-- Slide 3 -->
-<article class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-700" data-accent="keagamaan" style="background-image:url('assets/images/Pengajian-Rutin-dan-Doa-Bersama.jpg')">
+<article class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-700" data-accent="keagamaan" style="background-image:url('assets/images/Pengajian-Rutin-dan-Doa-Bersama.webp')">
 <div class="absolute inset-0 bg-black/60"></div>
 <div class="relative z-10 h-full flex items-center">
 <div class="max-w-7xl mx-auto px-6 text-white">
@@ -267,7 +264,7 @@
 </div>
 </article>
 <!-- Slide 4 (auto-hydrated from posts.json) -->
-<article class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-700" data-accent="sosial" style="background-image:url('assets/images/Santunan-Anak-Yatim-RAGE-SOKMA-Bulan-Ramadhan.jpg')">
+<article class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-700" data-accent="sosial" style="background-image:url('assets/images/Santunan-Anak-Yatim-RAGE-SOKMA-Bulan-Ramadhan.webp')">
 <div class="absolute inset-0 bg-black/60"></div>
 <div class="relative z-10 h-full flex items-center">
 <div class="max-w-7xl mx-auto px-6 text-white">
@@ -283,7 +280,7 @@
 </div>
 </article>
 <!-- Slide 5 (auto-hydrated from posts.json) -->
-<article class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-700" data-accent="pendidikan" style="background-image:url('assets/images/Program-Beasiswa-Pendidikan-Anak-Dhuafa.jpg')">
+<article class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-700" data-accent="pendidikan" style="background-image:url('assets/images/Program-Beasiswa-Pendidikan-Anak-Dhuafa.webp')">
 <div class="absolute inset-0 bg-black/60"></div>
 <div class="relative z-10 h-full flex items-center">
 <div class="max-w-7xl mx-auto px-6 text-white">
@@ -299,7 +296,7 @@
 </div>
 </article>
 <!-- Slide 6 (auto-hydrated from posts.json) -->
-<article class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-700" data-accent="keagamaan" style="background-image:url('assets/images/Pengajian-Rutin-dan-Doa-Bersama.jpg')">
+<article class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-700" data-accent="keagamaan" style="background-image:url('assets/images/Pengajian-Rutin-dan-Doa-Bersama.webp')">
 <div class="absolute inset-0 bg-black/60"></div>
 <div class="relative z-10 h-full flex items-center">
 <div class="max-w-7xl mx-auto px-6 text-white">
@@ -325,7 +322,7 @@
 </section>
 <!-- Wave divider (Hero -> Dampak) -->
 <div aria-hidden="true" class="wave-divider wave-divider--blue">
-<svg aria-hidden="true" focusable="false" preserveaspectratio="none" viewbox="0 0 1440 120">
+<svg aria-hidden="true" focusable="false" preserveAspectRatio="none" viewBox="0 0 1440 120">
 <path d="M0,64L60,58.7C120,53,240,43,360,48C480,53,600,75,720,80C840,85,960,75,1080,64C1200,53,1320,43,1380,37.3L1440,32L1440,120L1380,120C1320,120,1200,120,1080,120C960,120,840,120,720,120C600,120,480,120,360,120C240,120,120,120,60,120L0,120Z"></path>
 </svg>
 </div>
@@ -396,7 +393,7 @@
 </section>
 <!-- Wave divider (Dampak -> Berita) -->
 <div aria-hidden="true" class="wave-divider wave-divider--gray">
-<svg aria-hidden="true" focusable="false" preserveaspectratio="none" viewbox="0 0 1440 120">
+<svg aria-hidden="true" focusable="false" preserveAspectRatio="none" viewBox="0 0 1440 120">
 <path d="M0,96L60,85.3C120,75,240,53,360,53.3C480,53,600,75,720,80C840,85,960,75,1080,69.3C1200,64,1320,64,1380,64L1440,64L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path>
 </svg>
 </div>
@@ -474,7 +471,7 @@
 <!-- Kolom Kanan: Foto Pembina -->
 <div class="flex justify-center">
 <div class="bg-white rounded-xl shadow-lg p-6 text-center max-w-sm">
-<img alt="Pembina RAGE SOKMA" class="w-full h-72 object-cover rounded-lg mb-4" decoding="async" height="1350" loading="lazy" src="assets/images/pembina.jpg" width="1080"/>
+<img alt="Pembina RAGE SOKMA" class="w-full h-72 object-cover rounded-lg mb-4" decoding="async" height="1350" loading="lazy" sizes="(max-width: 640px) 92vw, (max-width: 1024px) 80vw, 960px" src="assets/images/pembina.webp" srcset="assets/images/pembina-480.webp 480w, assets/images/pembina-800.webp 800w, assets/images/pembina.webp 1080w" width="1080"/>
 <h3 class="text-xl font-bold text-gray-800">
                         Nama Pembina
                     </h3>
@@ -594,7 +591,7 @@
 </div>
 <a class="block h-full bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl hover:-translate-y-1 transition cursor-pointer flex flex-col" data-program-card="" href="/program/santunan-yatim.html">
 <div class="w-20 h-20 mx-auto mb-6 rounded-full border-4 border-blue-700 flex items-center justify-center">
-<img src="assets/icons/santunan-yatim-icon.png" alt="Santunan Yatim" class="w-12 h-12 object-contain" />
+<img alt="Santunan Yatim" class="w-12 h-12 object-contain" src="assets/icons/santunan-yatim-icon.svg"/>
 </div>
 <h3 class="text-xl font-bold text-gray-800 mb-3">
                         Santunan Yatim
@@ -616,7 +613,7 @@
 </div>
 <a class="block h-full bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl hover:-translate-y-1 transition cursor-pointer flex flex-col" data-program-card="" href="/program/peduli-dhuafa.html">
 <div class="w-20 h-20 mx-auto mb-6 rounded-full border-4 border-blue-700 flex items-center justify-center">
-<img src="assets/icons/peduli-dhuafa-icon.png" alt="Peduli Dhu’afa" class="w-12 h-12 object-contain" />
+<img alt="Peduli Dhu’afa" class="w-12 h-12 object-contain" src="assets/icons/peduli-dhuafa-icon.svg"/>
 </div>
 <h3 class="text-xl font-bold text-gray-800 mb-3">
                         Peduli Dhu’afa
@@ -638,7 +635,7 @@
 </div>
 <a class="block h-full bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl hover:-translate-y-1 transition cursor-pointer flex flex-col" data-program-card="" href="/program/sosial-keagamaan.html">
 <div class="w-20 h-20 mx-auto mb-6 rounded-full border-4 border-blue-700 flex items-center justify-center">
-<img src="assets/icons/sosial-keagamaan-icon.png" alt="Sosial Keagamaan" class="w-12 h-12 object-contain" />
+<img alt="Sosial Keagamaan" class="w-12 h-12 object-contain" src="assets/icons/sosial-keagamaan-icon.svg"/>
 </div>
 <h3 class="text-xl font-bold text-gray-800 mb-3">
                         Sosial Keagamaan
@@ -758,6 +755,7 @@
         © 2026 RAGE SOKMA. All rights reserved.
     </div>
 </footer>
-<script defer src="assets/js/gallery-tease.js"></script>
-<script src="assets/js/content.js"></script></body>
-</html>
+<script defer="" src="assets/js/gallery-tease.js"></script>
+<script src="assets/js/content.js"></script>
+
+</body></html>
