@@ -4,7 +4,9 @@
  * - Fitur: filter kategori, badge kategori, default kategori per type, galeri otomatis
  */
 (function () {
-  const DATA_URL = "assets/data/posts.json";
+  const VERSION = "20260126";
+  const DATA_URL = "assets/data/posts.json?v=" + VERSION;
+  const FALLBACK_IMG = "assets/images/logo.webp";
 
   const DEFAULT_CATEGORY_BY_TYPE = {
     berita: "Sosial Keagamaan",
@@ -65,7 +67,7 @@
     return `
 <article class="post-card">
   <a class="post-card__media" href="${href}">
-    ${img ? `<img loading="lazy" alt="${title}" src="${img}" />` : ``}
+    ${img ? `<img loading="lazy" decoding="async" alt="${title}" src="${img}" onerror="this.onerror=null;this.src=\'${FALLBACK_IMG}\';" />` : ``}
   </a>
   <div class="post-card__body">
     <div class="post-card__meta">
@@ -90,7 +92,7 @@
     return `
 <article class="popular-item">
   <a class="popular-item__thumb" href="${href}" aria-label="Buka: ${title}">
-    ${img ? `<img loading="lazy" alt="${title}" src="${img}" />` : ``}
+    ${img ? `<img loading="lazy" decoding="async" alt="${title}" src="${img}" onerror="this.onerror=null;this.src=\'${FALLBACK_IMG}\';" />` : ``}
   </a>
   <div class="popular-item__body">
     <div class="popular-item__meta">

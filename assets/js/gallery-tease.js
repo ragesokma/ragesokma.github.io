@@ -3,7 +3,9 @@
   const grid = document.getElementById("galleryTeaseGrid");
   if (!grid) return;
 
-  const DATA_URL = "assets/data/posts.json";
+  const VERSION = "20260126";
+  const DATA_URL = "assets/data/posts.json?v=" + VERSION;
+  const FALLBACK_IMG = "assets/images/logo.webp";
 
   function shuffle(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
@@ -45,6 +47,7 @@
     image.loading = "eager";
     image.fetchPriority = idx === 0 ? "high" : "auto";
     image.src = img;
+    image.onerror = () => { image.onerror = null; image.src = FALLBACK_IMG; };
 
     function setBgFromCurrentSrc() {
       const resolved = image.currentSrc || image.src;

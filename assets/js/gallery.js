@@ -1,5 +1,6 @@
 (function () {
-  const DATA_URL = "assets/data/posts.json";
+  const VERSION = "20260126";
+  const DATA_URL = "assets/data/posts.json?v=" + VERSION;
 
   // 3D gallery elements
   const stage = document.getElementById("galleryStage");
