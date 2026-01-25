@@ -2291,3 +2291,47 @@ img[width][height]{height:auto;}
     font-size: 0.95rem;
   }
 }
+/* =========================================
+   GALERI RAGE SOKMA – FINAL (NO BLUR)
+   ========================================= */
+
+/* Matikan SEMUA efek blur */
+.gallery-tease-card::before,
+.gallery-tease-card::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Card bersih */
+.gallery-tease-card {
+  position: relative;
+  overflow: hidden;
+  background: transparent !important;
+}
+
+/* Gambar pakai ASLI */
+.gallery-tease-card img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important; /* ganti center top jika sering kepotong kepala */
+  background: transparent !important;
+  filter: none !important;
+}
+
+/* Overlay judul TANPA blur */
+.gallery-tease-overlay,
+.gallery-tease-caption,
+.gallery-tease-title {
+  backdrop-filter: none !important;
+  filter: none !important;
+}
+
+/* Gradient tipis saja biar teks kebaca */
+.gallery-tease-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.55),
+    rgba(0,0,0,0.0) 65%
+  ) !important;
+}
