@@ -2205,3 +2205,47 @@ img[width][height]{height:auto;}
 @media (max-width: 480px){
   .gallery-tease-card{ height: 180px; }
 }
+/* =========================
+   Badge PROGRAM – Animasi Halus & Teratur
+   ========================= */
+
+.anim-smooth{
+  animation: badgeSmooth 1200ms cubic-bezier(.2,.9,.2,1) both;
+}
+
+@keyframes badgeSmooth{
+  0%   { opacity:0; transform: translateY(8px) scale(.98); }
+  20%  { opacity:1; transform: translateY(0) scale(1); }
+  80%  { opacity:1; transform: translateY(0) scale(1); }
+  100% { opacity:.95; transform: translateY(0) scale(1); }
+}
+
+/* Aksesibilitas */
+@media (prefers-reduced-motion: reduce){
+  .anim-smooth{ animation:none !important; }
+}
+/* =========================
+   Mobile fix – Judul Program Unggulan
+   ========================= */
+@media (max-width: 640px){
+  .program-title-inline{
+    flex-direction: column;   /* susun vertikal */
+    align-items: center;
+    gap: 10px;
+  }
+
+  .program-title-text{
+    white-space: normal;      /* boleh turun baris */
+    text-align: center;
+    font-size: 1.6rem;        /* sedikit diperkecil agar pas */
+  }
+
+  .badge-glass-blue{
+    max-width: 100%;
+  }
+
+  .badge-text{
+    text-align: center;
+    font-size: 0.95rem;
+  }
+}
