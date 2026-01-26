@@ -2400,3 +2400,22 @@ img[width][height]{height:auto;}
     rgba(0,0,0,0.0) 65%
   ) !important;
 }
+
+
+/* v27: Help block should match drawer nav item style */
+.quick-help__toggle.nav-link{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.quick-help__toggle .quick-help__left{
+  display:flex;
+  align-items:center;
+  gap: 0.45rem; /* match .nav-item */
+}
+.quick-help__toggle .nav-ico{
+  width:16px;
+  height:16px;
+}
+
