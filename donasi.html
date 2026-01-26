@@ -170,6 +170,29 @@ main > .container, main > .wrapper, main > .wrap{max-width: 100% !important; wid
 }
 </style>
 
+
+<style>
+/* Mobile polish (thumb-friendly) */
+@media (max-width: 700px){
+  .donasi-layout{grid-template-columns:1fr !important; gap:14px !important;}
+  .option-card{padding:16px !important;}
+  .card-title{font-size:20px !important;}
+  .card-desc{font-size:15px !important; line-height:1.5 !important;}
+  .btnrow{gap:10px !important;}
+  .btnrow a.btn{width:100% !important;}
+  .qris-wrap{padding:10px !important;margin-bottom:14px !important;}
+  .bank-grid{grid-template-columns:1fr !important;}
+}
+/* Tap feedback */
+.option-card a.btn{ -webkit-tap-highlight-color: transparent; }
+.option-card a.btn:active{ transform:translateY(1px); }
+.option-card{ touch-action: manipulation; }
+a.btn:focus-visible{
+  outline: 3px solid rgba(59,130,246,.25);
+  outline-offset: 2px;
+}
+</style>
+
 </head>
 <body class="font-sans" id="page-donasi">
 <header class="site-header sticky top-0 z-50" id="siteHeader">
