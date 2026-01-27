@@ -84,3 +84,30 @@
 .mobile-panel .drawer-footer-link:hover{
   background: rgba(0,0,0,.04);
 }
+
+/* v41 smooth accordion animation */
+.mobile-panel .drawer-acc-panel{
+  overflow:hidden;
+  transition: max-height .22s ease, opacity .18s ease;
+  opacity:1;
+}
+
+.mobile-panel .drawer-acc-panel[hidden]{
+  opacity:0;
+}
+
+/* active state styles */
+.mobile-panel a.is-active,
+#quickMenu a.is-active,
+.mobile-panel button.is-active{
+  background: rgba(0,0,0,.06);
+}
+
+.mobile-panel a.is-active{
+  font-weight:600;
+}
+
+.mobile-panel button.is-active .drawer-acc-title{
+  font-weight:700;
+}
+

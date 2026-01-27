@@ -294,17 +294,11 @@ a.btn:focus-visible{
 <div class="mobile-drawer-brand">
 <img alt="Logo RAGE SOKMA" class="mobile-drawer-logo" decoding="async" height="516" loading="lazy" src="/assets/images/logo.webp" width="484"/><span class="mobile-drawer-title">APLIKASI</span>
 </div>
-<button class="mobile-drawer-close" id="quickClose" type="button">
+<button aria-label="Tutup aksi cepat" class="mobile-drawer-close" id="quickClose" type="button">
 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg>
 </button>
 </div>
 <div class="quick-grid">
-<div class="method-body">
-<div class="qris-wrap" style="margin-bottom:20px;">
-<img alt="QRIS RAGE SOKMA untuk donasi" loading="lazy" src="assets/images/qris-rage-sokma.webp"/>
-</div>
-</div>
-</div>
 <a class="quick-item quick-item--donasi" href="/donasi.html"><span aria-hidden="true" class="quick-emoji">❤️</span><span class="quick-text">Donasi</span></a>
 <a class="quick-item" href="/relawan.html"><span aria-hidden="true" class="quick-emoji">🤝</span><span class="quick-text">Relawan</span></a>
 <a class="quick-item" href="/program.html"><span aria-hidden="true" class="quick-emoji">⭐</span><span class="quick-text">Program Unggulan</span></a>
@@ -313,16 +307,23 @@ a.btn:focus-visible{
 <a class="quick-item" href="/semua-berita.html"><span aria-hidden="true" class="quick-emoji">📰</span><span class="quick-text">Berita</span></a>
 <a class="quick-item" href="/gallery.html"><span aria-hidden="true" class="quick-emoji">🖼️</span><span class="quick-text">Galeri</span></a>
 <a class="quick-item" href="/kontak.html#wa"><span aria-hidden="true" class="quick-emoji">💬</span><span class="quick-text">Hubungi (WA)</span></a>
-
-<a class="quick-item" href="/faq.html"><span aria-hidden="true" class="quick-emoji">❓</span><span class="quick-text">FAQ</span></a>
-<a class="quick-item" href="/privacy-policy.html"><span aria-hidden="true" class="quick-emoji">🔒</span><span class="quick-text">Kebijakan Privasi</span></a>
-<a class="quick-item" href="https://www.instagram.com/paguyuban_ragesokma/" rel="noopener" target="_blank"><span aria-hidden="true" class="quick-emoji">📸</span><span class="quick-text">Instagram</span></a>
-<a class="quick-item" href="https://www.facebook.com/profile.php?id=61552373463791" rel="noopener" target="_blank"><span aria-hidden="true" class="quick-emoji">📘</span><span class="quick-text">Facebook</span></a>
-</div>
 </div>
 
+<div class="drawer-footer" id="quickDrawerFooter">
+  <div class="drawer-acc" data-acc="lainnya">
+    <button class="drawer-acc-btn" type="button" aria-expanded="false">
+      <span class="drawer-acc-label"><svg class="drawer-acc-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><circle cx="5" cy="12" r="1.8" fill="currentColor"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/><circle cx="19" cy="12" r="1.8" fill="currentColor"/></svg><span class="drawer-acc-title">Lainnya</span></span>
+      <svg class="drawer-chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="drawer-acc-panel" hidden>
+      <a class="drawer-footer-link" href="/faq.html"><svg class="drawer-footer-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M9.1 9a3 3 0 1 1 5.8 1c0 2-3 2-3 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 17h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>FAQ</span></a>
+      <a class="drawer-footer-link" href="/privacy-policy.html"><svg class="drawer-footer-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l8 4v6c0 5-3.4 9.4-8 10-4.6-.6-8-5-8-10V6l8-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.5 12a2.5 2.5 0 0 1 5 0v2.5H9.5V12z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 14.5v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Kebijakan Privasi</span></a>
+    </div>
+  </div>
 
-</header>
+  </header>
 <main><section class="bg-blue-700 py-16">
 <div class="max-w-5xl mx-auto px-6 text-center text-white">
 <h1 class="text-4xl font-bold">Donasi</h1>

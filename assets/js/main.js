@@ -1041,12 +1041,26 @@ if (document.readyState === 'loading') {
   initSite();
 }
 
-
-/* v40 accordion standard handler */
+/* v41 accordion standard handler (single-open + smooth height) */
 (function(){
+  function closePanel(btn, panel){
+    if (!btn || !panel) return;
+    panel.setAttribute('hidden','');
+    btn.setAttribute('aria-expanded','false');
+    panel.style.maxHeight = '';
+  }
+
+  function openPanel(btn, panel){
+    if (!btn || !panel) return;
+    panel.removeAttribute('hidden');
+    btn.setAttribute('aria-expanded','true');
+    panel.style.maxHeight = panel.scrollHeight + 'px';
+  }
+
   function initAccordions(scope){
     var root = scope || document;
-    var buttons = root.querySelectorAll('.drawer-acc-btn[data-acc]');
+    var buttons = Array.from(root.querySelectorAll('.drawer-acc-btn[data-acc]'));
+
     buttons.forEach(function(btn){
       if (btn.__accBound) return;
       btn.__accBound = true;
@@ -1055,12 +1069,17 @@ if (document.readyState === 'loading') {
       var panel = root.querySelector('.drawer-acc-panel[data-acc-panel="'+key+'"]') || document.getElementById('acc-panel-'+key);
 
       if (panel){
-        // ensure ids + aria-controls
         if (!panel.id) panel.id = 'acc-panel-'+key;
         btn.setAttribute('aria-controls', panel.id);
 
-        // set aria-expanded from DOM state
-        btn.setAttribute('aria-expanded', panel.hasAttribute('hidden') ? 'false' : 'true');
+        var expanded = panel.hasAttribute('hidden') ? 'false' : 'true';
+        btn.setAttribute('aria-expanded', expanded);
+
+        if (expanded === 'true') {
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+        } else {
+          panel.style.maxHeight = '';
+        }
       } else {
         if (!btn.getAttribute('aria-expanded')) btn.setAttribute('aria-expanded', 'false');
       }
@@ -1071,15 +1090,34 @@ if (document.readyState === 'loading') {
         if (!p) return;
 
         var isOpen = !p.hasAttribute('hidden');
+
+        // SINGLE-OPEN within the same container
+        var container = btn.closest('.mobile-panel') || btn.closest('#quickMenu') || root;
+        var otherBtns = Array.from(container.querySelectorAll('.drawer-acc-btn[data-acc]'));
+        otherBtns.forEach(function(ob){
+          if (ob === btn) return;
+          var ok = ob.getAttribute('data-acc');
+          var op = container.querySelector('.drawer-acc-panel[data-acc-panel="'+ok+'"]') || document.getElementById('acc-panel-'+ok);
+          if (op && !op.hasAttribute('hidden')) closePanel(ob, op);
+        });
+
         if (isOpen){
-          p.setAttribute('hidden','');
-          btn.setAttribute('aria-expanded','false');
+          closePanel(btn, p);
         } else {
-          p.removeAttribute('hidden');
-          btn.setAttribute('aria-expanded','true');
+          openPanel(btn, p);
         }
       });
     });
+
+    window.addEventListener('resize', function(){
+      buttons.forEach(function(btn){
+        var key = btn.getAttribute('data-acc');
+        var panel = root.querySelector('.drawer-acc-panel[data-acc-panel="'+key+'"]') || document.getElementById('acc-panel-'+key);
+        if (panel && !panel.hasAttribute('hidden')) {
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+        }
+      });
+    }, { passive: true });
   }
 
   if (document.readyState === 'loading'){
@@ -1087,5 +1125,38 @@ if (document.readyState === 'loading') {
   } else {
     initAccordions(document);
   }
+})();
+
+/* v41 active state (drawer + quick) */
+(function(){
+  function normalize(p){
+    if (!p) return '';
+    try { p = p.split('#')[0].split('?')[0]; } catch(e){}
+    if (p === '/') return '/index.html';
+    return p.replace(/\/+$/,'');
+  }
+  var current = normalize(window.location.pathname);
+  var currentFile = (current.split('/').pop() || '').toLowerCase();
+
+  var links = Array.from(document.querySelectorAll('.mobile-panel a, #quickMenu a, .quick-grid a, footer a'));
+  links.forEach(function(a){
+    var href = a.getAttribute('href');
+    if (!href) return;
+    if (href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+
+    var target = normalize(href);
+    var targetFile = (target.split('/').pop() || '').toLowerCase();
+
+    var match = (target && target === current) || (targetFile && targetFile === currentFile);
+    if (match){
+      a.classList.add('is-active');
+      a.setAttribute('aria-current','page');
+    }
+  });
+
+  var tBtn = document.querySelector('.drawer-acc-btn[data-acc="tentang"]');
+  var pBtn = document.querySelector('.drawer-acc-btn[data-acc="program"]');
+  if (tBtn && current.indexOf('/tentang/') !== -1) tBtn.classList.add('is-active');
+  if (pBtn && current.indexOf('/program/') !== -1) pBtn.classList.add('is-active');
 })();
 
