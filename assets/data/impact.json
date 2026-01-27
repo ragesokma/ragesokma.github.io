@@ -1,0 +1,33 @@
+{
+  "updated_at": "2026-01-21",
+  "period": "2024–2025",
+  "items": [
+    {
+      "key": "beneficiaries",
+      "title": "Penerima Manfaat",
+      "value": 120,
+      "suffix": "+",
+      "note": "Diperbarui berkala",
+      "tooltip": "Total individu yang telah menerima manfaat program RAGE SOKMA (akumulatif).",
+      "icon": "users"
+    },
+    {
+      "key": "activities",
+      "title": "Kegiatan Sosial",
+      "value": 35,
+      "suffix": "+",
+      "note": "Program berjalan",
+      "tooltip": "Total kegiatan sosial yang sudah terlaksana (akumulatif).",
+      "icon": "calendar"
+    },
+    {
+      "key": "volunteers",
+      "title": "Relawan Terlibat",
+      "value": 50,
+      "suffix": "+",
+      "note": "Kolaborator aktif",
+      "tooltip": "Jumlah relawan/kolaborator yang terlibat dalam berbagai kegiatan (akumulatif).",
+      "icon": "volunteer"
+    }
+  ]
+}
