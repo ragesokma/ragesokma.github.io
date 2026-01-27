@@ -301,6 +301,33 @@ if (quickBtn && quickMenu) {
     }
   });
 
+
+// =========================
+// Quick Drawer Footer (sticky accordion sections)
+// =========================
+const initQuickDrawerFooter = () => {
+  if (!quickMenu) return;
+  const accButtons = quickMenu.querySelectorAll('.drawer-acc-btn');
+  if (!accButtons || accButtons.length === 0) return;
+
+  accButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      const nextExpanded = !expanded;
+      btn.setAttribute('aria-expanded', String(nextExpanded));
+
+      const wrap = btn.closest('.drawer-acc');
+      const panel = wrap ? wrap.querySelector('.drawer-acc-panel') : null;
+      if (panel) {
+        if (nextExpanded) panel.removeAttribute('hidden');
+        else panel.setAttribute('hidden', '');
+      }
+    });
+  });
+};
+
+initQuickDrawerFooter();
+
 // =========================
 // Quick Help (inside Quick Actions drawer)
 // =========================
@@ -1026,3 +1053,46 @@ if (document.readyState === 'loading') {
 } else {
   initSite();
 }
+
+
+/* v38 accordion standard handler */
+(function(){
+  function initAccordions(scope){
+    var root = scope || document;
+    var buttons = root.querySelectorAll('.drawer-acc-btn[data-acc]');
+    buttons.forEach(function(btn){
+      if (btn.__accBound) return;
+      btn.__accBound = true;
+
+      // default aria-expanded based on panel hidden state
+      var key = btn.getAttribute('data-acc');
+      var panel = root.querySelector('.drawer-acc-panel[data-acc-panel="'+key+'"]');
+      if (panel){
+        btn.setAttribute('aria-expanded', panel.hasAttribute('hidden') ? 'false' : 'true');
+      } else {
+        btn.setAttribute('aria-expanded', 'false');
+      }
+
+      btn.addEventListener('click', function(){
+        var k = btn.getAttribute('data-acc');
+        var p = root.querySelector('.drawer-acc-panel[data-acc-panel="'+k+'"]');
+        if (!p) return;
+        var isOpen = !p.hasAttribute('hidden');
+        if (isOpen){
+          p.setAttribute('hidden','');
+          btn.setAttribute('aria-expanded','false');
+        } else {
+          p.removeAttribute('hidden');
+          btn.setAttribute('aria-expanded','true');
+        }
+      });
+    });
+  }
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', function(){ initAccordions(document); });
+  } else {
+    initAccordions(document);
+  }
+})();
+

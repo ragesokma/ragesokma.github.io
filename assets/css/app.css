@@ -937,12 +937,20 @@ details[open] .faq-summary::after{
     transition: background 180ms ease, transform 180ms ease;
   }
   .mobile-panel summary.mobile-summary::-webkit-details-marker{ display:none; }
-  .mobile-panel summary.mobile-summary::after{
-    content: ">";
-    font-weight: 900;
-    color: rgba(15,23,42,0.65);
-    transform: translateY(-0.5px);
+  .mobile-panel summary.mobile-summary::marker{ content:""; }
+  .mobile-panel summary.mobile-summary::after{ content:none !important; }
+
+  /* Unified drawer chevron (down/up like design) */
+  .mobile-summary .drawer-chev{
     margin-left: auto;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    min-height: 18px;
+    flex: 0 0 auto;
+    color: rgba(15,23,42,0.65);
+    transform: translateY(-0.5px) rotate(0deg);
+    transition: transform 180ms ease, color 180ms ease;
   }
   .mobile-panel details[open] > summary.mobile-summary{
     background: rgba(37, 99, 235, 0.10);
@@ -950,8 +958,8 @@ details[open] .faq-summary::after{
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
   }
-  .mobile-panel details[open] > summary.mobile-summary::after{
-    transform: rotate(90deg);
+  .mobile-panel details[open] > summary.mobile-summary .drawer-chev{
+    transform: translateY(-0.5px) rotate(180deg);
     color: rgba(15,23,42,0.85);
   }
 }
@@ -1954,6 +1962,79 @@ body.no-scroll{ overflow: hidden !important; }
 #quickMenu .quick-item:last-child{ border-bottom: 0; }
 #quickMenu .quick-item--donasi{ font-weight: 700; }
 
+/* Sticky footer sections inside Quick Actions drawer */
+#quickMenu .drawer-footer{
+  position: static;
+  margin-top: 14px;
+  padding: 0;
+  background: transparent;
+  border-top: 0;
+}
+
+#quickMenu .drawer-acc + .drawer-acc{ border-top: 1px solid rgba(226,232,240,0.9); }
+
+#quickMenu .drawer-acc-btn{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 2px;
+  font-weight: 700;
+  background: transparent;
+}
+
+#quickMenu .drawer-acc-label{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+#quickMenu .drawer-acc-ico{
+  width:18px;
+  height:18px;
+  flex:0 0 auto;
+  opacity:.9;
+}
+
+#quickMenu .drawer-chevron{
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  transition: transform .18s ease;
+}
+
+#quickMenu .drawer-acc-btn[aria-expanded="true"] .drawer-chevron{
+  transform: rotate(180deg);
+}
+
+#quickMenu .drawer-acc-panel{
+  padding: 2px 0 10px 0;
+}
+
+#quickMenu .drawer-footer-link{
+  display: flex;
+  align-items: center;
+  padding: 10px 2px;
+  border-top: 1px solid rgba(226,232,240,0.75);
+  color: inherit;
+}
+
+#quickMenu .drawer-acc-panel .drawer-footer-link:first-child{
+  border-top: 0;
+}
+
+#quickMenu .drawer-footer-ico{
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  margin-right: 10px;
+  opacity: .95;
+}
+#quickMenu .drawer-footer-link span{
+  line-height: 1.2;
+}
+
+
 
 /* =========================
    UX: One-time quick hint
@@ -2417,5 +2498,127 @@ img[width][height]{height:auto;}
 .quick-help__toggle .nav-ico{
   width:16px;
   height:16px;
+}
+
+
+/* v38 - standardized accordion (mobile drawer) */
+.mobile-panel .drawer-acc-btn{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:10px 10px;
+  border-radius:12px;
+}
+
+.mobile-panel .drawer-acc-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+}
+
+.mobile-panel .drawer-acc-btn .nav-ico{
+  width:20px;
+  height:20px;
+  flex:0 0 20px;
+}
+
+.mobile-panel .drawer-acc-title{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.mobile-panel .drawer-chevron{
+  width:18px;
+  height:18px;
+  margin-left:auto;
+  flex:0 0 18px;
+  transition: transform .18s ease;
+}
+
+.mobile-panel .drawer-acc-btn[aria-expanded="true"] .drawer-chevron{
+  transform: rotate(180deg);
+}
+
+.mobile-panel .drawer-acc-panel{
+  padding-left:34px; /* icon (20) + gap (10) + small */
+  margin-top:6px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.mobile-panel .drawer-sub-link{
+  display:block;
+  padding:8px 10px;
+  border-radius:10px;
+  color:inherit;
+  text-decoration:none;
+}
+
+.mobile-panel .drawer-sub-link:hover{
+  background: rgba(0,0,0,.04);
+}
+
+
+/* v38 standardized accordion - clean mobile drawer item system (scoped) */
+.mobile-panel .drawer-item{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:10px 10px;
+  border-radius:12px;
+  color:inherit;
+  text-decoration:none;
+  text-align:left;
+}
+
+.mobile-panel a.drawer-item:hover,
+.mobile-panel button.drawer-item:hover{
+  background: rgba(0,0,0,.04);
+}
+
+.mobile-panel .drawer-item .nav-ico{
+  width:20px;
+  height:20px;
+  flex:0 0 20px;
+}
+
+.mobile-panel .drawer-acc-btn{
+  background: transparent;
+  border:0;
+  cursor:pointer;
+}
+
+.mobile-panel .drawer-acc-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+}
+
+.mobile-panel .drawer-acc-title{
+  font-weight:600;
+}
+
+.mobile-panel .drawer-sub-link{
+  display:block !important;
+  padding:8px 10px;
+  border-radius:10px;
+  color:inherit;
+  text-decoration:none;
+}
+
+.mobile-panel .drawer-sub-link:hover{
+  background: rgba(0,0,0,.04);
+}
+
+
+/* v38 fix: ensure hidden accordion panels actually collapse */
+.mobile-panel .drawer-acc-panel[hidden]{
+  display:none !important;
 }
 

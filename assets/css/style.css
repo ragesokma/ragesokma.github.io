@@ -858,6 +858,23 @@ details[open] .faq-summary::after{
 
   .mobile-panel summary.mobile-summary.has-chev::after{ content:none !important; }
   .mobile-summary .mobile-chev{ margin-left:auto; width:18px; height:18px; color: rgba(15,23,42,0.65); }
+  /* Unified drawer chevron (down/up like design) */
+  .mobile-summary .drawer-chev{
+    margin-left: auto;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    min-height: 18px;
+    flex: 0 0 auto;
+    color: rgba(15,23,42,0.65);
+    transform: translateY(-0.5px) rotate(0deg);
+    transition: transform 180ms ease, color 180ms ease;
+  }
+  .mobile-panel details[open] > summary.mobile-summary .drawer-chev{
+    transform: translateY(-0.5px) rotate(180deg);
+    color: rgba(15,23,42,0.85);
+  }
+
   .mobile-panel details[open] > summary.mobile-summary{
     background: rgba(37, 99, 235, 0.10);
     border: 1px solid rgba(37, 99, 235, 0.14);
