@@ -1151,6 +1151,92 @@ details[open] .faq-summary::after{
   will-change:transform, clip-path, opacity, -webkit-mask-size, mask-size;
 }
 
+/* =========================
+   Program Unggulan - layout fix
+   Prevent the hanger from overlapping/capturing clicks on cards.
+   ========================= */
+
+/* Card wrapper becomes its own stacking context so decorations can't bleed */
+#program .program-card-wrap{
+  position: relative;
+  isolation: isolate;
+  /* Reserve vertical space for the hanger so it never overlaps the previous card */
+  padding-top: 56px;
+}
+
+/* Hanger is purely decorative */
+#program .program-hanger{
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Mobile: hanger lebih pendek + spacing lebih rapat */
+@media (max-width: 480px){
+  #program .program-card-wrap{ padding-top: 42px; }
+  #program .program-hanger .hanger-pin{ width: 14px; height: 14px; }
+  #program .program-hanger .hanger-pin::after{ width: 5px; height: 5px; top: 3px; left: 3px; }
+  #program .program-hanger .hanger-knot{ width: 6px; height: 6px; margin-top: 2px; }
+  #program .program-hanger .hanger-string{ height: 20px; margin-top: 2px; }
+}
+
+/* Ensure the card stays on top */
+#program a[data-program-card]{
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Hanger look (like a real hanging pin) --- */
+#program .program-hanger .hanger-pin{
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: #1d4ed8;
+  box-shadow:
+    0 10px 18px rgba(2, 6, 23, 0.22),
+    inset 2px 2px 0 rgba(255, 255, 255, 0.35);
+  position: relative;
+}
+
+#program .program-hanger .hanger-pin::after{
+  /* small highlight */
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: rgba(255,255,255,0.45);
+}
+
+#program .program-hanger .hanger-knot{
+  width: 8px;
+  height: 8px;
+  margin-top: 3px;
+  transform: rotate(45deg);
+  background: #163fbe;
+  border-radius: 2px;
+  box-shadow: 0 4px 10px rgba(2, 6, 23, 0.18);
+}
+
+#program .program-hanger .hanger-string{
+  width: 2px;
+  height: 34px;
+  margin-top: 3px;
+  border-radius: 9999px;
+  background: linear-gradient(to bottom, rgba(29, 78, 216, 0.95), rgba(29, 78, 216, 0.55));
+  box-shadow: 0 4px 10px rgba(2, 6, 23, 0.12);
+}
+
 /* Animasi kombinasi: Wipe, Peek in, Random Bars */
 .anim-wipe{
   animation:badgeWipe 650ms ease both;
