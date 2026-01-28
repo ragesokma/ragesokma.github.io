@@ -450,3 +450,26 @@ a:hover{ color: var(--rs-navy); }
 .from-blue-700{ --tw-gradient-from: var(--rs-sky-700) var(--tw-gradient-from-position); --tw-gradient-to: rgba(2,132,199,0) var(--tw-gradient-to-position); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) }
 .from-blue-800{ --tw-gradient-from: var(--rs-navy) var(--tw-gradient-from-position); --tw-gradient-to: rgba(30,58,138,0) var(--tw-gradient-to-position); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) }
 .to-blue-900{ --tw-gradient-to: var(--rs-navy-deep) var(--tw-gradient-to-position) }
+
+
+/* =========================================================
+   Hero framing: desktop vs mobile (v4.1)
+   - Desktop: cinematic crop (focus upper third)
+   - Mobile: centered crop + centered copy
+   ========================================================= */
+.hero-frame{height:62vh;min-height:320px;max-height:720px}
+@media (min-width:640px){.hero-frame{height:68vh}}
+@media (min-width:1024px){.hero-frame{height:78vh}}
+
+.hero-slide{background-repeat:no-repeat;background-size:cover}
+@media (min-width:1024px){
+  .hero-slide{background-position:center 30%}
+}
+@media (max-width:768px){
+  .hero-slide{background-position:center center}
+  .hero-content{justify-content:center}
+  .hero-copy{text-align:center}
+  .hero-copy .hero-title{max-width:22rem;margin-left:auto;margin-right:auto}
+  .hero-copy .hero-desc{max-width:24rem;margin-left:auto;margin-right:auto}
+}
+
