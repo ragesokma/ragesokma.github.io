@@ -207,21 +207,24 @@
 
 </header>
 <main>
-<section aria-label="Sorotan utama" class="h-[60vh] sm:h-[70vh] lg:h-[75vh] relative overflow-hidden hero-wrap" id="beranda">
-<!-- Atmosfer hero (ekspresif, ringan) -->
-<div aria-hidden="true" class="hero-atmo">
-<span class="hero-blob hero-blob--a"></span>
-<span class="hero-blob hero-blob--b"></span>
-<span class="hero-blob hero-blob--c"></span>
-</div>
-<!-- Slider Wrapper -->
-<div class="relative h-full" id="heroSlider">
+<section aria-label="Sorotan utama" class="py-6 sm:py-8 lg:py-10 hero-wrap" id="beranda">
+  <div class="max-w-7xl mx-auto px-6">
+    <!-- Frame hero: tidak full layar (selaras dengan konten di bawahnya) -->
+    <div class="relative overflow-hidden rounded-3xl shadow-xl hero-frame" id="heroFrame">
+      <!-- Atmosfer hero (ekspresif, ringan) -->
+      <div aria-hidden="true" class="hero-atmo">
+        <span class="hero-blob hero-blob--a"></span>
+        <span class="hero-blob hero-blob--b"></span>
+        <span class="hero-blob hero-blob--c"></span>
+      </div>
+      <!-- Slider Wrapper -->
+      <div class="relative h-full" id="heroSlider">
 <!-- Slide -->
 <article class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-700" data-accent="sosial" style="background-image:url('assets/images/Santunan-Anak-Yatim-RAGE-SOKMA-Bulan-Ramadhan.webp')">
 <div class="absolute inset-0 bg-black/60"></div>
 <div class="relative z-10 h-full flex items-center">
 <div class="max-w-7xl mx-auto px-6 text-white">
-<span class="inline-block mb-4 px-4 py-1 bg-emerald-400 text-blue-900 text-sm font-semibold rounded" data-hero-anim="kicker" hero-anim"="" hero-kicker="">
+<span class="inline-block mb-4 px-4 py-1 bg-emerald-400 text-blue-900 text-sm font-semibold rounded" data-hero-anim="kicker" hero-kicker="">
                         Sosial
                     </span>
 <h1 class="text-4xl md:text-5xl font-bold max-w-3xl leading-tight hero-title hero-anim" data-hero-anim="title">
@@ -231,13 +234,7 @@
                         RAGE SOKMA kembali melaksanakan kegiatan santunan anak yatim piatu
                         sebagai bentuk kepedulian sosial dan keagamaan.
                     </p>
-<a class="inline-flex items-center gap-2 mt-6 px-6 py-3 rounded-lg font-semibold text-white bg-white/10 border border-white/25 backdrop-blur-md shadow-lg hover:bg-white/15 hover:border-white/35 transition hero-readmore hero-anim" data-hero-anim="readmore" href="/berita/santunan-anak-yatim-rage-sokma-bulan-ramadhan.html">
-                        Baca Selengkapnya →
-                    </a>
-<div class="mt-5 flex flex-wrap gap-3 hero-actions hero-anim" data-hero-anim="ctas">
-<a class="hero-cta hero-cta--primary" href="/donasi.html">Donasi Sekarang</a>
-<a class="hero-cta hero-cta--secondary" href="/relawan.html">Gabung Relawan</a>
-</div>
+<!-- CTA removed (requested) -->
 </div>
 </div>
 </article>
@@ -246,7 +243,7 @@
 <div class="absolute inset-0 bg-black/60"></div>
 <div class="relative z-10 h-full flex items-center">
 <div class="max-w-7xl mx-auto px-6 text-white">
-<span class="inline-block mb-4 px-4 py-1 bg-blue-400 text-white text-sm font-semibold rounded" data-hero-anim="kicker" hero-anim"="" hero-kicker="">
+<span class="inline-block mb-4 px-4 py-1 bg-blue-400 text-white text-sm font-semibold rounded" data-hero-anim="kicker" hero-kicker="">
                         Pendidikan
                     </span>
 <h2 class="text-4xl md:text-5xl font-bold max-w-3xl hero-title hero-anim" data-hero-anim="title">
@@ -255,13 +252,7 @@
 <p class="mt-4 max-w-2xl text-lg text-gray-200 hero-desc hero-anim" data-hero-anim="desc">
                         Program bantuan pendidikan berkelanjutan bagi anak dhuafa.
                     </p>
-<a class="inline-flex items-center gap-2 mt-6 px-6 py-3 rounded-lg font-semibold text-white bg-white/10 border border-white/25 backdrop-blur-md shadow-lg hover:bg-white/15 hover:border-white/35 transition hero-readmore hero-anim" data-hero-anim="readmore" href="/berita/program-beasiswa-pendidikan-anak-dhuafa.html">
-                        Baca Selengkapnya →
-                    </a>
-<div class="mt-6 flex flex-wrap gap-3 hero-actions hero-anim" data-hero-anim="ctas">
-<a class="hero-cta hero-cta--primary" href="/donasi.html">Donasi Sekarang</a>
-<a class="hero-cta hero-cta--secondary" href="/relawan.html">Gabung Relawan</a>
-</div>
+<!-- CTA removed (requested) -->
 </div>
 </div>
 </article>
@@ -270,7 +261,7 @@
 <div class="absolute inset-0 bg-black/60"></div>
 <div class="relative z-10 h-full flex items-center">
 <div class="max-w-7xl mx-auto px-6 text-white">
-<span class="inline-block mb-4 px-4 py-1 bg-indigo-400 text-white text-sm font-semibold rounded" data-hero-anim="kicker" hero-anim"="" hero-kicker="">
+<span class="inline-block mb-4 px-4 py-1 bg-indigo-400 text-white text-sm font-semibold rounded" data-hero-anim="kicker" hero-kicker="">
                         Keagamaan
                     </span>
 <h2 class="text-4xl md:text-5xl font-bold max-w-3xl hero-title hero-anim" data-hero-anim="title">
@@ -279,13 +270,7 @@
 <p class="mt-4 max-w-2xl text-lg text-gray-200 hero-desc hero-anim" data-hero-anim="desc">
                         Pengajian rutin sebagai sarana pembinaan spiritual dan mempererat ukhuwah.
                     </p>
-<a class="inline-flex items-center gap-2 mt-6 px-6 py-3 rounded-lg font-semibold text-white bg-white/10 border border-white/25 backdrop-blur-md shadow-lg hover:bg-white/15 hover:border-white/35 transition hero-readmore hero-anim" data-hero-anim="readmore" href="/berita/pengajian-rutin-dan-doa-bersama.html">
-                        Baca Selengkapnya →
-                    </a>
-<div class="mt-6 flex flex-wrap gap-3 hero-actions hero-anim" data-hero-anim="ctas">
-<a class="hero-cta hero-cta--primary" href="/donasi.html">Donasi Sekarang</a>
-<a class="hero-cta hero-cta--secondary" href="/relawan.html">Gabung Relawan</a>
-</div>
+<!-- CTA removed (requested) -->
 </div>
 </div>
 </article>
@@ -294,14 +279,10 @@
 <div class="absolute inset-0 bg-black/60"></div>
 <div class="relative z-10 h-full flex items-center">
 <div class="max-w-7xl mx-auto px-6 text-white">
-<span class="inline-block mb-4 px-4 py-1 bg-emerald-400 text-blue-900 text-sm font-semibold rounded" data-hero-anim="kicker" hero-anim"="" hero-kicker="">Berita</span>
+<span class="inline-block mb-4 px-4 py-1 bg-emerald-400 text-blue-900 text-sm font-semibold rounded" data-hero-anim="kicker" hero-kicker="">Berita</span>
 <h2 class="text-4xl md:text-5xl font-bold max-w-3xl leading-tight hero-title hero-anim" data-hero-anim="title">Memuat judul…</h2>
 <p class="mt-4 max-w-2xl text-lg text-gray-200 line-clamp-2 hero-desc hero-anim" data-hero-anim="desc">Memuat ringkasan…</p>
-<a class="inline-flex items-center gap-2 mt-6 px-6 py-3 rounded-lg font-semibold text-white bg-white/10 border border-white/25 backdrop-blur-md shadow-lg hover:bg-white/15 hover:border-white/35 transition hero-readmore hero-anim" data-hero-anim="readmore" href="#">Baca Selengkapnya →</a>
-<div class="mt-5 flex flex-wrap gap-3 hero-actions hero-anim" data-hero-anim="ctas">
-<a class="hero-cta hero-cta--primary" href="/donasi.html">Donasi Sekarang</a>
-<a class="hero-cta hero-cta--secondary" href="/relawan.html">Gabung Relawan</a>
-</div>
+<!-- CTA removed (requested) -->
 </div>
 </div>
 </article>
@@ -310,14 +291,10 @@
 <div class="absolute inset-0 bg-black/60"></div>
 <div class="relative z-10 h-full flex items-center">
 <div class="max-w-7xl mx-auto px-6 text-white">
-<span class="inline-block mb-4 px-4 py-1 bg-blue-400 text-white text-sm font-semibold rounded" data-hero-anim="kicker" hero-anim"="" hero-kicker="">Berita</span>
+<span class="inline-block mb-4 px-4 py-1 bg-blue-400 text-white text-sm font-semibold rounded" data-hero-anim="kicker" hero-kicker="">Berita</span>
 <h2 class="text-4xl md:text-5xl font-bold max-w-3xl hero-title hero-anim" data-hero-anim="title">Memuat judul…</h2>
 <p class="mt-4 max-w-2xl text-lg text-gray-200 hero-desc hero-anim" data-hero-anim="desc">Memuat ringkasan…</p>
-<a class="inline-flex items-center gap-2 mt-6 px-6 py-3 rounded-lg font-semibold text-white bg-white/10 border border-white/25 backdrop-blur-md shadow-lg hover:bg-white/15 hover:border-white/35 transition hero-readmore hero-anim" data-hero-anim="readmore" href="#">Baca Selengkapnya →</a>
-<div class="mt-6 flex flex-wrap gap-3 hero-actions hero-anim" data-hero-anim="ctas">
-<a class="hero-cta hero-cta--primary" href="/donasi.html">Donasi Sekarang</a>
-<a class="hero-cta hero-cta--secondary" href="/relawan.html">Gabung Relawan</a>
-</div>
+<!-- CTA removed (requested) -->
 </div>
 </div>
 </article>
@@ -326,25 +303,32 @@
 <div class="absolute inset-0 bg-black/60"></div>
 <div class="relative z-10 h-full flex items-center">
 <div class="max-w-7xl mx-auto px-6 text-white">
-<span class="inline-block mb-4 px-4 py-1 bg-indigo-400 text-white text-sm font-semibold rounded" data-hero-anim="kicker" hero-anim"="" hero-kicker="">Berita</span>
+<span class="inline-block mb-4 px-4 py-1 bg-indigo-400 text-white text-sm font-semibold rounded" data-hero-anim="kicker" hero-kicker="">Berita</span>
 <h2 class="text-4xl md:text-5xl font-bold max-w-3xl hero-title hero-anim" data-hero-anim="title">Memuat judul…</h2>
 <p class="mt-4 max-w-2xl text-lg text-gray-200 hero-desc hero-anim" data-hero-anim="desc">Memuat ringkasan…</p>
-<a class="inline-flex items-center gap-2 mt-6 px-6 py-3 rounded-lg font-semibold text-white bg-white/10 border border-white/25 backdrop-blur-md shadow-lg hover:bg-white/15 hover:border-white/35 transition hero-readmore hero-anim" data-hero-anim="readmore" href="#">Baca Selengkapnya →</a>
-<div class="mt-6 flex flex-wrap gap-3 hero-actions hero-anim" data-hero-anim="ctas">
-<a class="hero-cta hero-cta--primary" href="/donasi.html">Donasi Sekarang</a>
-<a class="hero-cta hero-cta--secondary" href="/relawan.html">Gabung Relawan</a>
-</div>
+<!-- CTA removed (requested) -->
 </div>
 </div>
 </article>
 </div>
-<!-- Navigation -->
-<button aria-label="Slide sebelumnya" class="absolute left-6 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white p-3 rounded-full z-30" id="prevSlide" type="button">
-        ‹
-    </button>
-<button aria-label="Slide berikutnya" class="absolute right-6 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white p-3 rounded-full z-30" id="nextSlide" type="button">
-        ›
-    </button>
+      <!-- Navigation -->
+      <button aria-label="Slide sebelumnya" class="hero-nav hero-nav--prev" id="prevSlide" type="button">
+        <span class="sr-only">Sebelumnya</span>
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" class="hero-nav__icon">
+          <path d="M14.5 5.5L8 12l6.5 6.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button aria-label="Slide berikutnya" class="hero-nav hero-nav--next" id="nextSlide" type="button">
+        <span class="sr-only">Berikutnya</span>
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" class="hero-nav__icon">
+          <path d="M9.5 5.5L16 12l-6.5 6.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <!-- Dots indicator -->
+      <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-30" id="heroDots" aria-label="Navigasi slide" role="tablist"></div>
+    </div>
+  </div>
 </section>
 <!-- Wave divider (Hero -> Dampak) -->
 <div aria-hidden="true" class="wave-divider wave-divider--blue">
@@ -361,9 +345,10 @@
 </div>
 <a class="text-blue-700 font-semibold hover:underline" href="/transparansi.html">Lihat Transparansi →</a>
 </div>
-<div class="mt-10 flex gap-6 overflow-x-auto snap-x snap-mandatory -mx-6 px-6 pb-2 sm:pb-0 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 impact-grid" data-impact-grid="">
+<!-- Layout dibuat vertikal (selaras dengan section Motto), tanpa slider horizontal di mobile -->
+<div class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 impact-grid" data-impact-grid="">
 <!-- Cards will be hydrated from assets/data/impact.json -->
-<div class="impact-card snap-start shrink-0 w-[85%] sm:w-auto sm:shrink sm:snap-none" data-impact-key="beneficiaries">
+<div class="impact-card" data-impact-key="beneficiaries">
 <div aria-hidden="true" class="impact-accent"></div>
 <div aria-hidden="true" class="impact-glow"></div>
 <div class="impact-head">
@@ -379,7 +364,7 @@
 <span class="impact-note" data-impact-note="">Diperbarui berkala</span>
 </div>
 </div>
-<div class="impact-card snap-start shrink-0 w-[85%] sm:w-auto sm:shrink sm:snap-none" data-impact-key="activities">
+<div class="impact-card" data-impact-key="activities">
 <div aria-hidden="true" class="impact-accent"></div>
 <div aria-hidden="true" class="impact-glow"></div>
 <div class="impact-head">
@@ -395,7 +380,7 @@
 <span class="impact-note" data-impact-note="">Program berjalan</span>
 </div>
 </div>
-<div class="impact-card snap-start shrink-0 w-[85%] sm:w-auto sm:shrink sm:snap-none" data-impact-key="volunteers">
+<div class="impact-card" data-impact-key="volunteers">
 <div aria-hidden="true" class="impact-accent"></div>
 <div aria-hidden="true" class="impact-glow"></div>
 <div class="impact-head">
@@ -608,13 +593,8 @@
 <!-- Grid Program -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-10 items-stretch">
 <!-- PROGRAM 1 -->
-<div class="relative text-center h-full program-card-wrap">
-<!-- Hanger / Pin -->
-<div class="program-hanger" aria-hidden="true">
-  <span class="hanger-pin"></span>
-  <span class="hanger-knot"></span>
-  <span class="hanger-string"></span>
-</div>
+<div class="program-card-wrap text-center h-full">
+<div aria-hidden="true" class="program-marker"></div>
 <a class="block h-full bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl hover:-translate-y-1 transition cursor-pointer flex flex-col" data-program-card="" href="/program/santunan-yatim.html">
 <div class="w-20 h-20 mx-auto mb-6 rounded-full border-4 border-blue-700 flex items-center justify-center">
 <img alt="Santunan Yatim" class="w-12 h-12 object-contain" src="assets/icons/santunan-yatim-icon.svg"/>
@@ -632,12 +612,8 @@
 </a>
 </div>
 <!-- PROGRAM 2 -->
-<div class="relative text-center h-full program-card-wrap">
-<div class="program-hanger" aria-hidden="true">
-  <span class="hanger-pin"></span>
-  <span class="hanger-knot"></span>
-  <span class="hanger-string"></span>
-</div>
+<div class="program-card-wrap text-center h-full">
+<div aria-hidden="true" class="program-marker"></div>
 <a class="block h-full bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl hover:-translate-y-1 transition cursor-pointer flex flex-col" data-program-card="" href="/program/peduli-dhuafa.html">
 <div class="w-20 h-20 mx-auto mb-6 rounded-full border-4 border-blue-700 flex items-center justify-center">
 <img alt="Peduli Dhu’afa" class="w-12 h-12 object-contain" src="assets/icons/peduli-dhuafa-icon.svg"/>
@@ -655,12 +631,8 @@
 </a>
 </div>
 <!-- PROGRAM 3 -->
-<div class="relative text-center h-full program-card-wrap">
-<div class="program-hanger" aria-hidden="true">
-  <span class="hanger-pin"></span>
-  <span class="hanger-knot"></span>
-  <span class="hanger-string"></span>
-</div>
+<div class="program-card-wrap text-center h-full">
+<div aria-hidden="true" class="program-marker"></div>
 <a class="block h-full bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl hover:-translate-y-1 transition cursor-pointer flex flex-col" data-program-card="" href="/program/sosial-keagamaan.html">
 <div class="w-20 h-20 mx-auto mb-6 rounded-full border-4 border-blue-700 flex items-center justify-center">
 <img alt="Sosial Keagamaan" class="w-12 h-12 object-contain" src="assets/icons/sosial-keagamaan-icon.svg"/>

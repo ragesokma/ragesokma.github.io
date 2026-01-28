@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Sosial Keagamaan">
+  <defs>
+    <style>
+      .s{fill:none;stroke:#1e7f5c;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+    </style>
+  </defs>
+  <!-- mosque dome -->
+  <path class="s" d="M20 30c0-10 8-18 12-18s12 8 12 18"/>
+  <path class="s" d="M18 30h28"/>
+  <!-- minarets -->
+  <path class="s" d="M14 52V30l4-6l4 6v22"/>
+  <path class="s" d="M42 52V30l4-6l4 6v22"/>
+  <!-- base -->
+  <path class="s" d="M18 52h28"/>
+  <!-- crescent -->
+  <path class="s" d="M48 14c-3-2-7 0-8 3c-1 4 2 7 6 6"/>
+</svg>
