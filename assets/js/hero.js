@@ -62,8 +62,25 @@
       const p = picked[i];
       const s = slides[i];
 
-      // Background image
-      s.style.backgroundImage = `url('${p.image}')`;
+      // Background image (performance)
+      // - store in data-bg so we can lazy-apply on slide activation
+      // - preload only the first slide to make initial paint fast
+      const imgUrl = String(p.image);
+      s.dataset.bg = imgUrl;
+
+      if (i === 0) {
+        s.style.backgroundImage = `url('${imgUrl}')`;
+
+        // Preload first slide image (best effort)
+        try {
+          const head = document.head || document.getElementsByTagName('head')[0];
+          const link = document.createElement('link');
+          link.rel = 'preload';
+          link.as = 'image';
+          link.href = imgUrl;
+          head.appendChild(link);
+        } catch (_) {}
+      }
 
       // Kicker / label
       const kicker = s.querySelector("[data-hero-anim='kicker'], [hero-kicker], .hero-kicker");
@@ -71,7 +88,18 @@
 
       // Title
       const title = s.querySelector("[data-hero-anim='title'], .hero-title");
-      if (title) title.textContent = p.title || '';
+      if (title) {
+        // Prefer an inner link if present (index.html wraps titles in <a data-hero-link>)
+        const link = title.querySelector('a[data-hero-link]') || (title.matches('a') ? title : null);
+        const url = p.url || p.href || p.link || (p.slug ? `berita/${p.slug}.html` : '#');
+        if (link) {
+          link.textContent = p.title || '';
+          link.setAttribute('href', url);
+          link.setAttribute('aria-label', `Buka: ${p.title || 'berita'}`);
+        } else {
+          title.textContent = p.title || '';
+        }
+      }
 
       // Excerpt
       const desc = s.querySelector("[data-hero-anim='desc'], .hero-desc");

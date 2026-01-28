@@ -366,6 +366,9 @@ if (quickHelpToggle && quickHelpLinks) {
   if (slides.length > 0 && nextBtn && prevBtn) {
     let currentSlide = 0;
     let timerId = null;
+    const intervalMs = 6500;
+    let pausedByHover = false;
+    let pausedByVisibility = false;
 
     // Build dots indicator (optional container)
     let dots = [];
@@ -381,10 +384,7 @@ if (quickHelpToggle && quickHelpLinks) {
         btn.dataset.index = String(i);
         btn.addEventListener('click', () => {
           showSlide(i);
-          if (timerId) {
-            clearInterval(timerId);
-            timerId = setInterval(nextSlide, 6000);
-          }
+          restartAutoplay();
         });
         dotsWrap.appendChild(btn);
         return btn;
@@ -396,13 +396,35 @@ if (quickHelpToggle && quickHelpLinks) {
       dots.forEach((d, i) => d.setAttribute('aria-selected', i === index ? 'true' : 'false'));
     };
 
+    const ensureBg = (idx) => {
+      const s = slides[idx];
+      if (!s) return;
+      const url = s.dataset.bg;
+      if (url && !s.style.backgroundImage) {
+        s.style.backgroundImage = `url('${url}')`;
+      }
+    };
+
+    const preloadAround = (idx) => {
+      // Preload next slide image (best effort)
+      const nextIdx = (idx + 1) % slides.length;
+      const url = slides[nextIdx]?.dataset?.bg;
+      if (!url) return;
+      const img = new Image();
+      img.decoding = 'async';
+      img.src = url;
+    };
+
     const showSlide = (index) => {
+      ensureBg(index);
       slides.forEach((slide, i) => {
         const isActive = i === index;
 
         // Use inline opacity as a robust fallback (in case utility classes are missing)
         slide.style.opacity = isActive ? '1' : '0';
         slide.style.zIndex = isActive ? '1' : '0';
+        slide.style.transform = isActive ? 'scale(1)' : 'scale(1.02)';
+        slide.style.filter = isActive ? 'none' : 'saturate(0.96)';
 
         // Keep utility classes too (when Tailwind CDN is available)
         slide.classList.toggle('opacity-100', isActive);
@@ -419,12 +441,32 @@ if (quickHelpToggle && quickHelpLinks) {
       currentSlide = index;
       syncDots(index);
 
+      preloadAround(index);
+
       // Optional: keep an accent variable on wrapper (useful for future global accents)
       if (heroSlider) {
         const active = slides[index];
         const accent = getComputedStyle(active).getPropertyValue('--hero-accent').trim();
         if (accent) heroSlider.style.setProperty('--hero-accent', accent);
       }
+    };
+
+    const stopAutoplay = () => {
+      if (timerId) {
+        clearInterval(timerId);
+        timerId = null;
+      }
+    };
+
+    const startAutoplay = () => {
+      if (timerId) return;
+      if (pausedByHover || pausedByVisibility) return;
+      timerId = setInterval(nextSlide, intervalMs);
+    };
+
+    const restartAutoplay = () => {
+      stopAutoplay();
+      startAutoplay();
     };
 
     const nextSlide = () => {
@@ -439,18 +481,45 @@ if (quickHelpToggle && quickHelpLinks) {
 
     nextBtn.addEventListener('click', () => {
       nextSlide();
-      if (timerId) {
-        clearInterval(timerId);
-        timerId = setInterval(nextSlide, 6000);
-      }
+      restartAutoplay();
     });
 
     prevBtn.addEventListener('click', () => {
       prevSlide();
-      if (timerId) {
-        clearInterval(timerId);
-        timerId = setInterval(nextSlide, 6000);
-      }
+      restartAutoplay();
+    });
+
+    // V2.4: Pause on hover (desktop) + pause on touch hold (mobile friendly)
+    if (heroSlider) {
+      heroSlider.addEventListener('mouseenter', () => {
+        pausedByHover = true;
+        stopAutoplay();
+      });
+      heroSlider.addEventListener('mouseleave', () => {
+        pausedByHover = false;
+        startAutoplay();
+      });
+
+      // Mobile: pause while user is touching/dragging inside hero
+      heroSlider.addEventListener('touchstart', () => {
+        pausedByHover = true;
+        stopAutoplay();
+      }, { passive: true });
+      heroSlider.addEventListener('touchend', () => {
+        pausedByHover = false;
+        startAutoplay();
+      });
+      heroSlider.addEventListener('touchcancel', () => {
+        pausedByHover = false;
+        startAutoplay();
+      });
+    }
+
+    // V2.4: UX polish — auto pause when tab is not active
+    document.addEventListener('visibilitychange', () => {
+      pausedByVisibility = document.hidden;
+      if (pausedByVisibility) stopAutoplay();
+      else startAutoplay();
     });
 
     // Keyboard: left/right arrows when focus is inside hero
@@ -470,7 +539,7 @@ if (quickHelpToggle && quickHelpLinks) {
 
     // Init
     showSlide(0);
-    timerId = setInterval(nextSlide, 6000);
+    startAutoplay();
   }
   }
 
