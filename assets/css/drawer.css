@@ -111,3 +111,29 @@
   font-weight:700;
 }
 
+
+
+
+/* === Mobile drawer menu color override (requested) === */
+.mobile-panel a,
+.mobile-panel button{
+  color:#111827 !important;
+  background:transparent !important;
+  border:1px solid transparent !important;
+  box-shadow:none !important;
+}
+
+.mobile-panel a:hover,
+.mobile-panel a:focus-visible,
+.mobile-panel button:hover,
+.mobile-panel button:focus-visible{
+  color: var(--color-primary) !important;
+  background: linear-gradient(90deg, rgba(245,158,11,0.12), rgba(14,165,233,0.14)) !important;
+}
+
+.mobile-panel a.is-active,
+.mobile-panel button.is-active{
+  color: var(--color-primary) !important;
+  background: linear-gradient(90deg, rgba(245,158,11,0.14), rgba(14,165,233,0.16)) !important;
+}
+

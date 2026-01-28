@@ -2895,3 +2895,86 @@ footer.bg-blue-800::before{
   background: linear-gradient(90deg, rgba(245,158,11,0.90), rgba(14,165,233,0.85));
   opacity:0.95;
 }
+
+
+
+/* === Navbar menu color override (requested) ===
+   Default: black text
+   Hover/Active: blue text with blue+orange background
+   Scoped to header/nav so other <a> buttons keep their style.
+*/
+.site-header .desktop-nav a.nav-link,
+.site-header .desktop-nav button.nav-link,
+.site-header .desktop-nav .nav-link{
+  color: #111827; /* near-black */
+  background: transparent;
+  border: 1px solid transparent;
+  box-shadow: none;
+  font-weight: 600;
+}
+
+.site-header .desktop-nav .nav-ico{
+  color: #111827;
+}
+
+.site-header .desktop-nav a.nav-link:hover,
+.site-header .desktop-nav a.nav-link:focus-visible,
+.site-header .desktop-nav button.nav-link:hover,
+.site-header .desktop-nav button.nav-link:focus-visible{
+  color: var(--color-primary);
+  background: linear-gradient(90deg, rgba(245,158,11,0.12), rgba(14,165,233,0.14));
+  outline-color: rgba(147, 197, 253, 0.45);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.site-header .desktop-nav a.nav-link:hover .nav-ico,
+.site-header .desktop-nav a.nav-link:focus-visible .nav-ico,
+.site-header .desktop-nav button.nav-link:hover .nav-ico,
+.site-header .desktop-nav button.nav-link:focus-visible .nav-ico{
+  color: var(--color-primary);
+}
+
+.site-header .desktop-nav .nav-link.active,
+.site-header .desktop-nav .nav-parent.active,
+.site-header .desktop-nav .nav-link.is-active{
+  color: var(--color-primary) !important;
+  background: linear-gradient(90deg, rgba(245,158,11,0.14), rgba(14,165,233,0.16));
+  outline-color: rgba(147, 197, 253, 0.50);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.site-header .desktop-nav .nav-link.active .nav-ico,
+.site-header .desktop-nav .nav-parent.active .nav-ico,
+.site-header .desktop-nav .nav-link.is-active .nav-ico{
+  color: var(--color-primary) !important;
+}
+
+/* Mobile drawer: match behavior */
+.mobile-panel a,
+.mobile-panel button{
+  color: #111827;
+  background: transparent;
+  border: 1px solid transparent;
+  box-shadow: none;
+  font-weight: 600;
+}
+
+.mobile-panel a:hover,
+.mobile-panel a:focus-visible,
+.mobile-panel button:hover,
+.mobile-panel button:focus-visible{
+  color: var(--color-primary);
+  background: linear-gradient(90deg, rgba(245,158,11,0.12), rgba(14,165,233,0.14));
+  outline-color: rgba(147, 197, 253, 0.45);
+}
+
+.mobile-panel a.is-active,
+.mobile-panel button.is-active{
+  color: var(--color-primary) !important;
+  background: linear-gradient(90deg, rgba(245,158,11,0.14), rgba(14,165,233,0.16));
+}
+
