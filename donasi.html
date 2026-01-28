@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+
+<html lang="id">
+<head>
+  <style id="anti-fouc">html{visibility:hidden}</style>
+  <noscript><style>html{visibility:visible}</style></noscript>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      document.documentElement.style.visibility = "visible";
+    });
+    window.addEventListener("pageshow", function () {
+      document.documentElement.style.visibility = "visible";
+    });
+  </script>
+
+  <link rel="preload" href="assets/css/app.css?v=2026012804" as="style"/>
+  <link rel="preload" href="assets/css/drawer.css" as="style"/>
+  <link rel="preload" href="assets/css/utilities.css?v=2026012804" as="style"/>
+
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+
+  <meta content="Halaman donasi resmi RAGE SOKMA. Dukung program sosial untuk yatim &amp; dhuafa melalui QRIS atau transfer. Transparan dan amanah." name="description"/>
+  <link href="https://ragesokma.github.io/donasi.html" rel="canonical"/>
+
+  <meta content="index,follow,max-image-preview:large" name="robots"/>
+  <meta content="id_ID" property="og:locale"/>
+  <meta content="website" property="og:type"/>
+  <meta content="Donasi | RAGE SOKMA" property="og:title"/>
+  <meta content="Halaman donasi resmi RAGE SOKMA. Dukung program sosial untuk yatim &amp; dhuafa melalui QRIS atau transfer. Transparan dan amanah." property="og:description"/>
+  <meta content="https://ragesokma.github.io/donasi.html" property="og:url"/>
+  <meta content="https://ragesokma.github.io/assets/images/logo.webp" property="og:image"/>
+
+  <meta content="summary_large_image" name="twitter:card"/>
+  <meta content="Donasi | RAGE SOKMA" name="twitter:title"/>
+  <meta content="Halaman donasi resmi RAGE SOKMA. Dukung program sosial untuk yatim &amp; dhuafa melalui QRIS atau transfer. Transparan dan amanah." name="twitter:description"/>
+
+  <meta content="#1d4ed8" name="theme-color"/>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "RAGE SOKMA",
+      "url": "https://ragesokma.github.io/donasi.html",
+      "logo": "https://ragesokma.github.io/assets/images/logo.webp",
+      "sameAs": []
+    }
+  </script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "RAGE SOKMA",
+      "url": "https://ragesokma.github.io/donasi.html",
+      "inLanguage": "id-ID"
+    }
+  </script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Beranda", "item": "https://ragesokma.github.io/index.html" },
+        { "@type": "ListItem", "position": 2, "name": "Donasi",  "item": "https://ragesokma.github.io/donasi.html" }
+      ]
+    }
+  </script>
+
+  <title>Donasi | RAGE SOKMA</title>
+  <meta content="Donasi | RAGE SOKMA | RAGE SOKMA — informasi program, transparansi, donasi, relawan, berita, dan layanan lainnya." name="description"/>
+
+  <link href="assets/css/app.css?v=2026012804" rel="stylesheet"/>
+  <link href="assets/css/drawer.css" rel="stylesheet"/>
+  <link href="assets/css/utilities.css?v=2026012804" rel="stylesheet"/>
+
+  <link href="assets/images/logo.webp" rel="icon" type="image/png"/>
+  <link href="assets/images/logo.webp" rel="apple-touch-icon"/>
+
+  <!-- Styles khusus Donasi (tanpa "force full width") -->
+  <style>
+    /* Clickable option cards + layout */
+    .donasi-layout{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:16px;
+      align-items:stretch;
+      margin-top:16px;
+      width:100%;
+    }
+    @media (max-width: 1100px){ .donasi-layout{ grid-template-columns:repeat(2,minmax(0,1fr)) } }
+    @media (max-width: 700px){ .donasi-layout{ grid-template-columns:1fr } }
+
+    .option-card{
+      border:1px solid rgba(148,163,184,.55);
+      border-radius:20px;
+      padding:20px;
+      background:#fff;
+      transition:transform .15s ease, box-shadow .15s ease, background-color .15s ease, border-color .15s ease;
+      display:flex;
+      flex-direction:column;
+    }
+    .option-card:hover{
+      background:linear-gradient(180deg, rgba(59,130,246,.10), rgba(59,130,246,.03));
+      border-color:rgba(59,130,246,.55);
+      box-shadow:0 14px 34px rgba(2,6,23,.10);
+    }
+    .option-card:focus-within{ outline:3px solid rgba(59,130,246,.20); outline-offset:2px; }
+
+    .card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+    .kicker{font-size:14px;opacity:.7}
+    .card-title{margin:6px 0 0;font-size:22px;font-weight:800}
+    .card-desc{margin-top:10px;opacity:.85}
+
+    .badge{
+      display:inline-flex;align-items:center;border-radius:999px;
+      border:1px solid rgba(59,130,246,.25);
+      background:rgba(59,130,246,.08);
+      padding:4px 10px;font-size:12px;font-weight:700;
+      color:rgb(29,78,216)
+    }
+
+    .btnrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+    .hint{margin-top:10px;font-size:.92rem;opacity:.85}
+
+    a.btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      border-radius:14px;padding:10px 14px;
+      font-weight:700;text-decoration:none;
+      transition:background-color .15s ease,border-color .15s ease,transform .05s ease
+    }
+    a.btn:active{transform:translateY(1px)}
+    a.btn-primary{background:rgb(29,78,216);color:#fff}
+    a.btn-primary:hover{background:rgb(30,64,175)}
+    a.btn-ghost{background:#fff;border:1px solid rgba(148,163,184,.65);color:rgb(15,23,42)}
+    a.btn-ghost:hover{background:rgba(2,6,23,.03);border-color:rgba(100,116,139,.65)}
+
+    .qris-wrap{
+      display:flex;justify-content:center;align-items:center;
+      padding:12px;border-radius:16px;
+      background:rgba(2,6,23,.02);
+      border:1px dashed rgba(100,116,139,.35);
+      margin-top:10px
+    }
+    .qris-wrap img{max-width:320px;width:100%;height:auto;border-radius:12px}
+
+    .bank-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+    @media (max-width: 520px){ .bank-grid{grid-template-columns:1fr} }
+    .bank-box{padding:14px;border-radius:16px;background:rgba(2,6,23,.03)}
+    .bank-label{font-size:13px;opacity:.7}
+    .bank-value{font-size:18px;font-weight:800;margin-top:6px}
+    .bank-note{font-size:12px;opacity:.75;margin-top:6px}
+
+    .tips-card{
+      border:1px solid rgba(148,163,184,.55);
+      border-radius:20px;
+      padding:18px;
+      background:linear-gradient(180deg, rgba(59,130,246,.10), rgba(255,255,255,1));
+    }
+    .tips-list{margin:0;padding-left:18px;display:grid;gap:8px;color:rgba(15,23,42,.85)}
+    .tips-actions{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+    .option-card .btnrow, .option-card .tips-actions{margin-top:auto}
+
+    @media (max-width: 700px){
+      .option-card{padding:16px}
+      .card-title{font-size:20px}
+      .btnrow a.btn{width:100%}
+      .bank-grid{grid-template-columns:1fr}
+    }
+    a.btn:focus-visible{ outline:3px solid rgba(59,130,246,.25); outline-offset:2px; }
+  </style>
+</head>
+
+<body class="font-sans" data-donation-cta="confirm">
+<header class="site-header sticky top-0 z-50" id="siteHeader">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="site-header__inner flex items-center justify-between h-16 lg:h-20 transition-all duration-300">
+
+      <!-- LOGO -->
+      <a class="site-brand flex items-center gap-2 order-2 lg:order-none mx-auto lg:mx-0" href="index.html">
+        <img alt="Logo RAGE SOKMA" class="site-logo h-9 lg:h-11 w-auto transition-all duration-300"
+             decoding="async" height="516" loading="lazy" src="assets/images/logo.webp" width="484"/>
+        <span class="site-title">RAGE SOKMA</span>
+      </a>
+
+      <!-- NAV DESKTOP -->
+      <nav aria-label="Navigasi utama" class="items-center text-gray-800 font-medium desktop-nav">
+        <a class="nav-link nav-item" data-nav="" href="index.html">
+          <svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M3 11l9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path>
+          </svg><span>Beranda</span>
+        </a>
+
+        <!-- Tentang (dropdown) -->
+        <div class="relative">
+          <button aria-haspopup="true" aria-label="Menu Tentang" class="nav-link nav-parent nav-item peer" data-nav-parent="tentang" type="button">
+            <svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path>
+            </svg><span>Tentang</span>
+          </button>
+          <div class="absolute left-0 top-full pt-3 hidden peer-hover:block peer-focus:block hover:block">
+            <div class="w-56 glass-panel rounded-xl">
+              <a class="block px-4 py-3 hover:bg-white/20 rounded-t-xl" data-nav="" href="tentang/sejarah.html">Sejarah</a>
+              <a class="block px-4 py-3 hover:bg-white/20" data-nav="" href="tentang/visi-misi.html">Visi &amp; Misi</a>
+              <a class="block px-4 py-3 hover:bg-white/20" data-nav="" href="tentang/pengurus.html">Pengurus</a>
+              <a class="block px-4 py-3 hover:bg-white/20 rounded-b-xl" data-nav="" href="tentang/program-kerja.html">Program Kerja</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Program (dropdown) -->
+        <div class="relative">
+          <button aria-haspopup="true" aria-label="Menu Program" class="nav-link nav-parent nav-item peer" data-nav-parent="program" type="button">
+            <svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M12 2l1.2 5.2L18 9l-4.8 1.8L12 16l-1.2-5.2L6 9l4.8-1.8L12 2z"></path>
+              <path d="M19 14l.7 3 2.3 1-.0 0-2.3 1-.7 3-.7-3-2.3-1 2.3-1 .7-3z"></path>
+            </svg><span>Program</span>
+          </button>
+          <div class="absolute left-0 top-full pt-3 hidden peer-hover:block peer-focus:block hover:block">
+            <div class="w-72 glass-panel rounded-xl">
+              <a class="block px-4 py-3 hover:bg-white/20 rounded-t-xl" data-nav="" href="program/santunan-yatim.html">Santunan Anak Yatim</a>
+              <a class="block px-4 py-3 hover:bg-white/20" data-nav="" href="program/peduli-dhuafa.html">Peduli Dhu’afa</a>
+              <a class="block px-4 py-3 hover:bg-white/20" data-nav="" href="program/sosial-keagamaan.html">Sosial Keagamaan</a>
+              <a class="block px-4 py-3 hover:bg-white/20 rounded-b-xl font-semibold" data-nav="" href="program.html">Semua Program →</a>
+            </div>
+          </div>
+        </div>
+
+        <a class="nav-link nav-item" data-nav="" href="faq.html">
+          <svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle><path d="M9.1 9a3 3 0 1 1 5.8 1c0 2-3 2-3 4"></path><path d="M12 17h.01"></path>
+          </svg><span>FAQ</span>
+        </a>
+
+        <a class="nav-link nav-item" data-nav="" href="transparansi.html">
+          <svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M3 3v18h18"></path><path d="M7 14l3-3 3 3 5-6"></path>
+          </svg><span>Transparansi</span>
+        </a>
+
+        <a class="nav-link nav-item" data-nav="" href="kontak.html">
+          <svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1A19.5 19.5 0 0 1 3.2 12.8 19.8 19.8 0 0 1 .1 4.2 2 2 0 0 1 2.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .6 3a2 2 0 0 1-.5 2.1L6 10a16 16 0 0 0 8 8l1.2-1.2a2 2 0 0 1 2.1-.5c1 .3 2 .5 3 .6a2 2 0 0 1 1.7 2z"></path>
+          </svg><span>Kontak</span>
+        </a>
+
+        <a class="nav-link nav-item font-semibold" data-nav="" href="donasi.html">
+          <svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.6z"></path>
+          </svg><span>Donasi</span>
+        </a>
+
+        <a class="nav-link nav-item" data-nav="" href="relawan.html">
+          <svg aria-hidden="true" class="nav-ico" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg><span>Relawan</span>
+        </a>
+      </nav>
+
+      <!-- DESKTOP LOGIN -->
+      <div class="desktop-login">
+        <a aria-label="Login" class="login-icon" href="login.html" title="Login / Daftar">
+          <svg aria-hidden="true" fill="none" height="22" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6" viewBox="0 0 24 24" width="22">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+            <polyline points="10 17 15 12 10 7"></polyline>
+            <line x1="15" x2="3" y1="12" y2="12"></line>
+          </svg>
+        </a>
+      </div>
+
+      <!-- MOBILE BUTTON -->
+      <button aria-expanded="false" aria-label="Buka menu" class="lg:hidden text-3xl text-blue-700 mobile-btn order-3" id="menuBtn" type="button">☰</button>
+
+      <!-- QUICK BUTTON -->
+      <button aria-expanded="false" aria-label="Aksi cepat" class="lg:hidden text-blue-700 mobile-btn order-1" id="quickBtn" type="button">
+        <svg aria-hidden="true" class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+          <circle cx="6" cy="6" r="1.7"></circle><circle cx="12" cy="6" r="1.7"></circle><circle cx="18" cy="6" r="1.7"></circle>
+          <circle cx="6" cy="12" r="1.7"></circle><circle cx="12" cy="12" r="1.7"></circle><circle cx="18" cy="12" r="1.7"></circle>
+          <circle cx="6" cy="18" r="1.7"></circle><circle cx="12" cy="18" r="1.7"></circle><circle cx="18" cy="18" r="1.7"></circle>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- MOBILE MENU -->
+  <div class="hidden lg:hidden mobile-drawer" id="mobileMenu">
+    <div class="mobile-panel px-6 py-6 space-y-4 text-gray-800">
+      <div class="mobile-drawer-head">
+        <div class="mobile-drawer-brand">
+          <img alt="Logo RAGE SOKMA" class="mobile-drawer-logo" decoding="async" height="516" loading="lazy" src="assets/images/logo.webp" width="484"/>
+          <span class="mobile-drawer-title">Menu</span>
+        </div>
+        <button aria-label="Tutup menu" class="mobile-drawer-close" id="mobileClose" type="button">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24">
+            <path d="M18 6 6 18"></path><path d="M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <a class="drawer-item" data-nav="" href="index.html"><span>Beranda</span></a>
+      <a class="drawer-item" data-nav="" href="tentang/sejarah.html"><span>Tentang</span></a>
+      <a class="drawer-item" data-nav="" href="program.html"><span>Program</span></a>
+      <a class="drawer-item" data-nav="" href="faq.html"><span>FAQ</span></a>
+      <a class="drawer-item" data-nav="" href="transparansi.html"><span>Transparansi</span></a>
+      <a class="drawer-item" data-nav="" href="kontak.html"><span>Kontak</span></a>
+      <a class="drawer-item font-semibold" data-nav="" href="donasi.html"><span>Donasi</span></a>
+      <a class="drawer-item" data-nav="" href="relawan.html"><span>Relawan</span></a>
+      <a class="drawer-item" data-nav="" href="login.html"><span>Login</span></a>
+    </div>
+  </div>
+
+  <!-- QUICK ACTION MENU (MOBILE) -->
+  <div class="hidden lg:hidden mobile-drawer mobile-drawer--right" id="quickMenu">
+    <div class="mobile-panel px-6 py-6 text-gray-800">
+      <div class="mobile-drawer-head">
+        <div class="mobile-drawer-brand">
+          <img alt="Logo RAGE SOKMA" class="mobile-drawer-logo" decoding="async" height="516" loading="lazy" src="assets/images/logo.webp" width="484"/>
+          <span class="mobile-drawer-title">APLIKASI</span>
+        </div>
+        <button aria-label="Tutup aksi cepat" class="mobile-drawer-close" id="quickClose" type="button">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24">
+            <path d="M18 6 6 18"></path><path d="M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="quick-grid">
+        <a class="quick-item quick-item--donasi" href="donasi.html"><span aria-hidden="true" class="quick-emoji">❤️</span><span class="quick-text">Donasi</span></a>
+        <a class="quick-item" href="relawan.html"><span aria-hidden="true" class="quick-emoji">🤝</span><span class="quick-text">Relawan</span></a>
+        <a class="quick-item" href="program.html"><span aria-hidden="true" class="quick-emoji">⭐</span><span class="quick-text">Program Unggulan</span></a>
+        <a class="quick-item" href="transparansi.html"><span aria-hidden="true" class="quick-emoji">📊</span><span class="quick-text">Transparansi</span></a>
+        <a class="quick-item" href="transparansi.html#dokumen"><span aria-hidden="true" class="quick-emoji">📄</span><span class="quick-text">Laporan &amp; Dokumen</span></a>
+        <a class="quick-item" href="semua-berita.html"><span aria-hidden="true" class="quick-emoji">📰</span><span class="quick-text">Berita</span></a>
+        <a class="quick-item" href="gallery.html"><span aria-hidden="true" class="quick-emoji">🖼️</span><span class="quick-text">Galeri</span></a>
+        <a class="quick-item" href="kontak.html#wa"><span aria-hidden="true" class="quick-emoji">💬</span><span class="quick-text">Hubungi (WA)</span></a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="bg-blue-700 py-16">
+    <div class="max-w-6xl mx-auto px-6 text-center text-white">
+      <h1 class="text-4xl font-extrabold">Donasi</h1>
+      <p class="mt-4 text-lg opacity-90">
+        Dukung program sosial RAGE SOKMA untuk anak yatim &amp; dhuafa. Donasi kamu akan disalurkan secara amanah dan transparan.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <h2 class="text-3xl font-extrabold text-blue-900">Metode Donasi</h2>
+      <p class="mt-2 text-slate-600">
+        Saat ini donasi dapat dilakukan melalui <strong>QRIS</strong> atau <strong>Transfer Bank Jatim</strong>.
+        Setelah donasi, silakan lanjut ke halaman konfirmasi agar donasi tercatat.
+      </p>
+
+      <div class="donasi-layout">
+        <!-- QRIS -->
+        <div class="option-card" id="qris">
+          <div class="card-head">
+            <div>
+              <div class="kicker">QRIS</div>
+              <div class="card-title">QRIS RAGE SOKMA</div>
+              <p class="card-desc">Scan QRIS di bawah ini untuk donasi cepat.</p>
+            </div>
+            <span class="badge">QRIS</span>
+          </div>
+
+          <div class="qris-wrap">
+            <img alt="QRIS RAGE SOKMA untuk donasi"
+                 loading="lazy"
+                 onerror="this.onerror=null;this.src='assets/images/placeholder.webp';"
+                 src="assets/images/qris-rage-sokma.webp"/>
+          </div>
+
+          <div class="btnrow">
+            <a aria-label="Konfirmasi donasi QRIS" class="btn btn-primary" href="konfirmasi-donasi.html?metode=qris">Saya sudah bayar (Konfirmasi)</a>
+            <a class="btn btn-ghost" href="assets/images/qris-rage-sokma.webp" rel="noopener" target="_blank">Buka QRIS</a>
+          </div>
+          <p class="hint">Jika QR tidak bisa discan, klik “Buka QRIS”.</p>
+        </div>
+
+        <!-- Bank Jatim -->
+        <div class="option-card" id="bank-jatim">
+          <div class="card-head">
+            <div>
+              <div class="kicker">Bank</div>
+              <div class="card-title">Bank Jatim</div>
+              <p class="card-desc">Transfer ke rekening resmi RAGE SOKMA. Simpan bukti transfer untuk konfirmasi.</p>
+            </div>
+            <span class="badge">Transfer</span>
+          </div>
+
+          <div class="bank-grid">
+            <div class="bank-box">
+              <div class="bank-label">No. Rekening</div>
+              <div class="bank-value">1302040997</div>
+              <div class="bank-note">Ganti dengan nomor rekening resmi.</div>
+            </div>
+            <div class="bank-box">
+              <div class="bank-label">Atas Nama</div>
+              <div class="bank-value">KSM Paguyuban Rage Sokma</div>
+              <div class="bank-note">Ganti dengan nama pemilik rekening resmi.</div>
+            </div>
+          </div>
+
+          <div class="btnrow">
+            <a aria-label="Konfirmasi donasi transfer Bank Jatim" class="btn btn-primary" href="konfirmasi-donasi.html?metode=bank-jatim">Saya sudah transfer (Konfirmasi)</a>
+            <a class="btn btn-ghost" href="kontak.html">Butuh bantuan? Hubungi kami</a>
+          </div>
+          <p class="hint">Tips: pastikan rekening sesuai informasi di halaman ini.</p>
+        </div>
+
+        <!-- Tips -->
+        <aside class="option-card tips-card">
+          <div class="card-head">
+            <div>
+              <div class="kicker">Aman</div>
+              <div class="card-title">Donasi Aman</div>
+              <p class="card-desc">Panduan singkat agar donasi kamu tercatat dan tepat sasaran.</p>
+            </div>
+            <span class="badge">Tips</span>
+          </div>
+
+          <ul class="tips-list">
+            <li>Pastikan QRIS / rekening sesuai informasi di halaman ini.</li>
+            <li>Simpan bukti pembayaran untuk konfirmasi.</li>
+            <li>Setelah donasi, lakukan konfirmasi agar donasi tercatat.</li>
+            <li>Rekap donasi ditampilkan di halaman transparansi.</li>
+          </ul>
+
+          <div class="tips-actions">
+            <a class="btn btn-ghost" href="laporan.html">Lihat Laporan Bulanan (PDF)</a>
+            <a class="btn btn-ghost" href="transparansi.html">Lihat Transparansi</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="bg-blue-800 text-gray-200 pt-16">
+  <div class="max-w-7xl mx-auto px-6 pb-10">
+    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div>
+        <p class="font-bold text-white">RAGE SOKMA</p>
+        <p class="text-sm text-gray-200">Komunitas Peduli Yatim &amp; Dhuafa</p>
+      </div>
+      <div class="text-sm">
+        <a class="hover:text-white" href="index.html">Beranda</a>
+        <span class="mx-2">•</span>
+        <a class="hover:text-white" href="donasi.html">Donasi</a>
+        <span class="mx-2">•</span>
+        <a class="hover:text-white" href="relawan.html">Relawan</a>
+        <span class="mx-2">•</span>
+        <a class="hover:text-white" href="transparansi.html">Transparansi</a>
+        <span class="mx-2">•</span>
+        <a class="hover:text-white" href="kontak.html">Kontak</a>
+      </div>
+    </div>
+  </div>
+  <div class="bg-blue-900 text-center py-5 text-sm text-gray-300">© 2026 RAGE SOKMA. All rights reserved.</div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+<script src="assets/js/site-config.js"></script>
+<script src="assets/js/enhancements.js"></script>
+</body>
+</html>
