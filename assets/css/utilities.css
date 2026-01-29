@@ -473,3 +473,97 @@ a:hover{ color: var(--rs-navy); }
   .hero-copy .hero-desc{max-width:24rem;margin-left:auto;margin-right:auto}
 }
 
+
+/* ===== Mobile navbar: left controls + right app+brand ===== */
+@media (max-width: 1023px){
+  .site-header__inner{ gap: 0.5rem; }
+  .site-brand--desktop{ display:none !important; }
+  .mobile-left, .mobile-right{ display:flex; align-items:center; }
+  .mobile-left{ gap: .5rem; flex: 1; min-width: 0; }
+  .site-brand--mobile{ flex: 1; min-width: 0; gap: .45rem; }
+  .site-brand--mobile .site-title{ display:block; overflow:hidden; text-overflow:ellipsis; }
+  .mobile-right{ gap: .75rem; }
+  .mobile-btn{ line-height: 1; }
+  .rs-search-btn{
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(29,78,216,0.08);
+    color: rgb(29,78,216);
+    border: 1px solid rgba(29,78,216,0.18);
+  }
+  .rs-search-btn:active{ transform: scale(0.98); }
+  .site-brand--mobile .site-logo{ height: 34px; }
+  .site-brand--mobile .site-title{ font-size: 0.98rem; letter-spacing: .2px; }
+}
+@media (min-width: 1024px){
+  .site-brand--mobile{ display:none !important; }
+}
+
+/* ===== Search modal ===== */
+.rs-modal-open{ overflow: hidden; }
+.rs-search-modal{ position: fixed; inset: 0; z-index: 9999; }
+.rs-search-modal.hidden{ display: none; }
+.rs-search-backdrop{ position:absolute; inset:0; background: rgba(2,6,23,0.55); backdrop-filter: blur(6px); }
+.rs-search-card{
+  position: relative;
+  margin: 14vh auto 0;
+  width: min(680px, calc(100% - 2rem));
+  border-radius: 20px;
+  background: rgba(255,255,255,0.86);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.65);
+  box-shadow: 0 24px 70px rgba(2,6,23,0.35);
+  padding: 18px 16px 14px;
+}
+@media (max-width: 640px){
+  .rs-search-card{ margin: 10vh auto 0; border-radius: 18px; }
+}
+.rs-search-head{ display:flex; align-items:flex-start; justify-content:space-between; gap: 12px; }
+.rs-search-eyebrow{ font-size: .78rem; opacity: .75; }
+.rs-search-title{ margin: 2px 0 0; font-size: 1.15rem; font-weight: 800; letter-spacing: .2px; color: #0f172a; }
+.rs-search-close{
+  width: 40px; height: 40px; border-radius: 999px;
+  display:inline-flex; align-items:center; justify-content:center;
+  background: rgba(15,23,42,0.06); border: 1px solid rgba(15,23,42,0.10);
+}
+.rs-search-inputWrap{
+  margin-top: 12px;
+  display:flex; align-items:center; gap: 10px;
+  padding: 12px 12px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(2,6,23,0.12);
+}
+.rs-search-input{ width: 100%; border: none; outline: none; background: transparent; font-size: 1rem; color: #0f172a; }
+.rs-search-ico{ opacity: .65; display:inline-flex; }
+.rs-search-meta{ margin: 10px 2px 0; font-size: .9rem; opacity: .72; }
+.rs-search-results{ margin-top: 10px; max-height: 46vh; overflow:auto; padding-right: 4px; }
+.rs-search-item{
+  display:block;
+  border-radius: 14px;
+  padding: 12px 12px;
+  background: rgba(255,255,255,0.75);
+  border: 1px solid rgba(2,6,23,0.08);
+  margin-bottom: 10px;
+  text-decoration:none;
+}
+.rs-search-item:hover{ background: rgba(255,255,255,0.92); border-color: rgba(29,78,216,0.25); }
+.rs-search-itemTop{ display:flex; align-items:center; justify-content:space-between; gap: 10px; }
+.rs-search-itemTitle{ margin-top: 6px; font-weight: 800; color:#0f172a; }
+.rs-search-itemDesc{ margin-top: 4px; opacity: .75; font-size: .92rem; color:#0f172a; }
+.rs-search-date{ font-size: .78rem; opacity: .65; }
+.rs-search-foot{ margin-top: 10px; display:flex; justify-content:flex-end; }
+.rs-search-hint{ font-size: .82rem; opacity: .65; }
+.rs-search-empty{ padding: 16px 6px; text-align:center; }
+.rs-search-emptyTitle{ font-weight: 900; color:#0f172a; }
+.rs-search-emptyDesc{ margin-top: 4px; opacity: .72; }
+.rs-badge{ font-size:.74rem; padding: 4px 10px; border-radius: 999px; font-weight: 800; letter-spacing: .2px; border: 1px solid rgba(2,6,23,0.12); }
+.rs-badge--news{ background: rgba(29,78,216,0.10); color: rgb(29,78,216); }
+.rs-badge--article{ background: rgba(16,185,129,0.10); color: rgb(5,150,105); }
+
+/* Desktop search button placement */
+.rs-search-btn--desktop{ margin-right: 10px; }
