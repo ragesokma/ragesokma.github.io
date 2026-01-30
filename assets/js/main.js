@@ -1242,7 +1242,7 @@ if (document.readyState === 'loading') {
           </div>
 
           <div class="search-modal__bar">
-            <input id="searchModalInput" type="search" placeholder="Ketik keyword…" autocomplete="off" />
+            <input id="searchModalInput" type="search" aria-label="Kata kunci pencarian" placeholder="Ketik keyword…" autocomplete="off" />
             <button id="searchModalGo" type="button">Cari</button>
           </div>
 
