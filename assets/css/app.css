@@ -89,7 +89,8 @@ main{padding-top:16px;}
   width:46px;
   height:46px;
   border-radius:9999px;
-  color:#fff;
+  /* Arrow/icon color */
+  color:#2563eb;
   background:rgba(255,255,255,0.16);
   border:1px solid rgba(255,255,255,0.22);
   box-shadow:0 16px 40px rgba(0,0,0,0.28);
@@ -103,6 +104,7 @@ main{padding-top:16px;}
   background:rgba(255,255,255,0.24);
   box-shadow:0 18px 46px rgba(0,0,0,0.32);
   transform:translateY(-50%) scale(1.03);
+  color:#1d4ed8;
 }
 .hero-nav:active{ transform:translateY(-50%) scale(0.98); }
 .hero-nav:focus-visible{ outline:2px solid rgba(255,255,255,0.9); outline-offset:3px; }
@@ -2929,3 +2931,8 @@ footer.bg-blue-800::before{
   }
 }
 
+
+
+/* === Hotfix: show original hero images (remove overlay/blur) === */
+.hero-slide::before{ background: none !important; }
+.hero-slide{ filter: none !important; }
