@@ -866,3 +866,12 @@ a:hover{ color: var(--rs-navy); }
   }
 }
 
+
+/* === Detail page main image: always fill nicely (no white bars) === */
+.article-hero-img{
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}

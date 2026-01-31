@@ -1,8 +1,12 @@
 /**
- * RAGE SOKMA V2 — HERO AUTO (Homepage)
- * - Source: assets/data/posts.json
- * - Rule: include ALL posts (berita + artikel) that have an image
- * - Builds slides dynamically by cloning the template slide.
+ * RAGE SOKMA V2 — HERO AUTO (Homepage) — v18
+ * Source: assets/data/posts.json
+ * HERO rule (as requested):
+ *   - include ALL berita
+ *   - plus artikel that are marked popular
+ * Guarantee:
+ *   - title/link/background are always rendered from the SAME post object
+ *   - no leftover template background-image can leak into other slides
  */
 (function () {
   const slider = document.getElementById('heroSlider');
@@ -61,96 +65,83 @@
 
     const posts = Array.isArray(data) ? data : (data.posts || []);
     // Include ALL content types (berita + artikel, etc.) as long as it has an image
-    const picked = posts
-      .filter((p) => !!p?.image)
-      .sort((a, b) => normDate(b).localeCompare(normDate(a)));
+    
+const isBerita = (p) => String(p?.type || '').toLowerCase().trim() === 'berita';
+const isPopular = (p) => p?.popular === true || p?.is_popular === true || p?.featured === true;
+
+// HERO rule (as requested):
+// - Include ALL berita
+// - Plus artikel that are marked popular
+// - If an item has no image, use a safe placeholder (so title and image never drift)
+const picked = posts
+  .filter((p) => isBerita(p) || isPopular(p))
+  .map((p) => ({
+    ...p,
+    image: p?.image ? String(p.image) : 'assets/images/placeholder.jpg'
+  }))
+  .sort((a, b) => normDate(b).localeCompare(normDate(a)));
 
     if (!picked.length) {
       heroResolve?.();
       return;
     }
 
-    // Build enough slides by cloning the first slide as a template
-    const slides = Array.from(slider.querySelectorAll('.hero-slide'));
-    const template = slides[0];
+    // Rebuild slides from scratch to guarantee NO title↔image drift
+    // (Old template content/background can never leak through.)
+    const existing = Array.from(slider.querySelectorAll('.hero-slide'));
+    const template = existing[0];
     if (!template) {
       heroResolve?.();
       return;
     }
 
-    // Ensure number of slides equals picked length
-    const need = picked.length;
-    const current = slides.length;
-    if (need > current) {
-      const frag = document.createDocumentFragment();
-      for (let i = current; i < need; i++) {
-        const clone = template.cloneNode(true);
-        clone.classList.remove('is-active');
-        clone.style.opacity = '0';
-        clone.style.pointerEvents = 'none';
-        clone.setAttribute('aria-hidden', 'true');
-        // Clear bg to allow lazy-apply via data-bg
-        clone.style.backgroundImage = '';
-        clone.removeAttribute('data-bg');
-        frag.appendChild(clone);
-      }
-      slider.appendChild(frag);
-    } else if (need < current) {
-      // Keep at least 1 slide (template)
-      for (let i = current - 1; i >= Math.max(need, 1); i--) {
-        slides[i]?.remove();
-      }
-    }
+    // Capture a clean template clone, then wipe the slider
+    const base = template.cloneNode(true);
+    slider.innerHTML = '';
 
-    const finalSlides = Array.from(slider.querySelectorAll('.hero-slide'));
-    const useCount = Math.min(finalSlides.length, picked.length);
-
+    const frag = document.createDocumentFragment();
+    const useCount = picked.length;
     for (let i = 0; i < useCount; i++) {
       const p = picked[i];
-      const s = finalSlides[i];
+      const s = base.cloneNode(true);
 
-      // Background image (performance)
-      // - store in data-bg so we can lazy-apply on slide activation
-      // - render to .hero-bg (so hover zoom doesn't fight with slide translate)
-      // - preload only the first slide to make initial paint fast
-      const imgUrl = String(p.image);
+      // Base visibility/interaction
+      const isActive = i === 0;
+      s.classList.toggle('is-active', isActive);
+      s.style.opacity = isActive ? '1' : '0';
+      s.style.pointerEvents = isActive ? 'auto' : 'none';
+      s.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+      // Clear any stale bg (we always re-apply)
+      s.style.backgroundImage = '';
+      s.removeAttribute('data-bg');
+
+      // Background image
+      const imgUrl = String(p.image || 'assets/images/placeholder.jpg');
       s.dataset.bg = imgUrl;
-
       const bgLayer = s.querySelector('.hero-bg');
-
-      if (i === 0) {
-        if (bgLayer) bgLayer.style.backgroundImage = `url('${imgUrl}')`;
-
-        // Preload first slide image (best effort)
-        try {
-          const head = document.head || document.getElementsByTagName('head')[0];
-          const link = document.createElement('link');
-          link.rel = 'preload';
-          link.as = 'image';
-          link.href = imgUrl;
-          head.appendChild(link);
-        } catch (_) {}
+      if (bgLayer) {
+        // ensure bg layer actually covers the slide (in case CSS is missing)
+        bgLayer.classList.add('absolute','inset-0','bg-center','bg-cover');
+        bgLayer.style.backgroundImage = isActive ? `url('${imgUrl}')` : '';
       }
 
       // Kicker / label
       const kicker = s.querySelector("[data-hero-anim='kicker'], [hero-kicker], .hero-kicker");
       if (kicker) {
-        // Show category/label if available; fallback to the type (Artikel/Berita)
         const type = String(p?.type || '').toLowerCase().trim();
         const fallback = type ? type.charAt(0).toUpperCase() + type.slice(1) : 'Konten';
         kicker.textContent = pickLabel(p) || fallback;
       }
 
-      // Title
+      // Title + link
       const title = s.querySelector("[data-hero-anim='title'], .hero-title");
       if (title) {
-        // Prefer an inner link if present (index.html wraps titles in <a data-hero-link>)
         const link = title.querySelector('a[data-hero-link]') || (title.matches('a') ? title : null);
         const url = pickUrl(p);
         if (link) {
           link.textContent = p.title || '';
           link.setAttribute('href', url);
-          link.setAttribute('aria-label', `Buka: ${p.title || 'berita'}`);
+          link.setAttribute('aria-label', `Buka: ${p.title || 'konten'}`);
         } else {
           title.textContent = p.title || '';
         }
@@ -159,12 +150,28 @@
       // Excerpt
       const desc = s.querySelector("[data-hero-anim='desc'], .hero-desc");
       if (desc) desc.textContent = p.excerpt || p.summary || '';
-    }
 
-    // Make sure all used slides are visible
-    finalSlides.forEach((s, idx) => {
-      s.style.display = idx < useCount ? '' : 'none';
-    });
+      frag.appendChild(s);
+    }
+    slider.appendChild(frag);
+
+    // Preload first slide image (best effort)
+    try {
+      const firstUrl = slider.querySelector('.hero-slide')?.dataset?.bg;
+      if (firstUrl) {
+        const head = document.head || document.getElementsByTagName('head')[0];
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = firstUrl;
+        head.appendChild(link);
+      }
+    } catch (_) {}
+
+    const finalSlides = Array.from(slider.querySelectorAll('.hero-slide'));
+
+    // Ensure all slides are visible (they manage opacity themselves)
+    finalSlides.forEach((s) => (s.style.display = ''));
 
     // Done
     heroResolve?.();

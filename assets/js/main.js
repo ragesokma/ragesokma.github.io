@@ -408,10 +408,12 @@ if (quickHelpToggle && quickHelpLinks) {
       if (!url) return;
       const bg = s.querySelector('.hero-bg');
       if (bg) {
-        if (!bg.style.backgroundImage) bg.style.backgroundImage = `url('${url}')`;
+        bg.style.backgroundImage = `url('${url}')`;
+        // also clear any inline bg on the slide itself
+        s.style.backgroundImage = '';
       } else {
         // Fallback (older markup)
-        if (!s.style.backgroundImage) s.style.backgroundImage = `url('${url}')`;
+        s.style.backgroundImage = `url('${url}')`;
       }
     };
 
