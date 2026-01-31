@@ -1,3 +1,29 @@
+// --- HERO mobile fit: keep image centered & not cropped (desktop unchanged)
+function applyHeroBgFit(root){
+  try{
+    var isMobile = window.matchMedia && window.matchMedia("(max-width: 640px)").matches;
+    var scope = root || document;
+    var els = scope.querySelectorAll(".hero-bg, .hero-slide, .hero-card, #hero .slide, .hero .slide");
+    els.forEach(function(el){
+      if(!el) return;
+      var cs = window.getComputedStyle(el);
+      var hasBg = (cs && cs.backgroundImage && cs.backgroundImage !== "none") || (el.style && el.style.backgroundImage);
+      if(!hasBg) return;
+      if(isMobile){
+        el.style.backgroundSize = "contain";
+        el.style.backgroundPosition = "center center";
+        el.style.backgroundRepeat = "no-repeat";
+        if(!el.style.backgroundColor) el.style.backgroundColor = "#f3f4f6";
+      }else{
+        // do not force desktop; clear only what we forced
+        el.style.backgroundSize = "";
+        el.style.backgroundPosition = "";
+        el.style.backgroundRepeat = "";
+      }
+    });
+  }catch(e){}
+}
+
 /* eslint-disable no-unused-vars */
 
 // =============================================================
@@ -409,6 +435,7 @@ if (quickHelpToggle && quickHelpLinks) {
       const bg = s.querySelector('.hero-bg');
       if (bg) {
         bg.style.backgroundImage = `url('${url}')`;
+      applyHeroBgFit(document);
         // also clear any inline bg on the slide itself
         s.style.backgroundImage = '';
       } else {
@@ -1507,3 +1534,6 @@ if (document.readyState === 'loading') {
   // =========================
   })();
 
+
+
+window.addEventListener("resize", function(){ applyHeroBgFit(document); });

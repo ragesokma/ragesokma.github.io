@@ -2885,3 +2885,37 @@ footer.bg-blue-800::before{
   }
 }
 
+/* =====================================================
+   HERO MOBILE FIX (INTEGRATED - DESKTOP TIDAK BERUBAH)
+   ===================================================== */
+@media (max-width: 640px){
+  /* background hero: tampil utuh & center */
+  .hero-bg,
+  .hero-slide,
+  .hero-card,
+  #hero .slide,
+  .hero .slide{
+    background-size: contain !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-color: #f3f4f6;
+  }
+
+  /* tinggi minimum hero agar tidak mengecil */
+  .hero-slide,
+  .hero-card,
+  #hero,
+  .hero{
+    min-height: 300px;
+  }
+}
+
+/* Stronger specificity for mobile hero bg (beats some inline styles) */
+@media (max-width: 640px){
+  #hero .hero-bg, #hero .hero-slide, #hero .hero-card, #hero .slide{
+    background-size: contain !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-color: #f3f4f6 !important;
+  }
+}

@@ -9,7 +9,34 @@
  *   - no leftover template background-image can leak into other slides
  */
 (function () {
-  const slider = document.getElementById('heroSlider');
+  
+// --- HERO mobile fit: keep image centered & not cropped (desktop unchanged)
+function applyHeroBgFit(root){
+  try{
+    var isMobile = window.matchMedia && window.matchMedia("(max-width: 640px)").matches;
+    var scope = root || document;
+    var els = scope.querySelectorAll(".hero-bg, .hero-slide, .hero-card, #hero .slide, .hero .slide");
+    els.forEach(function(el){
+      if(!el) return;
+      var cs = window.getComputedStyle(el);
+      var hasBg = (cs && cs.backgroundImage && cs.backgroundImage !== "none") || (el.style && el.style.backgroundImage);
+      if(!hasBg) return;
+      if(isMobile){
+        el.style.backgroundSize = "contain";
+        el.style.backgroundPosition = "center center";
+        el.style.backgroundRepeat = "no-repeat";
+        if(!el.style.backgroundColor) el.style.backgroundColor = "#f3f4f6";
+      }else{
+        // do not force desktop; clear only what we forced
+        el.style.backgroundSize = "";
+        el.style.backgroundPosition = "";
+        el.style.backgroundRepeat = "";
+      }
+    });
+  }catch(e){}
+}
+
+const slider = document.getElementById('heroSlider');
 
   // main.js will wait this Promise before initializing dots/autoplay
   let heroResolve;
@@ -113,7 +140,9 @@ const picked = posts
       s.setAttribute('aria-hidden', isActive ? 'false' : 'true');
       // Clear any stale bg (we always re-apply)
       s.style.backgroundImage = '';
+      applyHeroBgFit(document);
       s.removeAttribute('data-bg');
+      applyHeroBgFit(document);
 
       // Background image
       const imgUrl = String(p.image || 'assets/images/placeholder.jpg');
@@ -188,3 +217,6 @@ const finalSlides = Array.from(slider.querySelectorAll('.hero-slide'));
 
   run().catch(() => heroResolve?.());
 })();
+
+
+window.addEventListener("resize", function(){ applyHeroBgFit(document); });
