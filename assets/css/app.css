@@ -3503,9 +3503,9 @@ main > section#beranda.hero-wrap + section{
   #heroFrame,
   #heroSlider {
     aspect-ratio: auto !important;
-    height: 82vh !important;
+    height: 62vh !important;
     max-height: none !important;
-    min-height: 82vh !important;
+    min-height: 62vh !important;
   }
 
   .hero-bg{background-size: cover !important;background-position: center !important;background-repeat: no-repeat !important;}
