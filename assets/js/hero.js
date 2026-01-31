@@ -10,11 +10,7 @@
  */
 (function () {
   
-// --- HERO mobile background fit
-// Desktop: do not force anything.
-// Mobile:
-//   - berita (wide photos): use "contain" to avoid showing only a corner
-//   - artikel (popular articles): use "cover" so the hero frame stays full
+// --- HERO mobile fit: keep image centered & not cropped (desktop unchanged)
 function applyHeroBgFit(root){
   try{
     var isMobile = window.matchMedia && window.matchMedia("(max-width: 640px)").matches;
@@ -26,11 +22,7 @@ function applyHeroBgFit(root){
       var hasBg = (cs && cs.backgroundImage && cs.backgroundImage !== "none") || (el.style && el.style.backgroundImage);
       if(!hasBg) return;
       if(isMobile){
-        // If this background belongs to an artikel slide, fill the frame.
-        // (Slides rebuilt by this script will have data-type set.)
-        var slide = el.closest && el.closest('.hero-slide');
-        var t = (slide && slide.dataset && slide.dataset.type) ? String(slide.dataset.type).toLowerCase() : '';
-        el.style.backgroundSize = (t === 'artikel') ? 'cover' : 'contain';
+        el.style.backgroundSize = "contain";
         el.style.backgroundPosition = "center center";
         el.style.backgroundRepeat = "no-repeat";
         if(!el.style.backgroundColor) el.style.backgroundColor = "#f3f4f6";
@@ -139,9 +131,6 @@ const picked = posts
     for (let i = 0; i < useCount; i++) {
       const p = picked[i];
       const s = base.cloneNode(true);
-
-      // Mark slide type so mobile background-fit can be tailored per content
-      s.dataset.type = String(p?.type || '').toLowerCase().trim();
 
       // Base visibility/interaction
       const isActive = i === 0;

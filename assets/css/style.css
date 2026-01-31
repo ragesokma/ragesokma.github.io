@@ -2919,13 +2919,3 @@ footer.bg-blue-800::before{
     background-color: #f3f4f6 !important;
   }
 }
-@media (max-width: 640px) {
-  .hero-frame {
-    min-height: calc(100vh - 64px);
-  }
-
-  #heroSlider,
-  .hero-slide {
-    min-height: inherit;
-  }
-}
