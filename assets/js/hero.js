@@ -155,20 +155,29 @@ const picked = posts
     }
     slider.appendChild(frag);
 
-    // Preload first slide image (best effort)
+        // Preload first slide image (best effort)
     try {
       const firstUrl = slider.querySelector('.hero-slide')?.dataset?.bg;
       if (firstUrl) {
-        const head = document.head || document.getElementsByTagName('head')[0];
-        const link = document.createElement('link');
-        link.rel = 'preload';
-        link.as = 'image';
-        link.href = firstUrl;
-        head.appendChild(link);
+        const preloadLink = document.getElementById('hero-preload');
+        if (preloadLink) {
+          preloadLink.setAttribute('href', firstUrl);
+        } else {
+          const head = document.head || document.getElementsByTagName('head')[0];
+          const link = document.createElement('link');
+          link.rel = 'preload';
+          link.as = 'image';
+          link.href = firstUrl;
+          link.id = 'hero-preload';
+          head.appendChild(link);
+        }
+        // Also warm the cache
+        const img = new Image();
+        img.src = firstUrl;
       }
     } catch (_) {}
 
-    const finalSlides = Array.from(slider.querySelectorAll('.hero-slide'));
+const finalSlides = Array.from(slider.querySelectorAll('.hero-slide'));
 
     // Ensure all slides are visible (they manage opacity themselves)
     finalSlides.forEach((s) => (s.style.display = ''));

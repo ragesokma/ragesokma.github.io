@@ -1,0 +1,19 @@
+/* HERO: MOBILE ONLY (desktop tidak berubah) */
+@media (max-width: 640px){
+  .hero-bg{
+    background-size: contain !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-color: #f3f4f6;
+  }
+  /* In case background is applied directly on slide container */
+  .hero-slide, .hero-card, #hero .slide, .hero .slide{
+    background-size: contain !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-color: #f3f4f6;
+  }
+  .hero-slide, .hero-card, #hero, .hero{
+    min-height: 300px;
+  }
+}
