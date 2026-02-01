@@ -141,5 +141,17 @@
     "excerpt": "Pendidikan sebagai fondasi masa depan dan jalan memperkuat kemandirian anak yatim.",
     "image": "assets/images/pentingnya-pendidikan-untuk-anak-yatim.jpg",
     "popular": true
+  },
+  {
+    "title": "Tasyakuran Paguyuban Rage Sokma",
+    "slug": "tasyakuran-paguyuban-rage-sokma",
+    "url": "berita/tasyakuran-paguyuban-rage-sokma.html",
+    "date": "2025-02-01",
+    "type": "berita",
+    "category": "Sosial Keagamaan",
+    "excerpt": "Tasyakuran Paguyuban Rage Sokma, sembelih kambing dan bagikan kepada masyarakat sekitar.",
+    "image": "assets/images/berita/tasyakuran-paguyuban-rage-sokma.jpg",
+    "popular": false,
+    "gallery": true
   }
 ]
