@@ -168,6 +168,78 @@ main{padding-top:28px;}
   gap:8px;
   margin-top:18px;
 }
+
+/* ------------------------------------------------------------
+ * Share bar (detail berita / artikel)
+ * ------------------------------------------------------------ */
+.share-wrapper{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin:18px 0 20px;
+  width:100%;
+}
+
+.share-label{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  height:36px;
+  padding:0 14px;
+  border:1px solid rgba(0,0,0,.12);
+  border-radius:10px;
+  background:#fff;
+  font-weight:800;
+  letter-spacing:.06em;
+  font-size:12px;
+}
+
+.share-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  height:36px;
+  padding:0 14px;
+  border:1px solid rgba(0,0,0,.12);
+  border-radius:999px;
+  background:#fff;
+  font-weight:700;
+  font-size:13px;
+  text-decoration:none;
+  color:inherit;
+  transition:transform .08s ease, box-shadow .12s ease, background .12s ease;
+}
+
+.share-wrapper svg{
+  width:16px;
+  height:16px;
+  flex:0 0 auto;
+}
+
+.share-btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.share-btn:active{
+  transform:translateY(0);
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+.share-wrapper svg{
+  width:16px;
+  height:16px;
+  flex:0 0 auto;
+}
+
+@media (max-width: 480px){
+  .share-label,
+  .share-btn{ height:34px; padding:0 12px; }
+}
 .posts-pagination .pg-numbers{
   display:flex;
   align-items:center;

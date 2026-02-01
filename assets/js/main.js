@@ -162,6 +162,80 @@ function setupActiveNavIndicator() {
   }
 }
 
+/** ------------------------------------------------------------
+ * Share buttons (Detail Berita / Artikel)
+ * - Auto-inject share bar on pages that contain <article.prose>
+ * - Uses current URL + document title
+ * ------------------------------------------------------------ */
+function initShareBar() {
+  try {
+    // Only inject once
+    if (document.querySelector('.share-wrapper')) return;
+
+    // Detect detail pages by presence of article content
+    const article = document.querySelector('article.prose');
+    if (!article) return;
+
+    // Prefer placing after hero image (if any), otherwise before article
+    const heroImg = document.querySelector('.article-hero-img');
+    const anchor = heroImg ? heroImg : article;
+    const parent = anchor && anchor.parentElement;
+    if (!parent) return;
+
+    const pageUrl = (window.location.href || '').split('#')[0];
+    const url = encodeURIComponent(pageUrl);
+    const title = encodeURIComponent(document.title || '');
+    const media = encodeURIComponent((heroImg && heroImg.src) ? heroImg.src : '');
+
+    const wrap = document.createElement('div');
+    wrap.className = 'share-wrapper';
+    wrap.setAttribute('aria-label', 'Bagikan');
+
+    // Inline SVG icons (no external dependency)
+    const iconShare = `
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M18 16a3 3 0 0 0-2.4 1.2l-6.1-3.1a3.2 3.2 0 0 0 0-2.2l6.1-3.1A3 3 0 1 0 15 6a3 3 0 0 0 .1.7L9 9.8a3 3 0 1 0 0 4.4l6.1 3.1A3 3 0 1 0 18 16Z"/>
+      </svg>`;
+
+    const iconFacebook = `
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M13.5 22v-8h2.7l.4-3h-3.1V9.1c0-.9.2-1.5 1.6-1.5h1.7V5c-.3 0-1.4-.1-2.7-.1-2.7 0-4.6 1.6-4.6 4.6V11H7v3h2.8v8h3.7Z"/>
+      </svg>`;
+
+    const iconX = `
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M18.9 3H21l-6.9 7.9L22 21h-6.2l-4.8-6.1L5.6 21H3l7.4-8.5L2 3h6.3l4.3 5.6L18.9 3Zm-1.1 16h1.2L7.2 4.9H5.9L17.8 19Z"/>
+      </svg>`;
+
+    const iconPinterest = `
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M12 2C6.5 2 2 6.3 2 11.9c0 4.1 2.6 7.7 6.3 9.1-.1-.8-.2-2 0-2.9l1.4-5.9s-.4-.9-.4-2.1c0-2 1.1-3.5 2.5-3.5 1.2 0 1.8.9 1.8 2 0 1.2-.8 3.1-1.2 4.8-.3 1.4.7 2.5 2.1 2.5 2.5 0 4.2-3.2 4.2-7.1 0-2.9-2-5-5.5-5-4 0-6.4 3-6.4 6.2 0 1.2.4 2.1 1 2.8.1.2.2.3.1.6l-.3 1.1c-.1.4-.3.5-.6.3-1.5-.7-2.4-2.6-2.4-4.7 0-3.5 2.9-7.6 8.7-7.6 4.6 0 7.6 3.3 7.6 6.9 0 4.7-2.6 8.2-6.4 8.2-1.3 0-2.5-.7-2.9-1.5l-.8 3.1c-.3 1-.9 2.1-1.3 2.9.9.3 1.9.4 2.9.4 5.5 0 10-4.4 10-9.9C22 6.4 17.5 2 12 2Z"/>
+      </svg>`;
+
+    const iconWhatsApp = `
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M20.5 3.5A11 11 0 0 0 3.2 16.7L2 22l5.5-1.2A11 11 0 1 0 20.5 3.5Zm-8.5 18a9 9 0 0 1-4.6-1.3l-.3-.2-3.2.7.7-3.1-.2-.3A9 9 0 1 1 12 21.5Zm5-6.7c-.3-.1-1.7-.8-2-.9s-.5-.1-.7.2-.8.9-1 1.1-.4.2-.7.1a7.4 7.4 0 0 1-2.2-1.4 8.4 8.4 0 0 1-1.6-2c-.2-.3 0-.5.1-.6l.5-.6c.2-.2.2-.4.3-.6.1-.2 0-.4 0-.6s-.7-1.7-1-2.4c-.3-.6-.6-.6-.7-.6h-.6c-.2 0-.6.1-.9.4s-1.2 1.1-1.2 2.8 1.2 3.2 1.4 3.4c.2.2 2.4 3.7 5.8 5.1.8.3 1.4.5 1.9.6.8.3 1.6.2 2.2.1.7-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4s-.3-.2-.6-.3Z"/>
+      </svg>`;
+
+    wrap.innerHTML = `
+      <span class="share-label" aria-hidden="true">${iconShare}<span>SHARE</span></span>
+      <a class="share-btn share-btn--facebook" target="_blank" rel="noopener" aria-label="Bagikan ke Facebook" href="https://www.facebook.com/sharer/sharer.php?u=${url}">${iconFacebook}<span>Facebook</span></a>
+      <a class="share-btn share-btn--twitter" target="_blank" rel="noopener" aria-label="Bagikan ke X" href="https://twitter.com/intent/tweet?url=${url}&text=${title}">${iconX}<span>Twitter</span></a>
+      <a class="share-btn share-btn--pinterest" target="_blank" rel="noopener" aria-label="Bagikan ke Pinterest" href="https://pinterest.com/pin/create/button/?url=${url}&media=${media}&description=${title}">${iconPinterest}<span>Pinterest</span></a>
+      <a class="share-btn share-btn--whatsapp" target="_blank" rel="noopener" aria-label="Bagikan ke WhatsApp" href="https://wa.me/?text=${title}%20${url}">${iconWhatsApp}<span>WhatsApp</span></a>
+    `.trim();
+
+    // Insert right after hero image if exists, else before article
+    if (heroImg) {
+      heroImg.insertAdjacentElement('afterend', wrap);
+    } else {
+      parent.insertBefore(wrap, article);
+    }
+  } catch (e) {
+    // fail silently
+  }
+}
+
 const initSite = () => {
   // =========================
   // Sticky header: glass + shrink on scroll
@@ -1214,6 +1288,12 @@ if (quickHelpToggle && quickHelpLinks) {
 
   // Active menu indicator (desktop + mobile)
   setupActiveNavIndicator();
+
+  // Share bar on detail pages (Berita / Artikel)
+  initShareBar();
+
+  // Share bar (detail berita/artikel)
+  initShareBar();
 
   initImpactStats();
 };
