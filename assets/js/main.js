@@ -222,7 +222,7 @@ function initShareBar() {
       <a class="share-btn share-btn--facebook" target="_blank" rel="noopener" aria-label="Bagikan ke Facebook" href="https://www.facebook.com/sharer/sharer.php?u=${url}">${iconFacebook}<span>Facebook</span></a>
       <a class="share-btn share-btn--twitter" target="_blank" rel="noopener" aria-label="Bagikan ke X" href="https://twitter.com/intent/tweet?url=${url}&text=${title}">${iconX}<span>Twitter</span></a>
       <a class="share-btn share-btn--pinterest" target="_blank" rel="noopener" aria-label="Bagikan ke Pinterest" href="https://pinterest.com/pin/create/button/?url=${url}&media=${media}&description=${title}">${iconPinterest}<span>Pinterest</span></a>
-      <a class="share-btn share-btn--whatsapp" target="_blank" rel="noopener" aria-label="Bagikan ke WhatsApp" href="https://wa.me/?text=${title}%20${url}">${iconWhatsApp}<span>WhatsApp</span></a>
+      <a class="share-btn share-btn--whatsapp" target="_blank" rel="noopener" aria-label="Bagikan ke WhatsApp" href="https://wa.me/?text=${url}">${iconWhatsApp}<span>WhatsApp</span></a>
     `.trim();
 
     // Insert right after hero image if exists, else before article
@@ -231,10 +231,36 @@ function initShareBar() {
     } else {
       parent.insertBefore(wrap, article);
     }
+
+    // WhatsApp: prefer native share so user sees preview in WhatsApp compose (on most phones)
+    try {
+      const wa = wrap.querySelector('.share-btn--whatsapp');
+      if (wa && navigator.share) {
+        wa.addEventListener('click', async (ev) => {
+          const ua = navigator.userAgent || '';
+          const isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
+          if (!isMobile) return;
+
+          ev.preventDefault();
+          try {
+            await navigator.share({
+              title: document.title || '',
+              text: (document.title || '').replace(/\s+\|\s+RAGE SOKMA\s*$/i, ''),
+              url: pageUrl
+            });
+          } catch (err) {
+            window.open(wa.href, '_blank', 'noopener');
+          }
+        });
+      }
+    } catch (e) {
+      // ignore
+    }
   } catch (e) {
     // fail silently
   }
 }
+
 
 const initSite = () => {
   // =========================
