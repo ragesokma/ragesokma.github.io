@@ -16,7 +16,7 @@
     relawan: "Sosial Keagamaan"
   };
 
-  const CATEGORY_ORDER = ["Santunan Anak Yatim", "Santunan Yatim", "Peduli Dhu’afa", "Sosial Keagamaan"];
+  const CATEGORY_ORDER = ["Santunan Anak Yatim", "Peduli Dhu’afa", "Sosial Keagamaan"];
 
   function safeText(s) {
     return (s || "").toString();
