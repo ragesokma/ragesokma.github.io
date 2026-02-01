@@ -183,8 +183,9 @@ function initShareBar() {
     if (!parent) return;
 
     const pageUrl = (window.location.href || '').split('#')[0];
+    const cleanTitleText = (document.title || '').replace(/\s+\|\s+RAGE SOKMA\s*$/i, '').trim();
     const url = encodeURIComponent(pageUrl);
-    const title = encodeURIComponent(document.title || '');
+    const title = encodeURIComponent(cleanTitleText);
     const media = encodeURIComponent((heroImg && heroImg.src) ? heroImg.src : '');
 
     const wrap = document.createElement('div');
@@ -222,7 +223,7 @@ function initShareBar() {
       <a class="share-btn share-btn--facebook" target="_blank" rel="noopener" aria-label="Bagikan ke Facebook" href="https://www.facebook.com/sharer/sharer.php?u=${url}">${iconFacebook}<span>Facebook</span></a>
       <a class="share-btn share-btn--twitter" target="_blank" rel="noopener" aria-label="Bagikan ke X" href="https://twitter.com/intent/tweet?url=${url}&text=${title}">${iconX}<span>Twitter</span></a>
       <a class="share-btn share-btn--pinterest" target="_blank" rel="noopener" aria-label="Bagikan ke Pinterest" href="https://pinterest.com/pin/create/button/?url=${url}&media=${media}&description=${title}">${iconPinterest}<span>Pinterest</span></a>
-      <a class="share-btn share-btn--whatsapp" target="_blank" rel="noopener" aria-label="Bagikan ke WhatsApp" href="https://wa.me/?text=${url}">${iconWhatsApp}<span>WhatsApp</span></a>
+      <a class="share-btn share-btn--whatsapp" target="_blank" rel="noopener" aria-label="Bagikan ke WhatsApp" href="#">${iconWhatsApp}<span>WhatsApp</span></a>
     `.trim();
 
     // Insert right after hero image if exists, else before article
@@ -232,25 +233,49 @@ function initShareBar() {
       parent.insertBefore(wrap, article);
     }
 
-    // WhatsApp: prefer native share so user sees preview in WhatsApp compose (on most phones)
+    // WhatsApp: open WhatsApp directly (no generic share sheet)
+    // Message format requested: Title + newline + URL
     try {
       const wa = wrap.querySelector('.share-btn--whatsapp');
-      if (wa && navigator.share) {
-        wa.addEventListener('click', async (ev) => {
+      if (wa) {
+        const waText = encodeURIComponent(`${cleanTitleText}\n${pageUrl}`.trim());
+        const waWeb = `https://wa.me/?text=${waText}`;
+        const waApi = `https://api.whatsapp.com/send?text=${waText}`;
+        const waScheme = `whatsapp://send?text=${waText}`;
+
+        wa.href = waWeb;
+
+        wa.addEventListener('click', (ev) => {
           const ua = navigator.userAgent || '';
           const isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
-          if (!isMobile) return;
+          const isAndroid = /Android/i.test(ua);
+
+          // Desktop: open WhatsApp Web (or wa.me)
+          if (!isMobile) {
+            // Keep default behavior
+            wa.href = waWeb;
+            return;
+          }
 
           ev.preventDefault();
-          try {
-            await navigator.share({
-              title: document.title || '',
-              text: (document.title || '').replace(/\s+\|\s+RAGE SOKMA\s*$/i, ''),
-              url: pageUrl
-            });
-          } catch (err) {
-            window.open(wa.href, '_blank', 'noopener');
+
+          // Mobile: try to jump straight into the WhatsApp app
+          // Android: intent is the most reliable
+          if (isAndroid) {
+            const intent = `intent://send?text=${waText}#Intent;scheme=whatsapp;package=com.whatsapp;end`;
+            window.location.href = intent;
+            // Fallback to web API if intent is blocked
+            setTimeout(() => {
+              window.location.href = waApi;
+            }, 600);
+            return;
           }
+
+          // iOS: scheme first, fallback to wa.me
+          window.location.href = waScheme;
+          setTimeout(() => {
+            window.location.href = waWeb;
+          }, 600);
         });
       }
     } catch (e) {
