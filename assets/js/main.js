@@ -184,9 +184,170 @@ function initShareBar() {
 
     const pageUrl = (window.location.href || '').split('#')[0];
     const cleanTitleText = (document.title || '').replace(/\s+\|\s+RAGE SOKMA\s*$/i, '').trim();
+
+    // Pull narasi singkat untuk preview (OG description / meta description)
+    const metaOgDesc = document.querySelector('meta[property="og:description"]');
+    const metaDesc = document.querySelector('meta[name="description"]');
+    const shortDesc = (metaOgDesc?.getAttribute('content') || metaDesc?.getAttribute('content') || '').trim();
+
+    // Determine context: berita vs artikel
+    const path = (window.location.pathname || '').toLowerCase();
+    const isBerita = path.includes('/berita/');
+    const isArtikel = path.includes('/artikel/');
+
+    // Try to read publish date from meta (for WhatsApp message formatting on berita)
+    const publishedMeta = document.querySelector('meta[property="article:published_time"]');
+    const publishedRaw = (publishedMeta?.getAttribute('content') || '').trim();
+
+    const formatDateId = (isoDate) => {
+      try {
+        if (!isoDate) return '';
+        const d = new Date(isoDate);
+        if (Number.isNaN(d.getTime())) return '';
+        return d.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
+      } catch { return ''; }
+    };
+
+    const publishedPretty = formatDateId(publishedRaw);
+
+    // Share payloads
     const url = encodeURIComponent(pageUrl);
     const title = encodeURIComponent(cleanTitleText);
     const media = encodeURIComponent((heroImg && heroImg.src) ? heroImg.src : '');
+
+    // Helper: build WhatsApp message (title + optional date + newline + URL)
+    const buildWhatsAppText = () => {
+      // Requested format: judul (with context) + newline + link
+      let head = cleanTitleText;
+      if (isBerita && publishedPretty) {
+        head = `${cleanTitleText} — ${publishedPretty}`;
+      }
+      return `${head}\n${pageUrl}`.trim();
+    };
+
+    // Helper: simple share analytics (localStorage only)
+    const trackShare = (platform) => {
+      try {
+        const key = 'rage_share_counts_v1';
+        const data = JSON.parse(localStorage.getItem(key) || '{}');
+        const slug = (window.location.pathname || '').split('/').pop() || 'unknown';
+        data.total = data.total || {};
+        data.bySlug = data.bySlug || {};
+        data.total[platform] = (data.total[platform] || 0) + 1;
+        data.bySlug[slug] = data.bySlug[slug] || {};
+        data.bySlug[slug][platform] = (data.bySlug[slug][platform] || 0) + 1;
+        data.last = { platform, slug, ts: Date.now() };
+        localStorage.setItem(key, JSON.stringify(data));
+      } catch (e) {}
+    };
+
+    // Helper: generate Story image (1080x1920) from hero + title
+    const makeStoryImage = async () => {
+      const w = 1080, h = 1920;
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) throw new Error('no-canvas');
+
+      // Background
+      ctx.fillStyle = '#0b1220';
+      ctx.fillRect(0, 0, w, h);
+
+      // Draw hero image if exists
+      if (heroImg && heroImg.src) {
+        await new Promise((resolve) => {
+          const im = new Image();
+          im.crossOrigin = 'anonymous';
+          im.onload = () => {
+            // cover fit
+            const scale = Math.max(w / im.width, (h * 0.56) / im.height);
+            const dw = im.width * scale;
+            const dh = im.height * scale;
+            const dx = (w - dw) / 2;
+            const dy = 0;
+            ctx.drawImage(im, dx, dy, dw, dh);
+            // gradient overlay for text readability
+            const g = ctx.createLinearGradient(0, h * 0.35, 0, h * 0.8);
+            g.addColorStop(0, 'rgba(11,18,32,0)');
+            g.addColorStop(1, 'rgba(11,18,32,0.85)');
+            ctx.fillStyle = g;
+            ctx.fillRect(0, 0, w, h);
+            resolve();
+          };
+          im.onerror = () => resolve();
+          im.src = heroImg.src;
+        });
+      } else {
+        // Subtle pattern fallback
+        ctx.fillStyle = 'rgba(255,255,255,0.06)';
+        for (let y = 0; y < h; y += 48) {
+          ctx.fillRect(0, y, w, 1);
+        }
+      }
+
+      // Title
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '800 64px system-ui, -apple-system, Segoe UI, Roboto, Arial';
+      const pad = 80;
+      const maxWidth = w - pad * 2;
+      const lines = [];
+      const words = cleanTitleText.split(/\s+/).filter(Boolean);
+      let line = '';
+      for (const word of words) {
+        const test = line ? `${line} ${word}` : word;
+        if (ctx.measureText(test).width <= maxWidth) {
+          line = test;
+        } else {
+          if (line) lines.push(line);
+          line = word;
+        }
+      }
+      if (line) lines.push(line);
+      const maxLines = 4;
+      const clipped = lines.slice(0, maxLines);
+      let ty = Math.round(h * 0.62);
+      clipped.forEach((ln) => {
+        ctx.fillText(ln, pad, ty);
+        ty += 76;
+      });
+
+      // Description (optional)
+      if (shortDesc) {
+        ctx.fillStyle = 'rgba(255,255,255,0.9)';
+        ctx.font = '500 36px system-ui, -apple-system, Segoe UI, Roboto, Arial';
+        const d = shortDesc.length > 140 ? shortDesc.slice(0, 137) + '…' : shortDesc;
+        const dl = [];
+        let dlLine = '';
+        for (const word of d.split(/\s+/)) {
+          const test = dlLine ? `${dlLine} ${word}` : word;
+          if (ctx.measureText(test).width <= maxWidth) dlLine = test;
+          else { dl.push(dlLine); dlLine = word; }
+        }
+        if (dlLine) dl.push(dlLine);
+        const shown = dl.slice(0, 3);
+        let dy = ty + 8;
+        shown.forEach((ln) => {
+          ctx.fillText(ln, pad, dy);
+          dy += 46;
+        });
+      }
+
+      // Footer: site + URL
+      ctx.fillStyle = 'rgba(255,255,255,0.85)';
+      ctx.font = '700 34px system-ui, -apple-system, Segoe UI, Roboto, Arial';
+      ctx.fillText('RAGE SOKMA', pad, h - 140);
+      ctx.fillStyle = 'rgba(255,255,255,0.75)';
+      ctx.font = '500 30px system-ui, -apple-system, Segoe UI, Roboto, Arial';
+      const urlShort = pageUrl.replace(/^https?:\/\//i, '');
+      ctx.fillText(urlShort, pad, h - 96);
+
+      return new Promise((resolve) => {
+        canvas.toBlob((blob) => resolve(blob), 'image/png', 0.92);
+      });
+    };
+
+    // Build WhatsApp text once (judul enter baru link)
+    const waMessageText = buildWhatsAppText();
 
     const wrap = document.createElement('div');
     wrap.className = 'share-wrapper';
@@ -213,10 +374,21 @@ function initShareBar() {
         <path fill="currentColor" d="M12 2C6.5 2 2 6.3 2 11.9c0 4.1 2.6 7.7 6.3 9.1-.1-.8-.2-2 0-2.9l1.4-5.9s-.4-.9-.4-2.1c0-2 1.1-3.5 2.5-3.5 1.2 0 1.8.9 1.8 2 0 1.2-.8 3.1-1.2 4.8-.3 1.4.7 2.5 2.1 2.5 2.5 0 4.2-3.2 4.2-7.1 0-2.9-2-5-5.5-5-4 0-6.4 3-6.4 6.2 0 1.2.4 2.1 1 2.8.1.2.2.3.1.6l-.3 1.1c-.1.4-.3.5-.6.3-1.5-.7-2.4-2.6-2.4-4.7 0-3.5 2.9-7.6 8.7-7.6 4.6 0 7.6 3.3 7.6 6.9 0 4.7-2.6 8.2-6.4 8.2-1.3 0-2.5-.7-2.9-1.5l-.8 3.1c-.3 1-.9 2.1-1.3 2.9.9.3 1.9.4 2.9.4 5.5 0 10-4.4 10-9.9C22 6.4 17.5 2 12 2Z"/>
       </svg>`;
 
+    const iconInstagram = `
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3Zm-5 4.5A5.5 5.5 0 1 1 6.5 14 5.5 5.5 0 0 1 12 8.5Zm0 2A3.5 3.5 0 1 0 15.5 14 3.5 3.5 0 0 0 12 10.5ZM18 6.7a1.1 1.1 0 1 1-1.1-1.1A1.1 1.1 0 0 1 18 6.7Z"/>
+      </svg>`;
+
     const iconWhatsApp = `
       <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <path fill="currentColor" d="M20.5 3.5A11 11 0 0 0 3.2 16.7L2 22l5.5-1.2A11 11 0 1 0 20.5 3.5Zm-8.5 18a9 9 0 0 1-4.6-1.3l-.3-.2-3.2.7.7-3.1-.2-.3A9 9 0 1 1 12 21.5Zm5-6.7c-.3-.1-1.7-.8-2-.9s-.5-.1-.7.2-.8.9-1 1.1-.4.2-.7.1a7.4 7.4 0 0 1-2.2-1.4 8.4 8.4 0 0 1-1.6-2c-.2-.3 0-.5.1-.6l.5-.6c.2-.2.2-.4.3-.6.1-.2 0-.4 0-.6s-.7-1.7-1-2.4c-.3-.6-.6-.6-.7-.6h-.6c-.2 0-.6.1-.9.4s-1.2 1.1-1.2 2.8 1.2 3.2 1.4 3.4c.2.2 2.4 3.7 5.8 5.1.8.3 1.4.5 1.9.6.8.3 1.6.2 2.2.1.7-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4s-.3-.2-.6-.3Z"/>
       </svg>`;
+
+    const iconLink = `
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M10.59 13.41a1 1 0 0 1 0-1.41l2.83-2.83a3 3 0 1 1 4.24 4.24l-1.41 1.41a1 1 0 0 1-1.42-1.41l1.42-1.42a1 1 0 0 0-1.42-1.41l-2.83 2.83a1 1 0 0 1-1.41 0ZM13.41 10.59a1 1 0 0 1 0 1.41l-2.83 2.83a3 3 0 0 1-4.24-4.24l1.41-1.41a1 1 0 1 1 1.42 1.41L7.76 12a1 1 0 0 0 1.41 1.41l2.83-2.83a1 1 0 0 1 1.41 0Z"/>
+      </svg>`;
+
 
     wrap.innerHTML = `
       <span class="share-label" aria-hidden="true">${iconShare}<span>SHARE</span></span>
@@ -224,6 +396,9 @@ function initShareBar() {
       <a class="share-btn share-btn--twitter" target="_blank" rel="noopener" aria-label="Bagikan ke X" href="https://twitter.com/intent/tweet?url=${url}&text=${title}">${iconX}<span>Twitter</span></a>
       <a class="share-btn share-btn--pinterest" target="_blank" rel="noopener" aria-label="Bagikan ke Pinterest" href="https://pinterest.com/pin/create/button/?url=${url}&media=${media}&description=${title}">${iconPinterest}<span>Pinterest</span></a>
       <a class="share-btn share-btn--whatsapp" target="_blank" rel="noopener" aria-label="Bagikan ke WhatsApp" href="#">${iconWhatsApp}<span>WhatsApp</span></a>
+      <button class="share-btn share-btn--copy" type="button" aria-label="Salin tautan">${iconLink}<span>Salin tautan</span></button>
+      <a class="share-btn share-btn--igstory" href="#" aria-label="Bagikan ke Instagram Story">${iconInstagram}<span>IG Story</span></a>
+      <a class="share-btn share-btn--fbstory" href="#" aria-label="Bagikan ke Facebook Story">${iconFacebook}<span>FB Story</span></a>
     `.trim();
 
     // Insert right after hero image if exists, else before article
@@ -233,12 +408,19 @@ function initShareBar() {
       parent.insertBefore(wrap, article);
     }
 
+    // Track clicks for common platforms (FB, X, Pinterest)
+    try {
+      wrap.querySelector('.share-btn--facebook')?.addEventListener('click', () => trackShare('facebook'));
+      wrap.querySelector('.share-btn--twitter')?.addEventListener('click', () => trackShare('twitter'));
+      wrap.querySelector('.share-btn--pinterest')?.addEventListener('click', () => trackShare('pinterest'));
+    } catch (e) {}
+
     // WhatsApp: open WhatsApp directly (no generic share sheet)
-    // Message format requested: Title + newline + URL
+    // Message format requested: Judul + (tanggal jika berita) + newline + URL
     try {
       const wa = wrap.querySelector('.share-btn--whatsapp');
       if (wa) {
-        const waText = encodeURIComponent(`${cleanTitleText}\n${pageUrl}`.trim());
+        const waText = encodeURIComponent(waMessageText);
         const waWeb = `https://wa.me/?text=${waText}`;
         const waApi = `https://api.whatsapp.com/send?text=${waText}`;
         const waScheme = `whatsapp://send?text=${waText}`;
@@ -246,6 +428,8 @@ function initShareBar() {
         wa.href = waWeb;
 
         wa.addEventListener('click', (ev) => {
+          trackShare('whatsapp');
+
           const ua = navigator.userAgent || '';
           const isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
           const isAndroid = /Android/i.test(ua);
@@ -281,6 +465,103 @@ function initShareBar() {
     } catch (e) {
       // ignore
     }
+
+
+    // Copy link
+    try {
+      const btn = wrap.querySelector('.share-btn--copy');
+      if (btn) {
+        const originalLabel = btn.querySelector('span')?.textContent || 'Salin tautan';
+
+        const setCopied = () => {
+          btn.classList.add('is-copied');
+          const sp = btn.querySelector('span');
+          if (sp) sp.textContent = 'Tersalin!';
+          window.setTimeout(() => {
+            btn.classList.remove('is-copied');
+            const sp2 = btn.querySelector('span');
+            if (sp2) sp2.textContent = originalLabel;
+          }, 1400);
+        };
+
+        btn.addEventListener('click', async () => {
+          trackShare('copy_link');
+          const toCopy = pageUrl;
+
+          // Preferred: Clipboard API (works on https + localhost)
+          try {
+            if (navigator.clipboard) {
+              await navigator.clipboard.writeText(toCopy);
+              setCopied();
+              return;
+            }
+          } catch (e) {}
+
+          // Fallback: execCommand
+          try {
+            const ta = document.createElement('textarea');
+            ta.value = toCopy;
+            ta.setAttribute('readonly', '');
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            ta.style.top = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            setCopied();
+          } catch (e) {}
+        });
+      }
+    } catch (e) {
+      // ignore
+    }
+
+    // IG Story / FB Story
+    // Catatan: browser tidak bisa "langsung" lempar file ke Story tanpa interaksi share OS.
+    // Implementasi terbaik: generate gambar story → gunakan Web Share API (files) kalau tersedia.
+    const shareStory = async (platform) => {
+      try {
+        const blob = await makeStoryImage();
+        if (!blob) throw new Error('no-blob');
+        const file = new File([blob], 'rage-sokma-story.png', { type: 'image/png' });
+        const can = navigator.canShare && navigator.canShare({ files: [file] });
+
+        trackShare(platform);
+
+        if (navigator.share && can) {
+          await navigator.share({
+            files: [file],
+            title: cleanTitleText,
+            text: shortDesc || cleanTitleText,
+            url: pageUrl,
+          });
+          return;
+        }
+
+        // Fallback: download image so user can upload to story manually
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'rage-sokma-story.png';
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          URL.revokeObjectURL(a.href);
+          a.remove();
+        }, 4000);
+      } catch (e) {}
+    };
+
+    try {
+      wrap.querySelector('.share-btn--igstory')?.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        shareStory('instagram_story');
+      });
+      wrap.querySelector('.share-btn--fbstory')?.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        shareStory('facebook_story');
+      });
+    } catch (e) {}
   } catch (e) {
     // fail silently
   }

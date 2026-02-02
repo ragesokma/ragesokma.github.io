@@ -211,6 +211,9 @@ main{padding-top:28px;}
   font-size:13px;
   text-decoration:none;
   color:inherit;
+  cursor:pointer;
+  -webkit-appearance:none;
+  appearance:none;
   transition:transform .08s ease, box-shadow .12s ease, background .12s ease;
 }
 
@@ -223,6 +226,11 @@ main{padding-top:28px;}
 .share-btn:hover{
   transform:translateY(-1px);
   box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.share-btn.is-copied{
+  box-shadow:0 8px 20px rgba(0,0,0,.10);
+  transform:translateY(-1px);
 }
 
 .share-btn:active{

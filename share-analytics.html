@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Share Analytics | RAGE SOKMA</title>
+  <link rel="stylesheet" href="assets/css/app.css?v=2026020205" />
+  <link rel="stylesheet" href="assets/css/utilities.css?v=2026020205" />
+  <meta name="robots" content="noindex,nofollow" />
+</head>
+<body class="font-sans">
+  <main class="max-w-5xl mx-auto px-6 py-10">
+    <h1 class="text-2xl font-extrabold mb-2">Share Analytics</h1>
+    <p class="text-gray-600 mb-6">Data ini tersimpan di browser (localStorage) untuk kebutuhan monitoring klik share.</p>
+
+    <div class="flex flex-wrap gap-3 mb-6">
+      <button id="btnRefresh" class="btn-primary">Refresh</button>
+      <button id="btnClear" class="btn-outline">Reset Data</button>
+    </div>
+
+    <section class="bg-white rounded-2xl shadow p-5 mb-6">
+      <h2 class="font-bold mb-3">Total Klik per Platform</h2>
+      <div id="totals"></div>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow p-5">
+      <h2 class="font-bold mb-3">Rincian per Post</h2>
+      <div class="overflow-auto">
+        <table class="min-w-full text-sm">
+          <thead>
+            <tr class="text-left border-b">
+              <th class="py-2 pr-4">Post</th>
+              <th class="py-2 pr-4">Tipe</th>
+              <th class="py-2 pr-4">WhatsApp</th>
+              <th class="py-2 pr-4">Facebook</th>
+              <th class="py-2 pr-4">Twitter</th>
+              <th class="py-2 pr-4">Pinterest</th>
+              <th class="py-2 pr-4">IG Story</th>
+              <th class="py-2 pr-4">FB Story</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const KEY = 'rage_share_counts_v1';
+    const fmt = (n) => (typeof n === 'number' ? n : 0);
+
+    function readData(){
+      try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e){ return {}; }
+    }
+
+    function render(){
+      const data = readData();
+      const total = data.total || {};
+      const totals = document.getElementById('totals');
+      const rows = document.getElementById('rows');
+
+      totals.innerHTML = `
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+          <div class="p-3 rounded-xl border"><div class="text-xs text-gray-500">WhatsApp</div><div class="text-xl font-extrabold">${fmt(total.whatsapp)}</div></div>
+          <div class="p-3 rounded-xl border"><div class="text-xs text-gray-500">Facebook</div><div class="text-xl font-extrabold">${fmt(total.facebook)}</div></div>
+          <div class="p-3 rounded-xl border"><div class="text-xs text-gray-500">Twitter</div><div class="text-xl font-extrabold">${fmt(total.twitter)}</div></div>
+          <div class="p-3 rounded-xl border"><div class="text-xs text-gray-500">Pinterest</div><div class="text-xl font-extrabold">${fmt(total.pinterest)}</div></div>
+          <div class="p-3 rounded-xl border"><div class="text-xs text-gray-500">IG Story</div><div class="text-xl font-extrabold">${fmt(total.instagram_story)}</div></div>
+          <div class="p-3 rounded-xl border"><div class="text-xs text-gray-500">FB Story</div><div class="text-xl font-extrabold">${fmt(total.facebook_story)}</div></div>
+        </div>
+      `;
+
+      const bySlug = data.bySlug || {};
+      const slugs = Object.keys(bySlug);
+      slugs.sort((a,b) => {
+        const sa = bySlug[a] || {}; const sb = bySlug[b] || {};
+        const ta = Object.values(sa).reduce((x,v) => x + (typeof v === 'number' ? v : 0), 0);
+        const tb = Object.values(sb).reduce((x,v) => x + (typeof v === 'number' ? v : 0), 0);
+        return tb - ta;
+      });
+
+      rows.innerHTML = slugs.map((slug) => {
+        const s = bySlug[slug] || {};
+        const title = (s._title || slug);
+        const type = (s._type || '-');
+        return `
+          <tr class="border-b">
+            <td class="py-2 pr-4"><div class="font-semibold">${title}</div><div class="text-xs text-gray-500">${slug}</div></td>
+            <td class="py-2 pr-4">${type}</td>
+            <td class="py-2 pr-4">${fmt(s.whatsapp)}</td>
+            <td class="py-2 pr-4">${fmt(s.facebook)}</td>
+            <td class="py-2 pr-4">${fmt(s.twitter)}</td>
+            <td class="py-2 pr-4">${fmt(s.pinterest)}</td>
+            <td class="py-2 pr-4">${fmt(s.instagram_story)}</td>
+            <td class="py-2 pr-4">${fmt(s.facebook_story)}</td>
+          </tr>
+        `;
+      }).join('') || '<tr><td class="py-4 text-gray-500" colspan="8">Belum ada data.</td></tr>';
+    }
+
+    document.getElementById('btnRefresh').addEventListener('click', render);
+    document.getElementById('btnClear').addEventListener('click', () => {
+      localStorage.removeItem(KEY);
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>
