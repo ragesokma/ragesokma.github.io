@@ -3,7 +3,7 @@
   const grid = document.getElementById("galleryTeaseGrid");
   if (!grid) return;
 
-  const VERSION = "2026020121";
+  const VERSION = "2026020212";
   const DATA_URL = "assets/data/posts.json?v=" + VERSION;
   const FALLBACK_IMG = "assets/images/placeholder.jpg";
 

@@ -84,4 +84,11 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
+
+  <url>
+    <loc>https://ragesokma.github.io/berita/wujud-kepedulian-sosial-untuk-anak-yatim-dan-kurang-mampu.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

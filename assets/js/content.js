@@ -4,7 +4,7 @@
  * - Fitur: filter kategori, badge kategori, default kategori per type, galeri otomatis
  */
 (function () {
-  const VERSION = "20260131";
+  const VERSION = "2026020212";
   const DATA_URL = "assets/data/posts.json?v=" + VERSION;
   const FALLBACK_IMG = "assets/images/placeholder.jpg";
 

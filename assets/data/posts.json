@@ -153,5 +153,16 @@
     "image": "assets/images/berita/tasyakuran-paguyuban-rage-sokma.jpg",
     "popular": false,
     "gallery": true
+  },
+  {
+    "title": "Wujud Kepedulian Sosial untuk Anak Yatim dan Kurang Mampu",
+    "slug": "wujud-kepedulian-sosial-untuk-anak-yatim-dan-kurang-mampu",
+    "url": "berita/wujud-kepedulian-sosial-untuk-anak-yatim-dan-kurang-mampu.html",
+    "date": "2026-02-01",
+    "type": "berita",
+    "category": "Sosial Keagamaan",
+    "excerpt": "Khitan Massal Rage Sokma menjadi wujud kepedulian sosial-keagamaan bagi anak yatim dan keluarga kurang mampu di Balai Desa Sumberanyar.",
+    "image": "assets/images/wujud-kepedulian-sosial-untuk-anak-yatim-dan-kurang-mampu.jpg",
+    "popular": false
   }
 ]
