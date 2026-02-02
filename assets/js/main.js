@@ -364,16 +364,6 @@ function initShareBar() {
         <path fill="currentColor" d="M13.5 22v-8h2.7l.4-3h-3.1V9.1c0-.9.2-1.5 1.6-1.5h1.7V5c-.3 0-1.4-.1-2.7-.1-2.7 0-4.6 1.6-4.6 4.6V11H7v3h2.8v8h3.7Z"/>
       </svg>`;
 
-    const iconX = `
-      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path fill="currentColor" d="M18.9 3H21l-6.9 7.9L22 21h-6.2l-4.8-6.1L5.6 21H3l7.4-8.5L2 3h6.3l4.3 5.6L18.9 3Zm-1.1 16h1.2L7.2 4.9H5.9L17.8 19Z"/>
-      </svg>`;
-
-    const iconPinterest = `
-      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path fill="currentColor" d="M12 2C6.5 2 2 6.3 2 11.9c0 4.1 2.6 7.7 6.3 9.1-.1-.8-.2-2 0-2.9l1.4-5.9s-.4-.9-.4-2.1c0-2 1.1-3.5 2.5-3.5 1.2 0 1.8.9 1.8 2 0 1.2-.8 3.1-1.2 4.8-.3 1.4.7 2.5 2.1 2.5 2.5 0 4.2-3.2 4.2-7.1 0-2.9-2-5-5.5-5-4 0-6.4 3-6.4 6.2 0 1.2.4 2.1 1 2.8.1.2.2.3.1.6l-.3 1.1c-.1.4-.3.5-.6.3-1.5-.7-2.4-2.6-2.4-4.7 0-3.5 2.9-7.6 8.7-7.6 4.6 0 7.6 3.3 7.6 6.9 0 4.7-2.6 8.2-6.4 8.2-1.3 0-2.5-.7-2.9-1.5l-.8 3.1c-.3 1-.9 2.1-1.3 2.9.9.3 1.9.4 2.9.4 5.5 0 10-4.4 10-9.9C22 6.4 17.5 2 12 2Z"/>
-      </svg>`;
-
     const iconInstagram = `
       <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <path fill="currentColor" d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3Zm-5 4.5A5.5 5.5 0 1 1 6.5 14 5.5 5.5 0 0 1 12 8.5Zm0 2A3.5 3.5 0 1 0 15.5 14 3.5 3.5 0 0 0 12 10.5ZM18 6.7a1.1 1.1 0 1 1-1.1-1.1A1.1 1.1 0 0 1 18 6.7Z"/>
@@ -391,10 +381,8 @@ function initShareBar() {
 
 
     wrap.innerHTML = `
-      <span class="share-label" aria-hidden="true">${iconShare}<span>SHARE</span></span>
+      <span class="share-label" aria-hidden="true">${iconShare}<span>BAGIKAN</span></span>
       <a class="share-btn share-btn--facebook" target="_blank" rel="noopener" aria-label="Bagikan ke Facebook" href="https://www.facebook.com/sharer/sharer.php?u=${url}">${iconFacebook}<span>Facebook</span></a>
-      <a class="share-btn share-btn--twitter" target="_blank" rel="noopener" aria-label="Bagikan ke X" href="https://twitter.com/intent/tweet?url=${url}&text=${title}">${iconX}<span>Twitter</span></a>
-      <a class="share-btn share-btn--pinterest" target="_blank" rel="noopener" aria-label="Bagikan ke Pinterest" href="https://pinterest.com/pin/create/button/?url=${url}&media=${media}&description=${title}">${iconPinterest}<span>Pinterest</span></a>
       <a class="share-btn share-btn--whatsapp" target="_blank" rel="noopener" aria-label="Bagikan ke WhatsApp" href="#">${iconWhatsApp}<span>WhatsApp</span></a>
       <button class="share-btn share-btn--copy" type="button" aria-label="Salin tautan">${iconLink}<span>Salin tautan</span></button>
       <a class="share-btn share-btn--igstory" href="#" aria-label="Bagikan ke Instagram Story">${iconInstagram}<span>IG Story</span></a>
@@ -411,8 +399,6 @@ function initShareBar() {
     // Track clicks for common platforms (FB, X, Pinterest)
     try {
       wrap.querySelector('.share-btn--facebook')?.addEventListener('click', () => trackShare('facebook'));
-      wrap.querySelector('.share-btn--twitter')?.addEventListener('click', () => trackShare('twitter'));
-      wrap.querySelector('.share-btn--pinterest')?.addEventListener('click', () => trackShare('pinterest'));
     } catch (e) {}
 
     // WhatsApp: open WhatsApp directly (no generic share sheet)
