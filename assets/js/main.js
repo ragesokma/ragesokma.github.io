@@ -433,19 +433,59 @@ function initShareBar() {
           // Android: intent is the most reliable
           if (isAndroid) {
             const intent = `intent://send?text=${waText}#Intent;scheme=whatsapp;package=com.whatsapp;end`;
+            // If WhatsApp opens successfully, the page will usually become hidden.
+            // Cancel fallback to avoid the "WhatsApp → WhatsApp" double prompt.
+            let fallbackTimer = null;
+            const cancelFallback = () => {
+              if (fallbackTimer) {
+                clearTimeout(fallbackTimer);
+                fallbackTimer = null;
+              }
+              document.removeEventListener('visibilitychange', onVis, true);
+              window.removeEventListener('pagehide', cancelFallback, true);
+              window.removeEventListener('blur', cancelFallback, true);
+            };
+            const onVis = () => {
+              if (document.hidden) cancelFallback();
+            };
+
+            document.addEventListener('visibilitychange', onVis, true);
+            window.addEventListener('pagehide', cancelFallback, true);
+            window.addEventListener('blur', cancelFallback, true);
+
             window.location.href = intent;
-            // Fallback to web API if intent is blocked
-            setTimeout(() => {
+            // Fallback to web API only if WhatsApp didn't open
+            fallbackTimer = setTimeout(() => {
+              cancelFallback();
               window.location.href = waApi;
-            }, 600);
+            }, 900);
             return;
           }
 
-          // iOS: scheme first, fallback to wa.me
+          // iOS: scheme first, fallback to wa.me (cancel fallback if app opens)
+          let fallbackTimerIOS = null;
+          const cancelFallbackIOS = () => {
+            if (fallbackTimerIOS) {
+              clearTimeout(fallbackTimerIOS);
+              fallbackTimerIOS = null;
+            }
+            document.removeEventListener('visibilitychange', onVisIOS, true);
+            window.removeEventListener('pagehide', cancelFallbackIOS, true);
+            window.removeEventListener('blur', cancelFallbackIOS, true);
+          };
+          const onVisIOS = () => {
+            if (document.hidden) cancelFallbackIOS();
+          };
+
+          document.addEventListener('visibilitychange', onVisIOS, true);
+          window.addEventListener('pagehide', cancelFallbackIOS, true);
+          window.addEventListener('blur', cancelFallbackIOS, true);
+
           window.location.href = waScheme;
-          setTimeout(() => {
+          fallbackTimerIOS = setTimeout(() => {
+            cancelFallbackIOS();
             window.location.href = waWeb;
-          }, 600);
+          }, 900);
         });
       }
     } catch (e) {
