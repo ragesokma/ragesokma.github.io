@@ -1,5 +1,49 @@
 [
   {
+    "title": "Gelar Kegiatan Donor Darah untuk Kemanusiaan",
+    "slug": "gelar-kegiatan-donor-darah-untuk-kemanusiaan",
+    "url": "berita/gelar-kegiatan-donor-darah-untuk-kemanusiaan.html",
+    "date": "2026-02-02",
+    "type": "berita",
+    "category": "Sosial Keagamaan",
+    "excerpt": "Paguyuban Rage Sokma menggelar donor darah di Sumberanyar bekerja sama dengan PMI untuk membantu ketersediaan stok darah bagi pasien yang membutuhkan.",
+    "image": "assets/images/gelar-kegiatan-donor-darah-untuk-kemanusiaan.jpg",
+    "popular": false
+  },
+  {
+    "title": "Selenggarakan Kegiatan Khotmil Qur’an sebagai Penguatan Spiritual",
+    "slug": "selenggarakan-kegiatan-khotmil-quran-sebagai-penguatan-spiritual",
+    "url": "berita/selenggarakan-kegiatan-khotmil-quran-sebagai-penguatan-spiritual.html",
+    "date": "2026-02-02",
+    "type": "berita",
+    "category": "Sosial Keagamaan",
+    "excerpt": "Khotmil Qur’an digelar di Sumberanyar sebagai penguatan spiritual dan silaturahmi, diikuti anggota paguyuban, tokoh agama, dan warga sekitar.",
+    "image": "assets/images/selenggarakan-kegiatan-khotmil-quran-sebagai-penguatan-spiritual.jpg",
+    "popular": false
+  },
+  {
+    "title": "Bagikan Seragam Sekolah untuk Siswa SD sebagai Bentuk Kepedulian Pendidikan",
+    "slug": "bagikan-seragam-sekolah-untuk-siswa-sd-sebagai-bentuk-kepedulian-pendidikan",
+    "url": "berita/bagikan-seragam-sekolah-untuk-siswa-sd-sebagai-bentuk-kepedulian-pendidikan.html",
+    "date": "2026-02-02",
+    "type": "berita",
+    "category": "Santunan Anak Yatim",
+    "excerpt": "Paguyuban Rage Sokma membagikan seragam sekolah untuk siswa SD dari keluarga kurang mampu sebagai dukungan pendidikan dan motivasi belajar.",
+    "image": "assets/images/bagikan-seragam-sekolah-untuk-siswa-sd.jpg",
+    "popular": false
+  },
+  {
+    "title": "Wujud Kepedulian Sosial untuk Anak Yatim dan Kurang Mampu",
+    "slug": "wujud-kepedulian-sosial-untuk-anak-yatim-dan-kurang-mampu",
+    "url": "berita/wujud-kepedulian-sosial-untuk-anak-yatim-dan-kurang-mampu.html",
+    "date": "2026-02-01",
+    "type": "berita",
+    "category": "Sosial Keagamaan",
+    "excerpt": "Khitan Massal Rage Sokma menjadi wujud kepedulian sosial-keagamaan bagi anak yatim dan keluarga kurang mampu di Balai Desa Sumberanyar.",
+    "image": "assets/images/wujud-kepedulian-sosial-untuk-anak-yatim-dan-kurang-mampu.jpg",
+    "popular": false
+  },
+  {
     "title": "Bangun Rumah Layak Huni untuk Ibu Marsinem di Sekarputih",
     "slug": "bangun-rumah-layak-huni-ibu-marsinem-sekarputih",
     "url": "berita/bangun-rumah-layak-huni-ibu-marsinem-sekarputih.html",
@@ -153,16 +197,5 @@
     "image": "assets/images/berita/tasyakuran-paguyuban-rage-sokma.jpg",
     "popular": false,
     "gallery": true
-  },
-  {
-    "title": "Wujud Kepedulian Sosial untuk Anak Yatim dan Kurang Mampu",
-    "slug": "wujud-kepedulian-sosial-untuk-anak-yatim-dan-kurang-mampu",
-    "url": "berita/wujud-kepedulian-sosial-untuk-anak-yatim-dan-kurang-mampu.html",
-    "date": "2026-02-01",
-    "type": "berita",
-    "category": "Sosial Keagamaan",
-    "excerpt": "Khitan Massal Rage Sokma menjadi wujud kepedulian sosial-keagamaan bagi anak yatim dan keluarga kurang mampu di Balai Desa Sumberanyar.",
-    "image": "assets/images/wujud-kepedulian-sosial-untuk-anak-yatim-dan-kurang-mampu.jpg",
-    "popular": false
   }
 ]

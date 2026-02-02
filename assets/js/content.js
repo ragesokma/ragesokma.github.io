@@ -5,8 +5,24 @@
  */
 (function () {
   const VERSION = "2026020212";
-  const DATA_URL = "assets/data/posts.json?v=" + VERSION;
-  const FALLBACK_IMG = "assets/images/placeholder.jpg";
+
+  // Prefix path agar aman dipanggil dari subfolder (mis. /berita/, /artikel/)
+  const PATH_PREFIX = (() => {
+    // contoh pathname: "/", "/berita/index.html", "/artikel/slug.html"
+    const dir = window.location.pathname.replace(/\/[^\/]*$/, "/");
+    const depth = dir.split("/").filter(Boolean).length; // root=0, /berita/=1, /berita/sub/=2
+    return depth ? "../".repeat(depth) : "";
+  })();
+
+  const withPrefix = (p) => {
+    if (!p) return p;
+    if (/^(https?:)?\/\//i.test(p) || p.startsWith("data:") || p.startsWith("mailto:") || p.startsWith("tel:")) return p;
+    if (p.startsWith("/")) return PATH_PREFIX + p.slice(1);
+    return PATH_PREFIX + p;
+  };
+
+  const DATA_URL = withPrefix("assets/data/posts.json?v=" + VERSION);
+  const FALLBACK_IMG = withPrefix("assets/images/placeholder.jpg");
 
   const DEFAULT_CATEGORY_BY_TYPE = {
     berita: "Sosial Keagamaan",
@@ -137,8 +153,13 @@
     const root = document.getElementById("postsApp");
     if (!root) return;
 
+
+    // Optional: batasi jenis konten pada halaman (mis. "berita" atau "artikel")
+    const listingType = (root.getAttribute("data-type") || window.__POSTS_LISTING_TYPE || "").toLowerCase().trim();
+
     // Semua post (diurutkan terbaru) + kategori dinormalisasi
     const all = [...posts]
+      .filter(p => !listingType || String(p.type || "").toLowerCase() === listingType)
       .map(p => ({ ...p, category: normalizeCategory(p) }))
       .sort(sortByDateDesc);
 
