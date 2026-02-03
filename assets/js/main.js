@@ -2050,4 +2050,139 @@ if (document.readyState === 'loading') {
 
 
 
+/* =========================
+ * Single-source Footer (2 variants)
+ * version: 1
+ * ========================= */
+(function(){
+  try{
+    window.RAGE_FOOTER_VERSION = '1';
+
+    function getBasePrefix(){
+      var s = document.querySelector('script[src*="assets/js/main.js"]');
+      if(!s) return '';
+      var src = s.getAttribute('src') || '';
+      src = src.split('?')[0].split('#')[0];
+      var needle = 'assets/js/main.js';
+      var idx = src.indexOf(needle);
+      if(idx === -1) return '';
+      return src.substring(0, idx); // '', '../', '/', '/repo/'
+    }
+
+    var BASE = getBasePrefix();
+
+    function link(path){
+      path = String(path || '').replace(/^\/+/, ''); // remove leading /
+      return BASE + path;
+    }
+
+    function yearText(){
+      // keep consistent with existing copy
+      return '© 2026 RAGE SOKMA. All rights reserved.';
+    }
+
+    function footerCompact(){
+      return (
+        '<div class="max-w-7xl mx-auto px-6 pb-10">' +
+          '<div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">' +
+            '<div>' +
+              '<p class="font-bold text-white">RAGE SOKMA</p>' +
+              '<p class="text-sm text-gray-200">Komunitas Peduli Yatim &amp; Dhuafa</p>' +
+            '</div>' +
+            '<div class="text-sm">' +
+              '<a class="hover:text-white" href="' + link('index.html') + '">Beranda</a>' +
+              '<span class="mx-2">•</span>' +
+              '<a class="hover:text-white" href="' + link('relawan.html') + '">Relawan</a>' +
+              '<span class="mx-2">•</span>' +
+              '<a class="hover:text-white" href="' + link('transparansi.html') + '">Transparansi</a>' +
+              '<span class="mx-2">•</span>' +
+              '<a class="hover:text-white" href="' + link('kontak.html') + '">Kontak</a>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="bg-blue-900 text-center py-5 text-sm text-gray-300">' + yearText() + '</div>'
+      );
+    }
+
+    function footerFull(){
+      return (
+        '<div class="max-w-7xl mx-auto px-6">' +
+          '<div class="grid grid-cols-1 md:grid-cols-4 gap-12 pb-16">' +
+
+            '<div>' +
+              '<h3 class="text-xl font-bold text-white mb-4">RAGE SOKMA</h3>' +
+              '<p class="text-sm leading-relaxed">RAGE SOKMA adalah <strong>Komunitas Pecinta Anak Yatim &amp; Piatu dan Dhuafa</strong> yang bergerak dalam bidang sosial dan keagamaan dengan berlandaskan nilai RIDHO.</p>' +
+              '<div class="mt-5 flex flex-wrap gap-3">' +
+                '<a class="rs-btn rs-btn--primary" href="' + link('relawan.html') + '">Gabung Relawan</a>' +
+              '</div>' +
+            '</div>' +
+
+            '<div>' +
+              '<h3 class="text-xl font-bold text-white mb-4">Tautan Cepat</h3>' +
+              '<ul class="space-y-2 text-sm">' +
+                '<li><a class="hover:text-white" href="' + link('index.html') + '">Beranda</a></li>' +
+                '<li><a class="hover:text-white" href="' + link('tentang/sejarah.html') + '">Tentang</a></li>' +
+                '<li><a class="hover:text-white" href="' + link('program.html') + '">Program</a></li>' +
+                '<li><a class="hover:text-white" href="' + link('berita/index.html') + '">Berita</a></li>' +
+                '<li><a class="hover:text-white" href="' + link('transparansi.html') + '">Transparansi</a></li>' +
+                '<li><a class="hover:text-white" href="' + link('kontak.html') + '">Kontak</a></li>' +
+              '</ul>' +
+            '</div>' +
+
+            '<div>' +
+              '<h3 class="text-xl font-bold text-white mb-4">Program</h3>' +
+              '<ul class="space-y-2 text-sm">' +
+                '<li><a class="hover:text-white" href="' + link('program.html') + '">Program Unggulan</a></li>' +
+                '<li><a class="hover:text-white" href="' + link('program/santunan-anak-yatim.html') + '">Santunan Anak Yatim</a></li>' +
+                '<li><a class="hover:text-white" href="' + link('program/peduli-dhuafa.html') + '">Peduli Dhuafa</a></li>' +
+                '<li><a class="hover:text-white" href="' + link('program/sosial-keagamaan.html') + '">Sosial Keagamaan</a></li>' +
+              '</ul>' +
+            '</div>' +
+
+            '<div>' +
+              '<h3 class="text-xl font-bold text-white mb-4">Hubungi Kami</h3>' +
+              '<p class="text-sm">Butuh bantuan atau ingin konfirmasi? Hubungi admin RAGE SOKMA.</p>' +
+              '<ul class="mt-4 space-y-2 text-sm">' +
+                '<li>📞 0852-0424-6807</li>' +
+                '<li>✉️ ragesokma@outlook.com</li>' +
+                '<li>🕘 Respons: 09.00–21.00 WIB</li>' +
+              '</ul>' +
+              '<a class="inline-flex mt-4 bg-white text-blue-800 px-4 py-2 rounded-lg font-semibold hover:bg-blue-50 transition" href="' + link('kontak.html') + '#wa">Hubungi (WA)</a>' +
+            '</div>' +
+
+          '</div>' +
+        '</div>' +
+        '<div class="bg-blue-900 text-center py-6 text-sm text-gray-300">' + yearText() + '</div>'
+      );
+    }
+
+    function applyFooter(){
+      var el = document.getElementById('site-footer');
+      if(!el) return;
+
+      var variant = (el.getAttribute('data-variant') || 'compact').toLowerCase();
+
+      // Set wrapper classes (keep consistent with existing)
+      if(variant === 'full'){
+        el.className = 'bg-blue-800 text-gray-200 pt-20';
+        el.innerHTML = footerFull();
+      } else {
+        el.className = 'bg-blue-800 text-gray-200 pt-16';
+        el.innerHTML = footerCompact();
+      }
+    }
+
+    if(document.readyState === 'loading'){
+      document.addEventListener('DOMContentLoaded', applyFooter);
+    } else {
+      applyFooter();
+    }
+
+  }catch(e){
+    // fail silently to avoid breaking other scripts
+    console && console.warn && console.warn('Footer init failed:', e);
+  }
+})();
+
+
 window.addEventListener("resize", function(){ applyHeroBgFit(document); });
