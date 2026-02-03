@@ -5,6 +5,8 @@
 <style id="anti-fouc">html{visibility:hidden}</style><noscript><style>html{visibility:visible}</style></noscript><script>document.addEventListener("DOMContentLoaded",function(){document.documentElement.style.visibility="visible";});window.addEventListener("pageshow",function(){document.documentElement.style.visibility="visible";});</script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="/assets/images/logo.png" rel="icon" type="image/png"/>
+<link href="/assets/images/logo.png" rel="apple-touch-icon"/>
 <meta content="Terima kasih telah berdonasi untuk RAGE SOKMA. Donasi kamu sangat berarti." name="description"/>
 <link href="https://ragesokma.github.io/terima-kasih.html" rel="canonical"/>
 <meta content="index,follow,max-image-preview:large" name="robots"/>
@@ -40,8 +42,6 @@
 <title>Terima Kasih | RAGE SOKMA</title>
 <meta content="noindex, nofollow" name="robots"/>
 <meta content="noindex, nofollow" name="googlebot"/>
-
-
 <link href="/assets/css/app.css?v=2026020120" rel="stylesheet"/><link href="/assets/css/drawer.css?v=2026020120" rel="stylesheet"/><link href="/assets/css/utilities.css?v=2026020120" rel="stylesheet"/></head>
 <body>
 <header class="site-header sticky top-0 z-50" id="siteHeader">
@@ -217,8 +217,8 @@
 <main>
 <section class="bg-blue-700 py-16">
 <div class="max-w-4xl mx-auto px-6 text-center text-white">
-<h1 class="text-4xl font-extrabold">Terima Kasih 🙏</h1>
-<p class="mt-4 text-lg opacity-90">
+<h1 class="text-4xl font-extrabold" id="tk_h1">Terima Kasih 🙏</h1>
+<p class="mt-4 text-lg opacity-90" id="tk_subtitle">
         Konfirmasi donasi kamu telah kami terima.
       </p>
 </div>
@@ -226,20 +226,20 @@
 <section class="py-16 bg-white">
 <div class="max-w-3xl mx-auto px-6">
 <div class="rounded-2xl border border-slate-200 p-6 md:p-8 text-center">
-<h2 class="text-2xl font-bold text-slate-900">Donasi Kamu Sangat Berarti</h2>
-<p class="mt-3 text-slate-600 leading-relaxed">
+<h2 class="text-2xl font-bold text-slate-900" id="tk_title">Donasi Kamu Sangat Berarti</h2>
+<p class="mt-3 text-slate-600 leading-relaxed" id="tk_body">
           Terima kasih telah mempercayakan donasi kepada <strong>RAGE SOKMA</strong>.
           Tim kami akan melakukan verifikasi dan mencatat donasi kamu secara amanah dan transparan.
         </p>
 <div class="mt-6 rounded-xl bg-blue-50 border border-blue-100 p-4 text-sm text-slate-700">
-<p>
+<p id="tk_note">
             📌 Jika dalam <strong>1×24 jam</strong> kamu belum menerima konfirmasi lanjutan,
             silakan hubungi admin kami melalui WhatsApp.
           </p>
 </div>
 <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
 <a class="btn-secondary text-center" href="index.html">Kembali ke Beranda</a>
-<a class="btn-primary text-center" href="laporan.html">Lihat Laporan Donasi</a>
+<a class="btn-primary text-center" href="laporan.html" id="tk_cta2">Lihat Laporan Donasi</a>
 </div>
 </div>
 <div class="mt-8 text-center text-sm text-slate-500">
@@ -284,4 +284,28 @@
 <div class="bg-blue-900 text-center py-5 text-sm text-gray-300">© 2026 RAGE SOKMA. All rights reserved.</div>
 </footer>
 <script defer="defer" src="/assets/js/main.js?v=33"></script>
+
+<script>
+(function(){
+  try {
+    var params = new URLSearchParams(window.location.search);
+    var from = (params.get('from') || '').toLowerCase();
+    if (from === 'kontak') {
+      var h1 = document.getElementById('tk_h1');
+      var sub = document.getElementById('tk_subtitle');
+      var title = document.getElementById('tk_title');
+      var body = document.getElementById('tk_body');
+      var note = document.getElementById('tk_note');
+      var cta2 = document.getElementById('tk_cta2');
+
+      if (h1) h1.textContent = 'Terima Kasih 🙏';
+      if (sub) sub.textContent = 'Pesan kamu telah kami terima.';
+      if (title) title.textContent = 'Pesan Kamu Sudah Terkirim';
+      if (body) body.textContent = 'Terima kasih sudah menghubungi RAGE SOKMA. Tim kami akan meninjau pesan kamu dan membalas secepatnya melalui email atau WhatsApp yang kamu tuliskan.';
+      if (note) note.innerHTML = '📌 Jika dalam <strong>1×24 jam</strong> kamu belum mendapat balasan, silakan hubungi admin kami melalui WhatsApp.';
+      if (cta2) { cta2.style.display = "none"; }
+    }
+  } catch (e) {}
+})();
+</script>
 </body></html>

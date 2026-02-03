@@ -234,10 +234,13 @@
 <h2 class="text-2xl font-bold text-blue-800">Form Konfirmasi</h2>
 <p class="mt-2 text-slate-600">Silakan lengkapi data berikut agar donasi kamu cepat kami verifikasi dan tercatat.</p>
 <h2 class="mt-10 mb-4 text-xl font-semibold">📝 Data Konfirmasi Donasi</h2>
-<form action="https://formspree.io/f/mvzqglqz" class="mt-6 space-y-4" enctype="multipart/form-data" method="POST">
-<div style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;"><label>Jangan isi field ini</label><input autocomplete="off" name="_gotcha" tabindex="-1" type="text"/></div>
-<input name="_next" type="hidden" value="https://ragesokma.github.io/terima-kasih.html"/>
-<input name="_subject" type="hidden" value="Konfirmasi Donasi - RAGE SOKMA"/>
+<form action="https://formsubmit.co/ragesokma@outlook.com" class="mt-6 space-y-4" enctype="multipart/form-data" method="POST" id="donasiForm">
+<input type="text" name="_honey" style="display:none" autocomplete="off" tabindex="-1"/>
+<input type="hidden" name="_subject" value="Konfirmasi Donasi - RAGE SOKMA"/>
+<input type="hidden" name="_template" value="table"/>
+<input type="hidden" name="_next" id="fs_next" value=""/>
+<input type="hidden" name="_url" id="fs_url" value=""/>
+<input type="hidden" name="_autoresponse" value="Terima kasih! Konfirmasi donasi Anda telah kami terima. Tim RAGE SOKMA akan memverifikasi dan mencatat donasi Anda. Jika diperlukan, kami akan menghubungi Anda via WhatsApp. — RAGE SOKMA"/>
 <!-- Section 1 -->
 <div class="rounded-2xl border border-slate-200 bg-white p-6">
 <div class="flex items-start gap-3">
@@ -257,8 +260,9 @@
 <input class="form-input" id="kontak" name="kontak" placeholder="08xx xxxx xxxx" required="" type="tel"/>
 </div>
 <div class="md:col-span-1">
-<label class="form-label" for="email">Email (opsional)</label>
-<input class="form-input" id="email" name="email" placeholder="nama@email.com" type="email"/>
+<label class="form-label" for="email">Email (untuk menerima konfirmasi)</label>
+<input class="form-input" id="email" name="email" placeholder="nama@email.com" required="" type="email"/>
+<p class="mt-2 text-xs text-slate-500">Kami akan mengirim email konfirmasi otomatis ke alamat ini.</p>
 </div>
 </div>
 </div>
@@ -276,10 +280,11 @@
 <label class="form-label" for="metode">Metode</label>
 <select class="form-input" id="metode" name="metode" required="">
 <option disabled="" selected="" value="">Pilih metode donasi</option>
-<option>Transfer Bank</option>
-<option>QRIS</option>
-<option>Cash</option>
-<option>Lainnya</option>
+<option value="qris">QRIS</option>
+<option value="bank-jatim">Transfer Bank Jatim</option>
+<option value="transfer-bank">Transfer Bank (lainnya)</option>
+<option value="cash">Cash</option>
+<option value="lainnya">Lainnya</option>
 </select>
 </div>
 <div>
@@ -309,8 +314,8 @@
 </div>
 <div>
 <label class="form-label" for="bukti">Upload Bukti Transfer (opsional)</label>
-<input accept="image/*,.pdf" class="form-input" id="bukti" name="bukti" type="file"/>
-<p class="mt-2 text-xs text-slate-500">Format: JPG/PNG/PDF. Jika gagal, gunakan link Drive pada catatan.</p>
+<input accept="image/*,application/pdf" class="form-input" id="bukti" name="attachment" type="file"/>
+<p class="mt-2 text-xs text-slate-500">Format: JPG/PNG/PDF (maks 10MB). Jika gagal, gunakan link Drive pada catatan.</p>
 </div>
 </div>
 </div>
@@ -353,17 +358,30 @@
 <div class="bg-blue-900 text-center py-5 text-sm text-gray-300">© 2026 RAGE SOKMA. All rights reserved.</div>
 </footer>
 <script>
-(function prefillMetodeDonasi(){
+(function initKonfirmasiDonasi(){
   try{
+    // Pastikan FormSubmit redirect & URL tercatat (butuh full URL)
+    var next = document.getElementById('fs_next');
+    var url = document.getElementById('fs_url');
+    var base = window.location.href.split('#')[0].split('?')[0].split('/').slice(0,-1).join('/');
+    if(next) next.value = base + '/terima-kasih.html';
+    if(url) url.value = window.location.href;
+
+    // Prefill dari tombol di donasi.html (contoh: ?metode=qris)
     var params = new URLSearchParams(window.location.search);
-    var m = params.get('metode');
-    if(!m) return;
-    var sel = document.querySelector('select[name="metode"]');
-    if(!sel) return;
-    // normalize
-    m = m.toLowerCase();
-    if(m === 'qris' || m === 'bank-jatim'){
-      sel.value = m;
+    var metode = (params.get('metode') || '').toLowerCase();
+    var nominal = params.get('nominal');
+
+    var sel = document.getElementById('metode');
+    if(sel && metode){
+      var opt = sel.querySelector('option[value="'+metode+'"]');
+      if(opt) sel.value = metode;
+    }
+
+    var nom = document.getElementById('nominal');
+    if(nominal && nom){
+      var n = parseInt(nominal, 10);
+      if(!isNaN(n) && n > 0) nom.value = String(n);
     }
   }catch(e){}
 })();
