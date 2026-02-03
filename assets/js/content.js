@@ -4,8 +4,7 @@
  * - Fitur: filter kategori, badge kategori, default kategori per type, galeri otomatis
  */
 (function () {
-  // Cache-buster untuk posts.json
-  const VERSION = "20260203";
+  const VERSION = "2026020212";
 
   // Prefix path agar aman dipanggil dari subfolder (mis. /berita/, /artikel/)
   const PATH_PREFIX = (() => {
@@ -75,9 +74,8 @@
 
   function renderCard(post) {
     const cat = normalizeCategory(post);
-    // Pastikan URL aman dipanggil dari subfolder (mis. /berita/index.html)
-    const img = withPrefix(safeText(post.image));
-    const href = withPrefix(safeText(post.url));
+    const img = safeText(post.image);
+    const href = safeText(post.url);
     const title = safeText(post.title);
     const excerpt = safeText(post.excerpt);
     const date = formatDateID(post.date);
@@ -85,7 +83,7 @@
     return `
 <article class="post-card">
   <a class="post-card__media" href="${href}">
-    <img loading="lazy" decoding="async" alt="${title}" src="${img || FALLBACK_IMG}" onerror="this.onerror=null;this.src=\'${FALLBACK_IMG}\';" />
+    ${img ? `<img loading="lazy" decoding="async" alt="${title}" src="${img}" onerror="this.onerror=null;this.src=\'${FALLBACK_IMG}\';" />` : ``}
   </a>
   <div class="post-card__body">
     <div class="post-card__meta">
@@ -101,9 +99,8 @@
   // Compact item khusus "Artikel Populer" (thumbnail kecil + teks)
   function renderPopularItem(post) {
     const cat = normalizeCategory(post);
-    // Pastikan URL aman dipanggil dari subfolder (mis. /berita/index.html)
-    const img = withPrefix(safeText(post.image));
-    const href = withPrefix(safeText(post.url));
+    const img = safeText(post.image);
+    const href = safeText(post.url);
     const title = safeText(post.title);
     const excerpt = safeText(post.excerpt);
     const date = formatDateID(post.date);
@@ -111,7 +108,7 @@
     return `
 <article class="popular-item">
   <a class="popular-item__thumb" href="${href}" aria-label="Buka: ${title}">
-    <img loading="lazy" decoding="async" alt="${title}" src="${img || FALLBACK_IMG}" onerror="this.onerror=null;this.src=\'${FALLBACK_IMG}\';" />
+    ${img ? `<img loading="lazy" decoding="async" alt="${title}" src="${img}" onerror="this.onerror=null;this.src=\'${FALLBACK_IMG}\';" />` : ``}
   </a>
   <div class="popular-item__body">
     <div class="popular-item__meta">
