@@ -404,7 +404,6 @@ if (!parent) return;
           <a class="share-btn share-btn--facebook" target="_blank" rel="noopener" aria-label="Bagikan ke Facebook" href="https://www.facebook.com/sharer/sharer.php?u=${url}">${iconFacebook}<span>Facebook</span></a>
           <button class="share-btn share-btn--copy" type="button" aria-label="Salin tautan">${iconLink}<span>Salin</span></button>
           <a class="share-btn share-btn--igstory" href="#" aria-label="Bagikan ke Instagram Story">${iconInstagram}<span>IG Story</span></a>
-          <a class="share-btn share-btn--fbstory" href="#" aria-label="Bagikan ke Facebook Story">${iconFacebook}<span>FB Story</span></a>
         </div>
       </div>
       <div class="share-toast" role="status" aria-live="polite"></div>
@@ -654,10 +653,6 @@ if (mount) {
       wrap.querySelector('.share-btn--igstory')?.addEventListener('click', (ev) => {
         ev.preventDefault();
         shareStory('instagram_story');
-      });
-      wrap.querySelector('.share-btn--fbstory')?.addEventListener('click', (ev) => {
-        ev.preventDefault();
-        shareStory('facebook_story');
       });
     } catch (e) {}
   } catch (e) {
