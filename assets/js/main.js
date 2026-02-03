@@ -173,16 +173,20 @@ function initShareBar() {
     // Only inject once
     if (document.querySelector('.share-wrapper')) return;
 
-    // Detect detail pages (berita / artikel). Prefer <article.prose> but fallback gracefully.
+    // Detect detail pages (berita / artikel) ONLY.
+    // IMPORTANT: don't fallback to generic <article> because homepage hero uses <article> slides.
 const heroImg = document.querySelector('.article-hero-img');
-const article = document.querySelector('article.prose') || document.querySelector('article') || document.querySelector('.prose') || null;
+const mount = document.getElementById('share-mount');
+const article = document.querySelector('article.prose') || document.querySelector('.prose') || null;
 
 const path = (window.location.pathname || '').toLowerCase();
 const isDetail = path.includes('/berita/') || path.includes('/artikel/');
-if (!article && !isDetail) return;
+
+// Only show share bar if we're on a detail page, or the template explicitly provides a mount/hero.
+if (!isDetail && !mount && !heroImg) return;
+if (!article && !mount && !heroImg) return;
 
 // Optional mount point (lets us place share bar precisely from HTML)
-const mount = document.getElementById('share-mount');
 
 // Choose insertion anchor
 const anchor = mount || heroImg || article || document.querySelector('h1') || document.body;

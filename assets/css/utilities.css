@@ -525,8 +525,16 @@ a:hover{ color: var(--rs-navy); }
   section.hero-wrap{ padding-top: 0 !important; margin-top: 0 !important; }
 }
 
-  main > section.hero-wrap{ padding-top: 0 !important; margin-top: 0 !important; }
-  section.hero-wrap{ padding-top: 0 !important; margin-top: 0 !important; }
+/* =====================================================
+   Homepage: hero slider harus benar-benar nempel ke header
+   (hapus "kotak"/gap di atas hero pada desktop & mobile)
+   ===================================================== */
+/* Homepage: keep a thin, sweet spacing under sticky header */
+body.home main{ padding-top: 8px !important; }
+body.home main > section.hero-wrap{ margin-top: 0 !important; }
+
+@media (min-width: 1024px){
+  body.home main{ padding-top: 10px !important; }
 }
 
 
@@ -708,15 +716,10 @@ a:hover{ color: var(--rs-navy); }
    ===================================================== */
 @media (max-width: 1023px){
   /* Cancel the global main padding-top ONLY for the first hero section (homepage) */
-  main > section.hero-wrap{
-    padding-top: 0 !important;
-    margin-top: -16px !important; /* default main padding-top on non-small screens */
-  }
+  body.home main > section.hero-wrap{ margin-top: 0 !important; }
 }
 @media (max-width: 640px){
-  main > section.hero-wrap{
-    margin-top: -12px !important; /* matches app.css main padding-top on small screens */
-  }
+  body.home main > section.hero-wrap{ margin-top: 0 !important; }
 }
 
 
