@@ -7,18 +7,18 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="/assets/images/logo.png" rel="icon" type="image/png"/>
 <link href="/assets/images/logo.png" rel="apple-touch-icon"/>
-<meta content="Terima kasih telah berdonasi untuk RAGE SOKMA. Donasi kamu sangat berarti." name="description"/>
+<meta content="Terima kasih sudah mendaftar sebagai relawan RAGE SOKMA. Kami akan menghubungi kamu melalui WhatsApp/Email untuk tindak lanjut." name="description"/>
 <link href="https://ragesokma.github.io/terima-kasih.html" rel="canonical"/>
 <meta content="index,follow,max-image-preview:large" name="robots"/>
 <meta content="id_ID" property="og:locale"/>
 <meta content="website" property="og:type"/>
-<meta content="Donasi | RAGE SOKMA" property="og:title"/>
-<meta content="Halaman donasi resmi RAGE SOKMA. Dukung program sosial untuk yatim &amp; dhuafa melalui QRIS atau transfer. Transparan dan amanah." property="og:description"/>
+<meta content="Relawan | RAGE SOKMA" property="og:title"/>
+<meta content="Halaman terima kasih pendaftaran relawan RAGE SOKMA." property="og:description"/>
 <meta content="https://ragesokma.github.io/terima-kasih.html" property="og:url"/>
 <meta content="https://ragesokma.github.io/assets/images/logo.png" property="og:image"/>
 <meta content="summary_large_image" name="twitter:card"/>
-<meta content="Donasi | RAGE SOKMA" name="twitter:title"/>
-<meta content="Halaman donasi resmi RAGE SOKMA. Dukung program sosial untuk yatim &amp; dhuafa melalui QRIS atau transfer. Transparan dan amanah." name="twitter:description"/>
+<meta content="Relawan | RAGE SOKMA" name="twitter:title"/>
+<meta content="Halaman terima kasih pendaftaran relawan RAGE SOKMA." name="twitter:description"/>
 <meta content="#1d4ed8" name="theme-color"/>
 <script type="application/ld+json">
     {
@@ -219,31 +219,30 @@
 <div class="max-w-4xl mx-auto px-6 text-center text-white">
 <h1 class="text-4xl font-extrabold" id="tk_h1">Terima Kasih 🙏</h1>
 <p class="mt-4 text-lg opacity-90" id="tk_subtitle">
-        Konfirmasi donasi kamu telah kami terima.
+        Pendaftaran relawan kamu telah kami terima.
       </p>
 </div>
 </section>
 <section class="py-16 bg-white">
 <div class="max-w-3xl mx-auto px-6">
 <div class="rounded-2xl border border-slate-200 p-6 md:p-8 text-center">
-<h2 class="text-2xl font-bold text-slate-900" id="tk_title">Donasi Kamu Sangat Berarti</h2>
+<h2 class="text-2xl font-bold text-slate-900" id="tk_title">Terima Kasih Sudah Bergabung</h2>
 <p class="mt-3 text-slate-600 leading-relaxed" id="tk_body">
-          Terima kasih telah mempercayakan donasi kepada <strong>RAGE SOKMA</strong>.
-          Tim kami akan melakukan verifikasi dan mencatat donasi kamu secara amanah dan transparan.
+          Terima kasih sudah mendaftar menjadi <strong>Relawan RAGE SOKMA</strong>. Tim kami akan meninjau data kamu dan menghubungi kamu untuk proses selanjutnya (penjadwalan, penempatan bidang, dan informasi kegiatan).
         </p>
 <div class="mt-6 rounded-xl bg-blue-50 border border-blue-100 p-4 text-sm text-slate-700">
 <p id="tk_note">
-            📌 Jika dalam <strong>1×24 jam</strong> kamu belum menerima konfirmasi lanjutan,
+            📌 Jika dalam <strong>1×24 jam</strong> kamu belum menerima balasan/konfirmasi,
             silakan hubungi admin kami melalui WhatsApp.
           </p>
 </div>
 <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
 <a class="btn-secondary text-center" href="index.html">Kembali ke Beranda</a>
-<a class="btn-primary text-center" href="laporan.html" id="tk_cta2">Lihat Laporan Donasi</a>
+<a class="btn-primary text-center" href="relawan.html" id="tk_cta2">Kembali ke Halaman Relawan</a>
 </div>
 </div>
 <div class="mt-8 text-center text-sm text-slate-500">
-        Semoga Allah SWT membalas kebaikan kamu dengan keberkahan dan rezeki yang berlipat. Aamiin 🤲
+        Semoga niat baik kamu dimudahkan dan menjadi amal jariyah. Aamiin 🤲
       </div>
 </div>
 </section>
@@ -256,20 +255,33 @@
   try {
     var params = new URLSearchParams(window.location.search);
     var from = (params.get('from') || '').toLowerCase();
-    if (from === 'kontak') {
-      var h1 = document.getElementById('tk_h1');
-      var sub = document.getElementById('tk_subtitle');
-      var title = document.getElementById('tk_title');
-      var body = document.getElementById('tk_body');
-      var note = document.getElementById('tk_note');
-      var cta2 = document.getElementById('tk_cta2');
 
+    var h1 = document.getElementById('tk_h1');
+    var sub = document.getElementById('tk_subtitle');
+    var title = document.getElementById('tk_title');
+    var body = document.getElementById('tk_body');
+    var note = document.getElementById('tk_note');
+    var cta2 = document.getElementById('tk_cta2');
+
+    // Default page content is for relawan.
+    if (from === 'kontak') {
       if (h1) h1.textContent = 'Terima Kasih 🙏';
       if (sub) sub.textContent = 'Pesan kamu telah kami terima.';
       if (title) title.textContent = 'Pesan Kamu Sudah Terkirim';
       if (body) body.textContent = 'Terima kasih sudah menghubungi RAGE SOKMA. Tim kami akan meninjau pesan kamu dan membalas secepatnya melalui email atau WhatsApp yang kamu tuliskan.';
       if (note) note.innerHTML = '📌 Jika dalam <strong>1×24 jam</strong> kamu belum mendapat balasan, silakan hubungi admin kami melalui WhatsApp.';
-      if (cta2) { cta2.style.display = "none"; }
+      if (cta2) cta2.style.display = 'none';
+    } else if (from === 'donasi') {
+      if (h1) h1.textContent = 'Terima Kasih 🙏';
+      if (sub) sub.textContent = 'Konfirmasi donasi kamu telah kami terima.';
+      if (title) title.textContent = 'Konfirmasi Donasi Terkirim';
+      if (body) body.textContent = 'Terima kasih sudah melakukan konfirmasi donasi. Tim kami akan memverifikasi data dan bukti pembayaran kamu, lalu mencatatnya pada laporan transparansi.';
+      if (note) note.innerHTML = '📌 Jika dalam <strong>1×24 jam</strong> kamu belum menerima konfirmasi, silakan hubungi admin kami melalui WhatsApp.';
+      if (cta2) {
+        cta2.style.display = '';
+        cta2.textContent = 'Kembali ke Halaman Donasi';
+        cta2.setAttribute('href', 'donasi.html');
+      }
     }
   } catch (e) {}
 })();
