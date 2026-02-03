@@ -1,3 +1,4 @@
+window.RAGE_SHARE_VERSION = '38';
 // --- HERO mobile fit: keep image centered & not cropped (desktop unchanged)
 function applyHeroBgFit(root){
   try{
@@ -172,15 +173,22 @@ function initShareBar() {
     // Only inject once
     if (document.querySelector('.share-wrapper')) return;
 
-    // Detect detail pages by presence of article content
-    const article = document.querySelector('article.prose');
-    if (!article) return;
+    // Detect detail pages (berita / artikel). Prefer <article.prose> but fallback gracefully.
+const heroImg = document.querySelector('.article-hero-img');
+const article = document.querySelector('article.prose') || document.querySelector('article') || document.querySelector('.prose') || null;
 
-    // Prefer placing after hero image (if any), otherwise before article
-    const heroImg = document.querySelector('.article-hero-img');
-    const anchor = heroImg ? heroImg : article;
-    const parent = anchor && anchor.parentElement;
-    if (!parent) return;
+const path = (window.location.pathname || '').toLowerCase();
+const isDetail = path.includes('/berita/') || path.includes('/artikel/');
+if (!article && !isDetail) return;
+
+// Optional mount point (lets us place share bar precisely from HTML)
+const mount = document.getElementById('share-mount');
+
+// Choose insertion anchor
+const anchor = mount || heroImg || article || document.querySelector('h1') || document.body;
+const parent = (mount ? mount : (anchor && anchor.parentElement ? anchor.parentElement : document.body));
+if (!parent) return;
+
 
     const pageUrl = (window.location.href || '').split('#')[0];
     const cleanTitleText = (document.title || '').replace(/\s+\|\s+RAGE SOKMA\s*$/i, '').trim();
@@ -191,7 +199,6 @@ function initShareBar() {
     const shortDesc = (metaOgDesc?.getAttribute('content') || metaDesc?.getAttribute('content') || '').trim();
 
     // Determine context: berita vs artikel
-    const path = (window.location.pathname || '').toLowerCase();
     const isBerita = path.includes('/berita/');
     const isArtikel = path.includes('/artikel/');
 
@@ -222,7 +229,8 @@ function initShareBar() {
       if (isBerita && publishedPretty) {
         head = `${cleanTitleText} — ${publishedPretty}`;
       }
-      return `${head}\n${pageUrl}`.trim();
+            const emoji = '✨';
+      return `${emoji} ${head}\n${pageUrl}`.trim();
     };
 
     // Helper: simple share analytics (localStorage only)
@@ -378,27 +386,85 @@ function initShareBar() {
       <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <path fill="currentColor" d="M10.59 13.41a1 1 0 0 1 0-1.41l2.83-2.83a3 3 0 1 1 4.24 4.24l-1.41 1.41a1 1 0 0 1-1.42-1.41l1.42-1.42a1 1 0 0 0-1.42-1.41l-2.83 2.83a1 1 0 0 1-1.41 0ZM13.41 10.59a1 1 0 0 1 0 1.41l-2.83 2.83a3 3 0 0 1-4.24-4.24l1.41-1.41a1 1 0 1 1 1.42 1.41L7.76 12a1 1 0 0 0 1.41 1.41l2.83-2.83a1 1 0 0 1 1.41 0Z"/>
       </svg>`;
-
-
+    // Share bar — modern layout (meta + CTA + actions)
     wrap.innerHTML = `
-      <span class="share-label" aria-hidden="true">${iconShare}<span>BAGIKAN</span></span>
-      <a class="share-btn share-btn--facebook" target="_blank" rel="noopener" aria-label="Bagikan ke Facebook" href="https://www.facebook.com/sharer/sharer.php?u=${url}">${iconFacebook}<span>Facebook</span></a>
-      <a class="share-btn share-btn--whatsapp" target="_blank" rel="noopener" aria-label="Bagikan ke WhatsApp" href="#">${iconWhatsApp}<span>WhatsApp</span></a>
-      <button class="share-btn share-btn--copy" type="button" aria-label="Salin tautan">${iconLink}<span>Salin tautan</span></button>
-      <a class="share-btn share-btn--igstory" href="#" aria-label="Bagikan ke Instagram Story">${iconInstagram}<span>IG Story</span></a>
-      <a class="share-btn share-btn--fbstory" href="#" aria-label="Bagikan ke Facebook Story">${iconFacebook}<span>FB Story</span></a>
+      <div class="share-meta" aria-hidden="true">
+        <div class="share-title">${iconShare}<span>SHARE</span></div>
+        <div class="share-desc">RAGE SOKMA</div>
+      </div>
+      <div class="share-right">
+        <div class="share-cta">Bagikan kebaikan ini</div>
+        <div class="share-actions">
+          <button class="share-btn share-btn--native" type="button" aria-label="Bagikan">${iconShare}<span>Share</span></button>
+          <a class="share-btn share-btn--whatsapp" target="_blank" rel="noopener" aria-label="Bagikan ke WhatsApp" href="#">${iconWhatsApp}<span>WhatsApp</span></a>
+          <a class="share-btn share-btn--facebook" target="_blank" rel="noopener" aria-label="Bagikan ke Facebook" href="https://www.facebook.com/sharer/sharer.php?u=${url}">${iconFacebook}<span>Facebook</span></a>
+          <button class="share-btn share-btn--copy" type="button" aria-label="Salin tautan">${iconLink}<span>Salin</span></button>
+          <a class="share-btn share-btn--igstory" href="#" aria-label="Bagikan ke Instagram Story">${iconInstagram}<span>IG Story</span></a>
+          <a class="share-btn share-btn--fbstory" href="#" aria-label="Bagikan ke Facebook Story">${iconFacebook}<span>FB Story</span></a>
+        </div>
+      </div>
+      <div class="share-toast" role="status" aria-live="polite"></div>
     `.trim();
 
-    // Insert right after hero image if exists, else before article
-    if (heroImg) {
-      heroImg.insertAdjacentElement('afterend', wrap);
-    } else {
-      parent.insertBefore(wrap, article);
-    }
+    // Insert: if mount exists, append into mount; else after hero; else before article; else append to parent
+if (mount) {
+  mount.appendChild(wrap);
+} else if (heroImg) {
+  heroImg.insertAdjacentElement('afterend', wrap);
+} else if (article && parent && parent.insertBefore) {
+  parent.insertBefore(wrap, article);
+} else if (parent && parent.appendChild) {
+  parent.appendChild(wrap);
+}
+
+
+    // Small toast (used for Copy / Story fallbacks)
+    const toastEl = wrap.querySelector('.share-toast');
+    let toastTimer = null;
+    const showToast = (message) => {
+      if (!toastEl) return;
+      toastEl.textContent = message;
+      toastEl.classList.add('is-show');
+      if (toastTimer) window.clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(() => {
+        toastEl.classList.remove('is-show');
+      }, 1500);
+    };
 
     // Track clicks for common platforms (FB, X, Pinterest)
     try {
       wrap.querySelector('.share-btn--facebook')?.addEventListener('click', () => trackShare('facebook'));
+    } catch (e) {}
+
+    // Native share: use device share sheet when supported (mobile)
+    try {
+      const nativeBtn = wrap.querySelector('.share-btn--native');
+      const canNative = !!(navigator && navigator.share) && (window.isSecureContext || location.hostname === 'localhost');
+      if (!nativeBtn) {
+        // nothing
+      } else if (!canNative) {
+        nativeBtn.remove();
+      } else {
+        nativeBtn.addEventListener('click', async (ev) => {
+          ev.preventDefault();
+          trackShare('native');
+          try {
+            await navigator.share({
+              title: cleanTitleText,
+              text: `✨ ${cleanTitleText}`,
+              url: pageUrl
+            });
+          } catch (err) {
+            // Ignore user cancel
+            if (err && (err.name === 'AbortError' || String(err).includes('Abort'))) return;
+            // Fallback: copy link
+            try {
+              await navigator.clipboard.writeText(pageUrl);
+              showToast('Tautan tersalin');
+            } catch (e) {}
+          }
+        });
+      }
     } catch (e) {}
 
     // WhatsApp: open WhatsApp directly (no generic share sheet)
@@ -503,6 +569,7 @@ function initShareBar() {
           btn.classList.add('is-copied');
           const sp = btn.querySelector('span');
           if (sp) sp.textContent = 'Tersalin!';
+          showToast('Tautan tersalin');
           window.setTimeout(() => {
             btn.classList.remove('is-copied');
             const sp2 = btn.querySelector('span');
@@ -571,6 +638,7 @@ function initShareBar() {
         a.download = 'rage-sokma-story.png';
         document.body.appendChild(a);
         a.click();
+        showToast('Gambar story diunduh');
         setTimeout(() => {
           URL.revokeObjectURL(a.href);
           a.remove();
@@ -592,6 +660,17 @@ function initShareBar() {
     // fail silently
   }
 }
+
+// --- Ensure Share Bar always initializes even if other inits fail
+(function(){
+  const runShare = () => { try { initShareBar(); } catch(e) {} };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runShare);
+  } else {
+    runShare();
+  }
+  window.setTimeout(runShare, 1200);
+})();
 
 
 const initSite = () => {
@@ -1648,9 +1727,6 @@ if (quickHelpToggle && quickHelpLinks) {
   setupActiveNavIndicator();
 
   // Share bar on detail pages (Berita / Artikel)
-  initShareBar();
-
-  // Share bar (detail berita/artikel)
   initShareBar();
 
   initImpactStats();
